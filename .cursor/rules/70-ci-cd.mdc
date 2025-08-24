@@ -1,3 +1,22 @@
+---
+id: hosting-ci
+title: 70 — Hosting/CI
+description: Hosting na Vercel (SSR/ISR, public env przez NEXT_PUBLIC_*); GitHub Actions do lint, testów i Lighthouse; przykładowy workflow CI/CD.
+alwaysApply: false
+globs:
+  - ".github/workflows/**"
+  - "vercel.json"
+  - "vercel.*.json"
+  - "lighthouserc.*"
+  - "package.json"
+tags:
+  - hosting
+  - ci
+  - vercel
+  - github-actions
+  - lighthouse
+---
+
 # 70 — Hosting/CI
 
 - **Vercel** (SSR/ISR). Public env przez `NEXT_PUBLIC_*`.

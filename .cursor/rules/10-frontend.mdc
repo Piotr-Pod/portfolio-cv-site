@@ -1,3 +1,15 @@
+---
+id: frontend
+title: 10 — Frontend
+description: Next.js (App Router) + TypeScript, Tailwind + shadcn/ui + Radix UI, Framer Motion dla animacji, next-intl dla i18n, next-seo + next-sitemap dla SEO, Plausible/Umami dla analytics.
+alwaysApply: false
+globs:
+  - "app/**"
+  - "components/**"
+  - "lib/**"
+  - "public/**"
+---
+
 # 10 — Frontend
 
 - **Next.js (App Router) + TypeScript**. Stosuj Server Components, chyba że potrzebujesz stanu/efektów → Client.

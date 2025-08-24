@@ -1,3 +1,22 @@
+---
+id: openapi-bff
+title: 60 — OpenAPI & BFF (Spring-ready)
+description: Frontend zależy wyłącznie od kontraktu OpenAPI (YAML); generacja typowanego klienta TS; warstwa API w lib/api/*; w MVP Next Route Handlers jako BFF, docelowo proxy do Springa (jeden origin, brak CORS).
+alwaysApply: false
+globs:
+  - "lib/api/**"
+  - "openapi.yaml"
+  - "openapi.yml"
+  - "app/api/proxy/**"
+  - "app/api/**/route.ts"
+  - "scripts/gen:openapi*"
+tags:
+  - api
+  - openapi
+  - bff
+  - spring
+---
+
 # 60 — OpenAPI & BFF (Spring-ready)
 
 - Frontend zależy **wyłącznie** od kontraktu **OpenAPI** (YAML).  

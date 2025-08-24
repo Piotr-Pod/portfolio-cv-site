@@ -1,0 +1,30 @@
+---
+id: accessibility-wcag
+title: 50 — Dostępność (WCAG 2.2)
+description: Standardy dostępności: kontrast, focus-visible, skip-links, pełna obsługa klawiaturą; aria-label i tekst dla elementów interaktywnych; aria-busy/live przy interakcjach; testy z jest-axe/axe-core i Playwright snapshoty.
+alwaysApply: false
+globs:
+  - "components/**"
+  - "app/**"
+  - "__tests__/**"
+  - "e2e/**"
+  - "tests/**"
+tags:
+  - accessibility
+  - wcag
+  - a11y
+  - testing
+---
+
+# 50 — Dostępność (WCAG 2.2)
+
+**Wymagane:**
+- Kontrast, focus-visible, skip-links, pełna obsługa klawiaturą.
+- Łącza i przyciski mają czytelne nazwy dostępności (`aria-label` lub tekst).
+- Interakcje asynchroniczne → `aria-busy`, `aria-live` gdzie stosowne.
+
+**Testy**
+- **jest-axe/axe-core** dla komponentów.
+- **Playwright**: snapshoty a11y i nawigacja klawiaturą.
+
+**Snippety**: `snippets/testing-a11y.md`.

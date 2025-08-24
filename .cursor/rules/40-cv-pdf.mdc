@@ -1,3 +1,20 @@
+---
+id: cv-pdf
+title: 40 — CV PDF (Puppeteer/Playwright)
+description: Generowanie CV PDF z widoku /cv przez Puppeteer lub Playwright; endpoint app/api/cv/pdf/route.ts obsługuje PL/EN; dedykowany CSS do wydruku A4; cache-control dla pliku PDF.
+alwaysApply: false
+globs:
+  - "app/api/cv/pdf/**"
+  - "app/api/cv/**"
+  - "app/[locale]/cv/**"
+  - "lib/pdf/**"
+tags:
+  - pdf
+  - cv
+  - playwright
+  - puppeteer
+---
+
 # 40 — CV PDF (Puppeteer/Playwright)
 
 - Źródło: strona `/cv` (spójny branding).

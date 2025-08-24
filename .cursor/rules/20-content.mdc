@@ -1,0 +1,31 @@
+---
+id: content-mdx
+title: 20 — Treści (MDX + Contentlayer)
+description: MDX + Contentlayer jako źródło prawdy w repo; timeline/certyfikaty z plików YAML/JSON; frontmatter (title, description, date, locale, tags); struktura content/{blog,case-studies}/[slug]/index.mdx; ISR dla list, SSR/SSG dla detali.
+alwaysApply: false
+globs:
+  - "content/**"
+  - "content/**/*.mdx"
+  - "contentlayer.config.*"
+  - "lib/content/**"
+  - "lib/contentlayer/**"
+  - "data/timeline/**"
+  - "data/certificates/**"
+  - "data/**/*.y?(a)ml"
+  - "data/**/*.json"
+tags:
+  - content
+  - mdx
+  - contentlayer
+  - mvp
+---
+
+# 20 — Treści (MDX + Contentlayer)
+
+- Blog i case studies w **MDX** zarządzane przez **Contentlayer** — źródło prawdy w repo.
+- Timeline/certyfikaty: pliki **YAML/JSON** (szybkie na MVP).
+
+**Zasady:**
+- Każdy wpis ma frontmatter (title, description, date, locale, tags).
+- Struktura katalogów: `content/{blog,case-studies}/[slug]/index.mdx`.
+- Dodaj pre-render ISR dla list; szczegóły przez SSR/SSG w zależności od potrzeby.

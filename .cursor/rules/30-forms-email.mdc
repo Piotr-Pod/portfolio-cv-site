@@ -1,3 +1,20 @@
+---
+id: forms-email
+title: 30 — Formularze i e-mail
+description: Route Handlers w app/api/*; walidacja zod współdzielona z UI; wysyłka e-mail przez Resend lub Mailgun; format błędów JSON; dobre praktyki: rate-limit, logowanie serwerowe, walidacja długości i typów, brak CSRF przy tym samym originie.
+alwaysApply: false
+globs:
+  - "app/api/contact/**"
+  - "app/api/**/route.ts"
+  - "lib/validators/**"
+  - "lib/email/**"
+tags:
+  - forms
+  - api
+  - email
+  - zod
+---
+
 # 30 — Formularze i e-mail
 
 - **Route Handlers** w `app/api/*`.
