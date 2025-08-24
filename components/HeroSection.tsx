@@ -1,14 +1,16 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
-import { Download, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Download, Mail, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 
 export function HeroSection() {
   const t = useTranslations('hero');
+  const [showPopup, setShowPopup] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -33,9 +35,39 @@ export function HeroSection() {
     },
   };
 
+  const popupVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: 'easeOut',
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 0.8, 
+      y: -20,
+      transition: {
+        duration: 0.2,
+        ease: 'easeIn',
+      }
+    },
+  };
+
   const handleDownloadCV = () => {
     // TODO: Implement CV download functionality
     console.log('Download CV clicked');
+    
+    // Show popup
+    setShowPopup(true);
+    
+    // Hide popup after 2 seconds
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
   };
 
   const handleContact = () => {
@@ -44,7 +76,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative">
       <div className="container mx-auto px-4 py-16">
         <motion.div
           className="text-center max-w-4xl mx-auto"
@@ -135,6 +167,24 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Popup */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            className="fixed top-4 right-4 z-50"
+            variants={popupVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3 border border-green-400">
+              <CheckCircle className="h-5 w-5 flex-shrink-0" />
+              <span className="font-medium">CV zostało pobrane!</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
