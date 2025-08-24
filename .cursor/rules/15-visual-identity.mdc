@@ -3,34 +3,83 @@ description:
 globs:
 alwaysApply: false
 ---
-# Visual Identity & Design System
+# 📘 Visual Identity — Minimal Tech Elegance
 
-## Brand Guidelines
-- **Primary Colors**: Consistent brand palette with semantic color mapping
-- **Typography**: System fonts with fallbacks, consistent hierarchy
-- **Spacing**: 8px grid system (0.5rem, 1rem, 1.5rem, 2rem, 3rem, 4rem)
-- **Border Radius**: Consistent rounded corners (sm: 0.25rem, md: 0.5rem, lg: 0.75rem, xl: 1rem)
+## 🎨 Paleta kolorów
 
-## Design Tokens
-- **Colors**: CSS custom properties in `tailwind.config.js` with semantic naming
-- **Shadows**: Consistent elevation system (sm, md, lg, xl)
-- **Transitions**: Standardized timing functions (150ms, 300ms, 500ms)
-- **Breakpoints**: Mobile-first responsive design (sm: 640px, md: 768px, lg: 1024px, xl: 1280px)
+- **Primary (blue)**
+  - HEX: `#2563EB` (blue-600, główny akcent)
+  - HEX: `#1D4ED8` (blue-700, hover/darker states)
+  - HEX: `#60A5FA` (blue-400, secondary link, gradient light)
+- **Secondary (cyan)**
+  - HEX: `#06B6D4` (cyan-500, akcent poboczny, linki/ikony)
+- **Accent (neutral green-gray)**
+  - HEX: `#10B981` (emerald-500, success state / subtle accent)
+- **Neutral / Background**
+  - `#FFFFFF` (main background)
+  - `#F8FAFC` (slate-50, muted sections / cards)
+  - `#0F172A` (slate-900, główny tekst)
+  - `#475569` (slate-600, secondary text)
 
-## Component Design
-- **Consistency**: Reusable components with consistent props and variants
-- **Accessibility**: High contrast ratios, proper focus states
-- **Responsive**: Mobile-first approach with progressive enhancement
-- **Performance**: Optimized animations, lazy loading for images
+> Zasada: **jeden główny kolor (blue)** + **jeden wspierający (cyan)**.  
+> Zielony używamy tylko jako *subtelny akcent* (np. tag „success”).  
 
-## Visual Hierarchy
-- **Headings**: Clear typographic scale (h1-h6) with proper spacing
-- **Content**: Readable line heights (1.5-1.7), optimal paragraph spacing
-- **Layout**: Grid systems, proper whitespace, visual balance
-- **Interactive**: Clear hover/focus states, loading indicators
+---
 
-## Asset Management
-- **Images**: Optimized formats (WebP/AVIF), responsive sizing
-- **Icons**: Consistent icon library (Lucide/Phosphor), proper sizing
-- **Logos**: Vector formats (SVG), multiple color variants
-- **Favicon**: Complete favicon set for all platforms
+## 🖋️ Typografia
+
+- **Nagłówki (display):** `Space Grotesk` lub `IBM Plex Sans`  
+  - Duże rozmiary, `tracking-tight`, wyraziste
+- **Tekst podstawowy:** `Inter` (14–16px base)
+  - Czytelny, neutralny
+- **Kod/snippety:** `JetBrains Mono` (opcjonalnie, dla bloga/case studies)
+
+---
+
+## 🧩 Komponenty UI
+
+- **Przyciski**
+  - Primary: niebieskie tło, białe litery, `rounded-2xl`
+  - Secondary: cyan akcent lub outline
+  - Ghost/Link: tekst `text-primary underline-offset-4 hover:underline`
+
+- **Karty**
+  - Tło: `bg-white` lub `bg-slate-50`
+  - Obramowanie: `border border-slate-200`
+  - Promień: `rounded-2xl`
+  - Cień: `shadow-md` (subtelny)
+
+- **Formularze**
+  - Input: `border-slate-300 focus:ring focus:ring-blue-600`
+  - Label: `text-sm font-medium text-slate-700`
+
+- **Badges/Tagi**
+  - Primary: `bg-blue-600 text-white`
+  - Secondary: `bg-cyan-500 text-white`
+  - Muted: `bg-slate-200 text-slate-700`
+
+---
+
+## ✨ Animacje (Framer Motion)
+
+- Wejścia: `fade-in + slide-up` (0.4–0.6s, ease-out)
+- Hover: `scale-105` lub `translate-y-[-2px]` (subtelne)
+- CTA: delikatne `spring` transitions, brak “bounce”
+
+---
+
+## ♿ Dostępność (WCAG 2.2)
+
+- Kontrast: zawsze ≥ 4.5:1 (np. blue-600 na białym)
+- Focus states: `outline` w kolorze primary (`blue-600`)
+- Skip-links, pełna obsługa klawiaturą
+- Tekst w PDF CV → tylko ciemny na jasnym (bez neonów)
+
+---
+
+## 📄 Zastosowanie
+
+- **CV PDF**: jasne tło, blue/cyan akcenty, subtelne podziały sekcji
+- **Portfolio online**: minimal, dużo whitespace, delikatne animacje
+- **Case studies/blog**: focus na typografię, kod w `mono`, linki w blue/cyan
+

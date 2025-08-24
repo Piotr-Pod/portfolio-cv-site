@@ -76,7 +76,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative">
+    <section className="min-h-screen flex items-center justify-center bg-white relative">
       <div className="container mx-auto px-4 py-16">
         <motion.div
           className="text-center max-w-4xl mx-auto"
@@ -89,21 +89,21 @@ export function HeroSection() {
             className="mb-8 flex justify-center"
             variants={itemVariants}
           >
-            <Avatar className="h-32 w-32 border-4 border-white shadow-xl">
+            <Avatar className="h-32 w-32 border-4 border-white rounded-2xl">
               <AvatarImage
                 src="/api/avatar"
                 alt="AI Generated Avatar"
                 className="object-cover"
               />
-              <AvatarFallback className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                BE
+              <AvatarFallback className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-2xl">
+                PP
               </AvatarFallback>
             </Avatar>
           </motion.div>
 
           {/* Title */}
           <motion.h1
-            className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4"
+            className="text-5xl md:text-6xl font-bold text-slate-900 mb-4 tracking-tight"
             variants={itemVariants}
           >
             {t('title')}
@@ -111,7 +111,7 @@ export function HeroSection() {
 
           {/* Subtitle/Tagline */}
           <motion.p
-            className="text-xl md:text-2xl text-blue-600 dark:text-blue-400 font-medium mb-6"
+            className="text-xl md:text-2xl text-cyan-500 font-medium mb-6"
             variants={itemVariants}
           >
             {t('subtitle')}
@@ -119,7 +119,7 @@ export function HeroSection() {
 
           {/* Description */}
           <motion.p
-            className="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed"
             variants={itemVariants}
           >
             {t('description')}
@@ -133,9 +133,9 @@ export function HeroSection() {
             <Button
               size="lg"
               onClick={handleDownloadCV}
-              className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 transform hover:translate-y-[-2px] shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
             >
-              <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+              <Download className="mr-2 h-5 w-5" />
               {t('downloadCv')}
             </Button>
 
@@ -143,9 +143,9 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               onClick={handleContact}
-              className="group border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:text-blue-400 px-8 py-3 text-lg font-semibold transition-all duration-300 transform hover:scale-105"
+              className="group border-2 border-slate-300 hover:border-cyan-500 text-slate-700 hover:text-cyan-500 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
             >
-              <Mail className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+              <Mail className="mr-2 h-5 w-5" />
               {t('contact')}
             </Button>
           </motion.div>
@@ -157,9 +157,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.6 }}
           >
-            <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+            <div className="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center">
               <motion.div
-                className="w-1 h-3 bg-gray-400 rounded-full mt-2"
+                className="w-1 h-3 bg-slate-400 rounded-full mt-2"
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
               />
@@ -178,7 +178,7 @@ export function HeroSection() {
             animate="visible"
             exit="exit"
           >
-            <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3 border border-green-400">
+            <div className="bg-emerald-500 text-white px-6 py-4 rounded-2xl shadow-md flex items-center space-x-3 border border-emerald-400">
               <CheckCircle className="h-5 w-5 flex-shrink-0" />
               <span className="font-medium">CV zostało pobrane!</span>
             </div>

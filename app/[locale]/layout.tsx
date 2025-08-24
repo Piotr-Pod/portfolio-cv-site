@@ -1,12 +1,20 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import '@/app/globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+});
 
 export const metadata: Metadata = {
   title: 'CV Portfolio - Backend Engineer',
@@ -37,7 +45,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
