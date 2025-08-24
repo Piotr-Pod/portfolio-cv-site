@@ -11,5 +11,25 @@
     "about": "O mnie",
     "projects": "Projekty",
     "contact": "Kontakt"
+  },
+  "contact": {
+    "title": "Skontaktuj się ze mną",
+    "description": "Masz pytania lub chcesz omówić projekt? Jestem tutaj, aby pomóc. Wybierz preferowaną metodę kontaktu.",
+    "formTitle": "Wyślij wiadomość",
+    "nameLabel": "Imię i nazwisko",
+    "namePlaceholder": "Wprowadź swoje imię i nazwisko",
+    "emailLabel": "Adres e-mail",
+    "emailPlaceholder": "twoj.email@example.com",
+    "messageLabel": "Wiadomość",
+    "messagePlaceholder": "Opisz swój projekt lub pytanie...",
+    "sendButton": "Wyślij wiadomość",
+    "sending": "Wysyłanie...",
+    "successMessage": "Wiadomość została wysłana pomyślnie!",
+    "errorMessage": "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.",
+    "calendarTitle": "Umów spotkanie",
+    "calendarDescription": "Zarezerwuj 30-minutowe spotkanie, aby omówić Twój projekt lub współpracę.",
+    "bookMeeting": "Zarezerwuj spotkanie",
+    "emailTitle": "Napisz bezpośrednio",
+    "emailDescription": "Preferujesz bezpośredni kontakt e-mail? Kliknij poniżej, aby otworzyć swoją aplikację e-mail."
   }
 }

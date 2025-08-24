@@ -11,5 +11,25 @@
     "about": "About",
     "projects": "Projects",
     "contact": "Contact"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "description": "Have questions or want to discuss a project? I'm here to help. Choose your preferred contact method.",
+    "formTitle": "Send Message",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Enter your full name",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your.email@example.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Describe your project or question...",
+    "sendButton": "Send Message",
+    "sending": "Sending...",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "An error occurred while sending the message. Please try again.",
+    "calendarTitle": "Schedule a Meeting",
+    "calendarDescription": "Book a 30-minute meeting to discuss your project or collaboration.",
+    "bookMeeting": "Book Meeting",
+    "emailTitle": "Write Directly",
+    "emailDescription": "Prefer direct email contact? Click below to open your email application."
   }
 }
