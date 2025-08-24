@@ -1,0 +1,36 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Visual Identity & Design System
+
+## Brand Guidelines
+- **Primary Colors**: Consistent brand palette with semantic color mapping
+- **Typography**: System fonts with fallbacks, consistent hierarchy
+- **Spacing**: 8px grid system (0.5rem, 1rem, 1.5rem, 2rem, 3rem, 4rem)
+- **Border Radius**: Consistent rounded corners (sm: 0.25rem, md: 0.5rem, lg: 0.75rem, xl: 1rem)
+
+## Design Tokens
+- **Colors**: CSS custom properties in `tailwind.config.js` with semantic naming
+- **Shadows**: Consistent elevation system (sm, md, lg, xl)
+- **Transitions**: Standardized timing functions (150ms, 300ms, 500ms)
+- **Breakpoints**: Mobile-first responsive design (sm: 640px, md: 768px, lg: 1024px, xl: 1280px)
+
+## Component Design
+- **Consistency**: Reusable components with consistent props and variants
+- **Accessibility**: High contrast ratios, proper focus states
+- **Responsive**: Mobile-first approach with progressive enhancement
+- **Performance**: Optimized animations, lazy loading for images
+
+## Visual Hierarchy
+- **Headings**: Clear typographic scale (h1-h6) with proper spacing
+- **Content**: Readable line heights (1.5-1.7), optimal paragraph spacing
+- **Layout**: Grid systems, proper whitespace, visual balance
+- **Interactive**: Clear hover/focus states, loading indicators
+
+## Asset Management
+- **Images**: Optimized formats (WebP/AVIF), responsive sizing
+- **Icons**: Consistent icon library (Lucide/Phosphor), proper sizing
+- **Logos**: Vector formats (SVG), multiple color variants
+- **Favicon**: Complete favicon set for all platforms
