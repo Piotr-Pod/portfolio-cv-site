@@ -1,0 +1,15 @@
+{
+  "hero": {
+    "title": "Backend Engineer",
+    "subtitle": "Java/Spring, Microservices, Kafka",
+    "description": "Experienced backend engineer with a passion for building scalable and reliable systems. I specialize in Java, Spring Boot, microservices, and stream data processing technologies.",
+    "downloadCv": "Download CV",
+    "contact": "Contact"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  }
+}

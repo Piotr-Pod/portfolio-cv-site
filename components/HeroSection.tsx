@@ -1,0 +1,140 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+import { motion } from 'framer-motion';
+import { Download, Mail } from 'lucide-react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+
+export function HeroSection() {
+  const t = useTranslations('hero');
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
+  };
+
+  const handleDownloadCV = () => {
+    // TODO: Implement CV download functionality
+    console.log('Download CV clicked');
+  };
+
+  const handleContact = () => {
+    // TODO: Implement contact functionality
+    console.log('Contact clicked');
+  };
+
+  return (
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      <div className="container mx-auto px-4 py-16">
+        <motion.div
+          className="text-center max-w-4xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Avatar */}
+          <motion.div
+            className="mb-8 flex justify-center"
+            variants={itemVariants}
+          >
+            <Avatar className="h-32 w-32 border-4 border-white shadow-xl">
+              <AvatarImage
+                src="/api/avatar"
+                alt="AI Generated Avatar"
+                className="object-cover"
+              />
+              <AvatarFallback className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                BE
+              </AvatarFallback>
+            </Avatar>
+          </motion.div>
+
+          {/* Title */}
+          <motion.h1
+            className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4"
+            variants={itemVariants}
+          >
+            {t('title')}
+          </motion.h1>
+
+          {/* Subtitle/Tagline */}
+          <motion.p
+            className="text-xl md:text-2xl text-blue-600 dark:text-blue-400 font-medium mb-6"
+            variants={itemVariants}
+          >
+            {t('subtitle')}
+          </motion.p>
+
+          {/* Description */}
+          <motion.p
+            className="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+            variants={itemVariants}
+          >
+            {t('description')}
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            variants={itemVariants}
+          >
+            <Button
+              size="lg"
+              onClick={handleDownloadCV}
+              className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+              {t('downloadCv')}
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={handleContact}
+              className="group border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:border-gray-600 dark:hover:border-blue-400 dark:hover:text-blue-400 px-8 py-3 text-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              <Mail className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+              {t('contact')}
+            </Button>
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
+          >
+            <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+              <motion.div
+                className="w-1 h-3 bg-gray-400 rounded-full mt-2"
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
