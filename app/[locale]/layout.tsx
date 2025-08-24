@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
+import { Navigation } from '@/components/Navigation';
 import '@/app/globals.css';
 
 const inter = Inter({ 
@@ -47,6 +48,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}>
         <NextIntlClientProvider messages={messages}>
+          <Navigation />
           {children}
         </NextIntlClientProvider>
       </body>

@@ -12,6 +12,23 @@
     "projects": "Projects",
     "contact": "Contact"
   },
+  "about": {
+    "title": "About Me",
+    "description": "Experienced backend engineer with over 5 years of experience in building scalable and reliable systems. I specialize in Java technologies, microservices, and stream data processing.",
+    "experience": "Years of Experience",
+    "projects": "Projects Completed",
+    "technologies": "Technologies Mastered"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Selected projects demonstrating my skills in building scalable backend applications and microservices architecture.",
+    "featured": "Featured Project",
+    "viewMore": "View More Projects",
+    "sourceCode": "Source Code",
+    "viewDemo": "View Demo",
+    "code": "Code",
+    "demo": "Demo"
+  },
   "contact": {
     "title": "Get in Touch",
     "description": "Have questions or want to discuss a project? I'm here to help. Choose your preferred contact method.",

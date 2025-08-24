@@ -12,6 +12,23 @@
     "projects": "Projekty",
     "contact": "Kontakt"
   },
+  "about": {
+    "title": "O mnie",
+    "description": "Doświadczony inżynier backend z ponad 5-letnim doświadczeniem w tworzeniu skalowalnych i niezawodnych systemów. Specjalizuję się w technologiach Java, mikrousługach i przetwarzaniu strumieni danych.",
+    "experience": "Lat doświadczenia",
+    "projects": "Projektów ukończonych",
+    "technologies": "Technologii opanowanych"
+  },
+  "projects": {
+    "title": "Projekty",
+    "description": "Wybrane projekty demonstrujące moje umiejętności w tworzeniu skalowalnych aplikacji backend i architektury mikrousług.",
+    "featured": "Projekt wyróżniony",
+    "viewMore": "Zobacz więcej projektów",
+    "sourceCode": "Kod źródłowy",
+    "viewDemo": "Zobacz demo",
+    "code": "Kod",
+    "demo": "Demo"
+  },
   "contact": {
     "title": "Skontaktuj się ze mną",
     "description": "Masz pytania lub chcesz omówić projekt? Jestem tutaj, aby pomóc. Wybierz preferowaną metodę kontaktu.",

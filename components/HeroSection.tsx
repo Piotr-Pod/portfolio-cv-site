@@ -76,7 +76,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-white relative">
+    <section id="hero" className="min-h-screen flex items-center justify-center bg-white relative pt-16">
       <div className="container mx-auto px-4 py-16">
         <motion.div
           className="text-center max-w-4xl mx-auto"
