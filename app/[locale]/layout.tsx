@@ -22,6 +22,17 @@ export const metadata: Metadata = {
   description: 'Backend Engineer specializing in Java/Spring, Microservices, and Kafka',
   keywords: ['backend engineer', 'java', 'spring', 'microservices', 'kafka'],
   authors: [{ name: 'Backend Engineer' }],
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      'noarchive': true,
+      'nosnippet': true
+    }
+  },
   openGraph: {
     title: 'CV Portfolio - Backend Engineer',
     description: 'Backend Engineer specializing in Java/Spring, Microservices, and Kafka',
@@ -46,6 +57,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
+      </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}>
         <NextIntlClientProvider messages={messages}>
           <Navigation />
