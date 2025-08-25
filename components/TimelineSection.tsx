@@ -460,18 +460,18 @@ export function TimelineSection() {
                       transition={{ delay: index * 0.1 }}
                     >
                       {/* Timeline Icon */}
-                      <div className={`absolute left-4 w-6 h-6 ${hasCustomImage(item) ? 'bg-white border-2 border-slate-200' : colorClass} rounded-full flex items-center justify-center shadow-md z-10 overflow-hidden`}>
+                      <div className={`absolute left-3 top-6 w-8 h-8 ${hasCustomImage(item) ? 'bg-transparent' : colorClass} rounded-full flex items-center justify-center shadow-md z-10 overflow-hidden`}>
                         {hasCustomImage(item) ? (
                           <Image
                             src={item.iconImage!}
                             alt={`${item.title} icon`}
-                            width={20}
-                            height={20}
-                            className="rounded-full object-cover"
+                            width={32}
+                            height={32}
+                            className="rounded-full object-cover w-full h-full"
                             unoptimized // For better compatibility with various image formats
                           />
                         ) : (
-                          <IconComponent className="h-3 w-3 text-white" />
+                          <IconComponent className="h-4 w-4 text-white" />
                         )}
                       </div>
 
