@@ -1,6 +1,8 @@
-'use client';
+ 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
@@ -12,6 +14,14 @@ interface NavigationProps {
 
 export function Navigation({ className = '' }: NavigationProps) {
   const t = useTranslations('navigation');
+  const locale = useLocale();
+  const [currentPathname, setCurrentPathname] = useState<string>('/');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPathname(window.location.pathname);
+    }
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -22,6 +32,11 @@ export function Navigation({ className = '' }: NavigationProps) {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const makeLocaleHref = (nextLocale: 'pl' | 'en') => {
+    const base = currentPathname || '/';
+    return base.replace(/^\/[a-z]{2}(?=\/|$)/, `/${nextLocale}`);
   };
 
   const navItems = [
@@ -56,15 +71,26 @@ export function Navigation({ className = '' }: NavigationProps) {
             ))}
           </div>
 
-          {/* Right side - Initials */}
-          <motion.button
-            onClick={scrollToTop}
-            className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-bold text-lg shadow-md hover:shadow-lg transition-all duration-200 group"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ChevronUp className="h-5 w-5 group-hover:animate-bounce" />
-          </motion.button>
+          {/* Right side - Locale switcher + Scroll to top */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1">
+              <Button asChild variant={locale === 'pl' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'pl'}>
+                <Link href={makeLocaleHref('pl')} locale="pl">PL</Link>
+              </Button>
+              <Button asChild variant={locale === 'en' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'en'}>
+                <Link href={makeLocaleHref('en')} locale="en">EN</Link>
+              </Button>
+            </div>
+
+            <motion.button
+              onClick={scrollToTop}
+              className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-bold text-lg shadow-md hover:shadow-lg transition-all duration-200 group"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronUp className="h-5 w-5 group-hover:animate-bounce" />
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.nav>
