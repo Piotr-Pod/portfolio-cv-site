@@ -34,6 +34,11 @@
     "title": "My Professional Journey",
     "description": "Overview of my professional experience, education, and personal projects. Use filters to focus on specific areas.",
     "achievements": "Key achievements",
+    "technologies": "Technologies",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
     "filters": {
       "all": "All",
       "work": "Work",

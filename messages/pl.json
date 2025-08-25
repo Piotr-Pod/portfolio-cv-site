@@ -34,6 +34,11 @@
     "title": "Moja droga zawodowa",
     "description": "Przegląd mojego doświadczenia zawodowego, edukacji i projektów osobistych. Filtry pozwalają skupić się na konkretnych obszarach.",
     "achievements": "Główne osiągnięcia",
+    "technologies": "Technologie",
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
+    "expandAll": "Rozwiń wszystko",
+    "collapseAll": "Zwiń wszystko",
     "filters": {
       "all": "Wszystko",
       "work": "Praca",

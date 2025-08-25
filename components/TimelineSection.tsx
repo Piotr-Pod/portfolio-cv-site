@@ -10,7 +10,11 @@ import {
   Code, 
   Calendar,
   MapPin,
-  Building
+  Building,
+  ChevronDown,
+  ChevronUp,
+  Expand,
+  Minimize
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -33,8 +37,9 @@ interface TimelineItem {
 export function TimelineSection() {
   const t = useTranslations('timeline');
   const [enabledFilters, setEnabledFilters] = useState<Set<TimelineType>>(
-    new Set(['work', 'education', 'training', 'projects'])
+    new Set<TimelineType>(['work', 'education', 'training', 'projects'])
   );
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set<string>());
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -262,6 +267,33 @@ export function TimelineSection() {
     }
   };
 
+  const toggleItemExpanded = (itemId: string) => {
+    setExpandedItems(prev => {
+      const newExpanded = new Set(prev);
+      if (newExpanded.has(itemId)) {
+        newExpanded.delete(itemId);
+      } else {
+        newExpanded.add(itemId);
+      }
+      return newExpanded;
+    });
+  };
+
+  const toggleAllExpanded = () => {
+    const visibleItemIds = filteredItems.map(item => item.id);
+    const allVisible = visibleItemIds.every(id => expandedItems.has(id));
+    
+    if (allVisible) {
+      // Jeśli wszystkie widoczne są rozwinięte, zwiń wszystkie
+      setExpandedItems(new Set());
+    } else {
+      // Jeśli nie wszystkie są rozwinięte, rozwiń wszystkie widoczne
+      setExpandedItems(new Set(visibleItemIds));
+    }
+  };
+
+  const allVisibleExpanded = filteredItems.length > 0 && filteredItems.every(item => expandedItems.has(item.id));
+
   const filterOptions = [
     { key: 'all' as const, label: t('filters.all'), icon: null, onClick: toggleAllFilters, isActive: enabledFilters.size === 4 },
     { key: 'work' as TimelineType, label: t('filters.work'), icon: Briefcase, onClick: () => toggleFilter('work'), isActive: enabledFilters.has('work') },
@@ -271,7 +303,7 @@ export function TimelineSection() {
   ];
 
   return (
-    <section id="timeline" className="py-20 bg-gradient-to-b from-white to-slate-50">
+    <section id="timeline" className="py-16 bg-gradient-to-b from-white to-slate-50">
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-4xl mx-auto"
@@ -281,18 +313,18 @@ export function TimelineSection() {
           viewport={{ once: true, margin: "-100px" }}
         >
           {/* Section Header */}
-          <motion.div className="text-center mb-16" variants={itemVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+          <motion.div className="text-center mb-12" variants={itemVariants}>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3 tracking-tight">
               {t('title')}
             </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <p className="text-base text-slate-600 max-w-2xl mx-auto">
               {t('description')}
             </p>
           </motion.div>
 
           {/* Filter Buttons */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-3 mb-12"
+            className="flex flex-wrap justify-center gap-2 mb-6"
             variants={itemVariants}
           >
             {filterOptions.map((option) => {
@@ -302,25 +334,53 @@ export function TimelineSection() {
                   key={option.key}
                   variant={option.isActive ? "default" : "outline"}
                   onClick={option.onClick}
+                  size="sm"
                   className={`
-                    transition-all duration-300 hover:scale-105
+                    transition-all duration-300 hover:scale-105 text-sm
                     ${option.isActive 
                       ? 'bg-slate-900 text-white shadow-lg' 
                       : 'border-slate-300 text-slate-600 hover:border-slate-900 hover:text-slate-900'
                     }
                   `}
                 >
-                  {IconComponent && <IconComponent className="mr-2 h-4 w-4" />}
+                  {IconComponent && <IconComponent className="mr-1.5 h-3.5 w-3.5" />}
                   {option.label}
                 </Button>
               );
             })}
           </motion.div>
 
+          {/* Expand All Button */}
+          {filteredItems.length > 0 && (
+            <motion.div 
+              className="flex justify-center mb-8"
+              variants={itemVariants}
+            >
+              <Button
+                variant="ghost"
+                onClick={toggleAllExpanded}
+                size="sm"
+                className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all duration-300"
+              >
+                {allVisibleExpanded ? (
+                  <>
+                    <Minimize className="mr-2 h-4 w-4" />
+                    {t('collapseAll')}
+                  </>
+                ) : (
+                  <>
+                    <Expand className="mr-2 h-4 w-4" />
+                    {t('expandAll')}
+                  </>
+                )}
+              </Button>
+            </motion.div>
+          )}
+
           {/* Timeline */}
           <div className="relative">
             {/* Vertical Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-200"></div>
+            <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-slate-200"></div>
             
             <AnimatePresence mode="wait">
               <motion.div
@@ -329,86 +389,145 @@ export function TimelineSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="space-y-8"
+                className="space-y-6"
               >
                 {sortedItems.map((item, index) => {
                   const IconComponent = getTypeIcon(item.type);
                   const colorClass = getTypeColor(item.type);
+                  const isExpanded = expandedItems.has(item.id);
                   
                   return (
                     <motion.div
                       key={item.id}
-                      className="relative pl-20"
+                      className="relative pl-16"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       {/* Timeline Icon */}
-                      <div className={`absolute left-4 w-8 h-8 ${colorClass} rounded-full flex items-center justify-center shadow-lg z-10`}>
-                        <IconComponent className="h-4 w-4 text-white" />
+                      <div className={`absolute left-4 w-6 h-6 ${colorClass} rounded-full flex items-center justify-center shadow-md z-10`}>
+                        <IconComponent className="h-3 w-3 text-white" />
                       </div>
 
                       {/* Content Card */}
-                      <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 group">
-                        <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                      <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 group">
+                        {/* Header - always visible */}
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                           <div className="flex-1">
-                            <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                               {item.title}
                             </h3>
-                            <div className="flex items-center text-slate-600 mt-1 mb-2">
-                              <Building className="h-4 w-4 mr-2" />
-                              <span className="font-medium">{item.company}</span>
+                            <div className="flex items-center text-slate-600 mt-1 mb-1">
+                              <Building className="h-3.5 w-3.5 mr-1.5" />
+                              <span className="font-medium text-sm">{item.company}</span>
                             </div>
-                            <div className="flex items-center text-slate-500 text-sm">
-                              <MapPin className="h-4 w-4 mr-2" />
-                              <span>{item.location}</span>
-                            </div>
+                            {!isExpanded && (
+                              <div className="flex items-center text-slate-500 text-xs">
+                                <Calendar className="h-3 w-3 mr-1.5" />
+                                <span>
+                                  {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}
+                                </span>
+                              </div>
+                            )}
                           </div>
-                          <div className="flex items-center text-slate-500 text-sm mt-2 md:mt-0">
-                            <Calendar className="h-4 w-4 mr-2" />
-                            <span>
-                              {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}
-                            </span>
-                          </div>
+                          
+                          {/* Toggle button */}
+                          <button
+                            onClick={() => toggleItemExpanded(item.id)}
+                            className="flex items-center gap-1 text-slate-500 hover:text-slate-700 text-xs font-medium transition-colors mt-2 md:mt-0"
+                          >
+                            <span>{isExpanded ? t('showLess') : t('showMore')}</span>
+                            {isExpanded ? (
+                              <ChevronUp className="h-3 w-3" />
+                            ) : (
+                              <ChevronDown className="h-3 w-3" />
+                            )}
+                          </button>
                         </div>
 
-                        <p className="text-slate-600 leading-relaxed mb-4">
+                        {/* Basic description - always visible */}
+                        <p className="text-slate-600 leading-relaxed mb-3 text-sm">
                           {item.description}
                         </p>
 
-                        {/* Technologies */}
-                        {item.technologies && (
-                          <div className="mb-4">
-                            <div className="flex flex-wrap gap-2">
-                              {item.technologies.map((tech, techIndex) => (
-                                <span
-                                  key={techIndex}
-                                  className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-sm font-medium"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                        {/* Expanded details */}
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              {/* Extended info */}
+                              <div className="mb-4 p-3 bg-slate-50 rounded-lg">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                                  <div className="flex items-center text-slate-600">
+                                    <MapPin className="h-3 w-3 mr-2 flex-shrink-0" />
+                                    <span><strong>Lokalizacja:</strong> {item.location}</span>
+                                  </div>
+                                  <div className="flex items-center text-slate-600">
+                                    <Calendar className="h-3 w-3 mr-2 flex-shrink-0" />
+                                    <span><strong>Okres:</strong> {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}</span>
+                                  </div>
+                                </div>
+                              </div>
 
-                        {/* Achievements */}
-                        {item.achievements && (
-                          <div>
-                            <h4 className="text-sm font-semibold text-slate-700 mb-2">
-                              {t('achievements')}:
-                            </h4>
-                            <ul className="space-y-1">
-                              {item.achievements.map((achievement, achievementIndex) => (
-                                <li
-                                  key={achievementIndex}
-                                  className="text-sm text-slate-600 flex items-start"
-                                >
-                                  <span className="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                                  {achievement}
-                                </li>
-                              ))}
-                            </ul>
+                              {/* Technologies and Achievements - full view */}
+                              <div className="flex flex-col lg:flex-row lg:gap-6">
+                                {/* Technologies */}
+                                {item.technologies && (
+                                  <div className="mb-4 lg:mb-0 lg:flex-1">
+                                    <h4 className="text-xs font-semibold text-slate-700 mb-2">
+                                      {t('technologies')}:
+                                    </h4>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      {item.technologies.map((tech, techIndex) => (
+                                        <span
+                                          key={techIndex}
+                                          className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-xs font-medium"
+                                        >
+                                          {tech}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Achievements - full list */}
+                                {item.achievements && (
+                                  <div className="lg:flex-1">
+                                    <h4 className="text-xs font-semibold text-slate-700 mb-2">
+                                      {t('achievements')}:
+                                    </h4>
+                                    <ul className="space-y-1">
+                                      {item.achievements.map((achievement, achievementIndex) => (
+                                        <li
+                                          key={achievementIndex}
+                                          className="text-xs text-slate-600 flex items-start"
+                                        >
+                                          <span className="inline-block w-1 h-1 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                                          {achievement}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        {/* Collapsed preview - only when not expanded */}
+                        {!isExpanded && (item.technologies || item.achievements) && (
+                          <div className="flex items-center gap-4 text-xs text-slate-500">
+                            {item.technologies && (
+                              <span>🔧 {item.technologies.length} technologii</span>
+                            )}
+                            {item.achievements && (
+                              <span>🏆 {item.achievements.length} osiągnięć</span>
+                            )}
                           </div>
                         )}
                       </div>
