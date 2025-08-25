@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import Image from 'next/image';
 import { 
   Briefcase, 
   GraduationCap, 
@@ -46,8 +47,9 @@ interface TimelineItem {
   description: string;
   technologies?: string[];
   achievements?: string[];
-  customIcon?: LucideIcon; // Optional custom icon override
+  customIcon?: LucideIcon; // Optional custom Lucide icon override
   iconColor?: string; // Optional custom color override
+  iconImage?: string; // Optional custom image path (takes precedence over customIcon)
 }
 
 export function TimelineSection() {
@@ -97,6 +99,7 @@ export function TimelineSection() {
         'Redukcja czasu wdrażania z 2h do 15min',
         'Mentoring 3 junior developerów'
       ],
+      iconImage: '/images/timeline-icons/whatsapp_logo.png',
       customIcon: Crown, // Senior position - crown icon
       iconColor: 'bg-gradient-to-br from-yellow-400 to-orange-500'
     },
@@ -132,7 +135,9 @@ export function TimelineSection() {
         'Dostarczenie 3 MVP w terminie',
         'Implementacja CI/CD pipeline',
         'Redukcja kosztów infrastruktury o 30%'
-      ]
+      ],
+      // Example of using custom image (would need actual logo file)
+      // iconImage: '/images/timeline-icons/startuplab-logo.png'
     },
     // Edukacja (1)
     {
@@ -149,7 +154,9 @@ export function TimelineSection() {
         'Wyróżnienie za pracę magisterską',
         'Staż w laboratorium badawczym'
       ],
-      customIcon: Trophy, // Achievement in education - trophy icon
+      // Example: Using custom image instead of icon
+      // iconImage: '/images/timeline-icons/pw-logo.png',
+      customIcon: Trophy, // Fallback if no image
       iconColor: 'bg-gradient-to-br from-amber-400 to-yellow-500'
     },
     // Szkolenia (2)
@@ -183,7 +190,9 @@ export function TimelineSection() {
         'Certyfikat Confluent Kafka Developer',
         'Implementacja real-time data pipeline',
         'Optymalizacja performance Kafka clusters'
-      ]
+      ],
+      // Example of using custom image for certification
+      // iconImage: '/images/timeline-icons/confluent-certification.png'
     },
     // Projekty własne (2)
     {
@@ -269,6 +278,10 @@ export function TimelineSection() {
 
   const getItemColor = (item: TimelineItem) => {
     return item.iconColor || getTypeColor(item.type);
+  };
+
+  const hasCustomImage = (item: TimelineItem) => {
+    return Boolean(item.iconImage);
   };
 
   const formatDate = (dateStr: string) => {
@@ -447,8 +460,19 @@ export function TimelineSection() {
                       transition={{ delay: index * 0.1 }}
                     >
                       {/* Timeline Icon */}
-                      <div className={`absolute left-4 w-6 h-6 ${colorClass} rounded-full flex items-center justify-center shadow-md z-10`}>
-                        <IconComponent className="h-3 w-3 text-white" />
+                      <div className={`absolute left-4 w-6 h-6 ${hasCustomImage(item) ? 'bg-white border-2 border-slate-200' : colorClass} rounded-full flex items-center justify-center shadow-md z-10 overflow-hidden`}>
+                        {hasCustomImage(item) ? (
+                          <Image
+                            src={item.iconImage!}
+                            alt={`${item.title} icon`}
+                            width={20}
+                            height={20}
+                            className="rounded-full object-cover"
+                            unoptimized // For better compatibility with various image formats
+                          />
+                        ) : (
+                          <IconComponent className="h-3 w-3 text-white" />
+                        )}
                       </div>
 
                       {/* Content Card */}
