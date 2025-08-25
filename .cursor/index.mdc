@@ -19,6 +19,7 @@ alwaysApply: true
 
 ## Moduły (czytaj przed generowaniem kodu)
 - Frontend: `./cursorrules/10-frontend.mdc`
+- Identyfikacja wizualna/design: `./cursorrules/15-visual-identity.mdc`
 - Content: `./cursorrules/20-content.mdc`
 - Formularze/E-mail: `./cursorrules/30-forms-email.mdc`
 - CV PDF: `./cursorrules/40-cv-pdf.mdc`
