@@ -14,7 +14,21 @@ import {
   ChevronDown,
   ChevronUp,
   Expand,
-  Minimize
+  Minimize,
+  // Custom timeline icons - small size optimized
+  Award,
+  Rocket,
+  Target,
+  Zap,
+  Star,
+  Trophy,
+  Crown,
+  Gem,
+  Shield,
+  Heart,
+  Users,
+  Globe,
+  type LucideIcon
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -32,6 +46,8 @@ interface TimelineItem {
   description: string;
   technologies?: string[];
   achievements?: string[];
+  customIcon?: LucideIcon; // Optional custom icon override
+  iconColor?: string; // Optional custom color override
 }
 
 export function TimelineSection() {
@@ -80,7 +96,9 @@ export function TimelineSection() {
         'Zwiększenie wydajności systemu o 40%',
         'Redukcja czasu wdrażania z 2h do 15min',
         'Mentoring 3 junior developerów'
-      ]
+      ],
+      customIcon: Crown, // Senior position - crown icon
+      iconColor: 'bg-gradient-to-br from-yellow-400 to-orange-500'
     },
     {
       id: 'work-2',
@@ -96,7 +114,9 @@ export function TimelineSection() {
         'Implementacja systemu anti-fraud',
         'Integracja z 5 dostawcami płatności',
         'Optymalizacja bazy danych - 60% szybsze zapytania'
-      ]
+      ],
+      customIcon: Shield, // Security/fraud detection - shield icon
+      iconColor: 'bg-gradient-to-br from-green-500 to-emerald-600'
     },
     {
       id: 'work-3',
@@ -128,7 +148,9 @@ export function TimelineSection() {
         'Średnia ocen: 4.8/5.0',
         'Wyróżnienie za pracę magisterską',
         'Staż w laboratorium badawczym'
-      ]
+      ],
+      customIcon: Trophy, // Achievement in education - trophy icon
+      iconColor: 'bg-gradient-to-br from-amber-400 to-yellow-500'
     },
     // Szkolenia (2)
     {
@@ -144,7 +166,9 @@ export function TimelineSection() {
         'Certyfikat AWS Solutions Architect - Associate',
         'Hands-on projekty z EC2, RDS, Lambda',
         'Design patterns dla architektury serverless'
-      ]
+      ],
+      customIcon: Globe, // Cloud/global architecture - globe icon
+      iconColor: 'bg-gradient-to-br from-blue-400 to-cyan-500'
     },
     {
       id: 'training-2',
@@ -176,7 +200,9 @@ export function TimelineSection() {
         '500+ GitHub stars',
         'Użytkowane przez 10+ firm',
         'Prezentacja na konferencji DevOps Warsaw'
-      ]
+      ],
+      customIcon: Rocket, // Launch/automation project - rocket icon
+      iconColor: 'bg-gradient-to-br from-purple-500 to-pink-500'
     },
     {
       id: 'project-2',
@@ -192,7 +218,9 @@ export function TimelineSection() {
         '15% ROI w okresie testowym',
         'Przetwarzanie 1M+ zdarzeń/dzień',
         'Integration z 3 giełdami krypto'
-      ]
+      ],
+      customIcon: Target, // Precision trading/targeting - target icon
+      iconColor: 'bg-gradient-to-br from-emerald-400 to-teal-500'
     }
   ];
 
@@ -233,6 +261,14 @@ export function TimelineSection() {
       default:
         return 'bg-gray-500';
     }
+  };
+
+  const getItemIcon = (item: TimelineItem) => {
+    return item.customIcon || getTypeIcon(item.type);
+  };
+
+  const getItemColor = (item: TimelineItem) => {
+    return item.iconColor || getTypeColor(item.type);
   };
 
   const formatDate = (dateStr: string) => {
@@ -398,8 +434,8 @@ export function TimelineSection() {
                 className="space-y-6"
               >
                 {sortedItems.map((item, index) => {
-                  const IconComponent = getTypeIcon(item.type);
-                  const colorClass = getTypeColor(item.type);
+                  const IconComponent = getItemIcon(item);
+                  const colorClass = getItemColor(item);
                   const isExpanded = expandedItems.has(item.id);
                   
                   return (
