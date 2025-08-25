@@ -351,31 +351,37 @@ export function TimelineSection() {
           </motion.div>
 
           {/* Expand All Button */}
-          {filteredItems.length > 0 && (
-            <motion.div 
-              className="flex justify-center mb-8"
-              variants={itemVariants}
-            >
-              <Button
-                variant="ghost"
-                onClick={toggleAllExpanded}
-                size="sm"
-                className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all duration-300"
+          <AnimatePresence>
+            {filteredItems.length > 0 && (
+              <motion.div 
+                key="expand-all-button"
+                className="flex justify-center mb-8"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
               >
-                {allVisibleExpanded ? (
-                  <>
-                    <Minimize className="mr-2 h-4 w-4" />
-                    {t('collapseAll')}
-                  </>
-                ) : (
-                  <>
-                    <Expand className="mr-2 h-4 w-4" />
-                    {t('expandAll')}
-                  </>
-                )}
-              </Button>
-            </motion.div>
-          )}
+                <Button
+                  variant="ghost"
+                  onClick={toggleAllExpanded}
+                  size="sm"
+                  className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all duration-300"
+                >
+                  {allVisibleExpanded ? (
+                    <>
+                      <Minimize className="mr-2 h-4 w-4" />
+                      {t('collapseAll')}
+                    </>
+                  ) : (
+                    <>
+                      <Expand className="mr-2 h-4 w-4" />
+                      {t('expandAll')}
+                    </>
+                  )}
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Timeline */}
           <div className="relative">
