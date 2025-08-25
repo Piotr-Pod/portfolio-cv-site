@@ -42,6 +42,7 @@ export function Navigation({ className = '' }: NavigationProps) {
   const navItems = [
     { id: 'hero', label: t('home') },
     { id: 'about', label: t('about') },
+    { id: 'timeline', label: t('timeline') },
     { id: 'projects', label: t('projects') },
     { id: 'contact', label: t('contact') },
   ];

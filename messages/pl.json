@@ -9,6 +9,7 @@
   "navigation": {
     "home": "Strona główna",
     "about": "O mnie",
+    "timeline": "Timeline",
     "projects": "Projekty",
     "contact": "Kontakt"
   },
@@ -28,6 +29,18 @@
     "viewDemo": "Zobacz demo",
     "code": "Kod",
     "demo": "Demo"
+  },
+  "timeline": {
+    "title": "Moja droga zawodowa",
+    "description": "Przegląd mojego doświadczenia zawodowego, edukacji i projektów osobistych. Filtry pozwalają skupić się na konkretnych obszarach.",
+    "achievements": "Główne osiągnięcia",
+    "filters": {
+      "all": "Wszystko",
+      "work": "Praca",
+      "education": "Edukacja",
+      "training": "Szkolenia",
+      "projects": "Projekty"
+    }
   },
   "contact": {
     "title": "Skontaktuj się ze mną",

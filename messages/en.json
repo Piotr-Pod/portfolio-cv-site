@@ -9,6 +9,7 @@
   "navigation": {
     "home": "Home",
     "about": "About",
+    "timeline": "Timeline",
     "projects": "Projects",
     "contact": "Contact"
   },
@@ -28,6 +29,18 @@
     "viewDemo": "View Demo",
     "code": "Code",
     "demo": "Demo"
+  },
+  "timeline": {
+    "title": "My Professional Journey",
+    "description": "Overview of my professional experience, education, and personal projects. Use filters to focus on specific areas.",
+    "achievements": "Key achievements",
+    "filters": {
+      "all": "All",
+      "work": "Work",
+      "education": "Education",
+      "training": "Training",
+      "projects": "Projects"
+    }
   },
   "contact": {
     "title": "Get in Touch",
