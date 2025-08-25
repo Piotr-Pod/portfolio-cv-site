@@ -1,13 +1,21 @@
 ---
-id: frontend
+id: frontend-standards
 title: 10 — Frontend
-description: Next.js (App Router) + TypeScript, Tailwind + shadcn/ui + Radix UI, Framer Motion dla animacji, next-intl dla i18n, next-seo + next-sitemap dla SEO, Plausible/Umami dla analytics.
+description: Next.js App Router + TypeScript; Tailwind + shadcn/ui + Radix; Framer Motion (prefers-reduced-motion); i18n next-intl; Analytics Plausible/Umami; antywzorce: CSS Modules/SCSS, nadmiar global CSS, „magiczne" helpery bez testów.
 alwaysApply: false
 globs:
   - "app/**"
   - "components/**"
-  - "lib/**"
-  - "public/**"
+  - "styles/**"
+  - "middleware.ts"
+  - "messages/**"
+  - "lib/i18n/**"
+  - "content/**"
+tags:
+  - frontend
+  - nextjs
+  - ui
+
 ---
 
 # 10 — Frontend
@@ -16,7 +24,7 @@ globs:
 - **Tailwind + shadcn/ui + Radix UI**. Najpierw komponenty shadcn, dopiero później util-klasy.
 - **Framer Motion** dla animacji (honoruj `useReducedMotion`).
 - **next-intl**: locales `["pl","en"]`, prefix `/pl` `/en`. Klucze w `messages/*.json`.
-- **SEO**: **next-seo** (DefaultSeo) + **next-sitemap**. Każda route ma metadane i og:image.
+
 - **Analytics**: **Plausible** lub **Umami** (bez cookies).
 
 **Nie rób:**
@@ -24,4 +32,4 @@ globs:
 - „magicznych” helperów bez testów/typów.
 
 **Przykłady:**
-- Patrz `snippets/next-seo.md`, `snippets/next-intl.md`, `snippets/component-pattern.md`.
+- Patrz `snippets/next-intl.md`, `snippets/component-pattern.md`.
