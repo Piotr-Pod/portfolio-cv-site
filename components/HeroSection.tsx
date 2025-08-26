@@ -127,7 +127,7 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
             variants={itemVariants}
           >
             <Button
@@ -152,18 +152,56 @@ export function HeroSection() {
 
           {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            className="flex justify-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.6 }}
           >
-            <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
-              <motion.div
-                className="w-1 h-3 bg-muted-foreground rounded-full mt-2"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            </div>
+                         <div className="flex flex-col items-center space-y-1">
+               {/* Scroll text */}
+               <motion.p
+                 className="text-xs text-muted-foreground font-medium tracking-wider uppercase"
+                 animate={{ 
+                   opacity: [0.5, 1, 0.5]
+                 }}
+                 transition={{ 
+                   duration: 2, 
+                   repeat: Infinity, 
+                   ease: 'easeInOut' 
+                 }}
+               >
+                 Scroll
+               </motion.p>
+               
+               {/* Down arrow */}
+               <motion.div
+                 className="w-4 h-4 text-muted-foreground"
+                 animate={{ 
+                   y: [0, 4, 0],
+                   opacity: [0.6, 1, 0.6]
+                 }}
+                 transition={{ 
+                   duration: 1.5, 
+                   repeat: Infinity, 
+                   ease: 'easeInOut',
+                   delay: 0.5
+                 }}
+               >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+              </motion.div>
+             </div>
           </motion.div>
         </motion.div>
       </div>
