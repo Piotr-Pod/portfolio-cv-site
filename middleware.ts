@@ -7,8 +7,8 @@ const intlMiddleware = createMiddleware({
   defaultLocale: 'pl'
 });
 
-export default function middleware(request: NextRequest) {
-  const response = intlMiddleware(request);
+export default async function middleware(request: NextRequest) {
+  const response = await intlMiddleware(request);
   
   // Security headers
   response.headers.set('X-Content-Type-Options', 'nosniff');

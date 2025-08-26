@@ -17,14 +17,17 @@ export function Navigation({ className = '' }: NavigationProps) {
   const t = useTranslations('navigation');
   const locale = useLocale();
   const [currentPathname, setCurrentPathname] = useState<string>('/');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== 'undefined') {
       setCurrentPathname(window.location.pathname);
     }
   }, []);
 
   const scrollToSection = (sectionId: string) => {
+    if (!mounted) return;
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -32,6 +35,7 @@ export function Navigation({ className = '' }: NavigationProps) {
   };
 
   const scrollToTop = () => {
+    if (!mounted) return;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -78,10 +82,10 @@ export function Navigation({ className = '' }: NavigationProps) {
             <ThemeToggle />
             <div className="flex items-center gap-1 rounded-full bg-muted p-1">
               <Button asChild variant={locale === 'pl' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'pl'}>
-                <Link href={makeLocaleHref('pl')} locale="pl">PL</Link>
+                <Link href={makeLocaleHref('pl')}>PL</Link>
               </Button>
               <Button asChild variant={locale === 'en' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'en'}>
-                <Link href={makeLocaleHref('en')} locale="en">EN</Link>
+                <Link href={makeLocaleHref('en')}>EN</Link>
               </Button>
             </div>
 

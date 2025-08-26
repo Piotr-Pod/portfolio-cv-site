@@ -27,9 +27,12 @@ export function ContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [mounted, setMounted] = useState(false);
 
   // Generate CSRF token on component mount
   useEffect(() => {
+    setMounted(true);
+    
     const generateCSRFToken = () => {
       const array = new Uint8Array(32);
       crypto.getRandomValues(array);
@@ -102,11 +105,13 @@ export function ContactSection() {
   };
 
   const handleCalendarClick = () => {
+    if (!mounted) return;
     // TODO: Replace with actual Cal.com or Calendly URL
     window.open('https://cal.com/your-username', '_blank');
   };
 
   const handleEmailClick = () => {
+    if (!mounted) return;
     window.location.href = 'mailto:your-email@example.com';
   };
 

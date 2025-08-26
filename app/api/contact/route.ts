@@ -8,7 +8,7 @@ const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 5; // 5 requests per minute
 
 function checkRateLimit(identifier: string): boolean {
-  const now = Date.now();
+  const now = new Date().getTime();
   const record = rateLimitMap.get(identifier);
   
   if (!record || now > record.resetTime) {

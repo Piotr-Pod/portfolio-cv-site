@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { Navigation } from '@/components/Navigation';
@@ -45,16 +44,18 @@ const locales = ['pl', 'en'];
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  
   if (!locales.includes(locale)) {
     notFound();
   }
 
-  const messages = await getMessages();
+  const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
     <html lang={locale} suppressHydrationWarning>
