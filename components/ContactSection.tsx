@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Mail, Calendar, Send, CheckCircle, XCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,7 @@ interface ContactForm {
   name: string;
   email: string;
   message: string;
+  csrfToken: string;
 }
 
 export function ContactSection() {
@@ -22,9 +23,24 @@ export function ContactSection() {
     name: '',
     email: '',
     message: '',
+    csrfToken: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  // Generate CSRF token on component mount
+  useEffect(() => {
+    const generateCSRFToken = () => {
+      const array = new Uint8Array(32);
+      crypto.getRandomValues(array);
+      return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    };
+    
+    setFormData(prev => ({
+      ...prev,
+      csrfToken: generateCSRFToken(),
+    }));
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -73,7 +89,7 @@ export function ContactSection() {
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '', csrfToken: formData.csrfToken });
       } else {
         setSubmitStatus('error');
       }
@@ -170,6 +186,13 @@ export function ContactSection() {
                       className="w-full resize-none"
                     />
                   </div>
+
+                  {/* Hidden CSRF token field */}
+                  <input
+                    type="hidden"
+                    name="csrfToken"
+                    value={formData.csrfToken}
+                  />
 
                   <Button
                     type="submit"

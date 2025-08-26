@@ -57,11 +57,11 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
       </head>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`} suppressHydrationWarning>
         <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
           <NextIntlClientProvider messages={messages}>
             <Navigation />
