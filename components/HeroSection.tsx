@@ -143,7 +143,7 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               onClick={handleContact}
-              className="group border-2 border-border hover:border-cyan-500 text-foreground hover:text-cyan-500 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+              className="group px-8 py-3 text-lg font-semibold transition-all duration-300 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
             >
               <Mail className="mr-2 h-5 w-5" />
               {t('contact')}

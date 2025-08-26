@@ -13,11 +13,11 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-slate-300 bg-white hover:border-cyan-500 hover:text-cyan-500",
+          "border border-slate-300 bg-background text-foreground hover:border-cyan-500 hover:text-cyan-500 dark:border-slate-600 dark:bg-background dark:text-foreground",
         secondary:
           "bg-cyan-500 text-white hover:bg-cyan-600",
-        ghost: "hover:bg-slate-100 hover:text-slate-900",
-        link: "text-blue-600 underline-offset-4 hover:underline",
+        ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+        link: "text-blue-600 underline-offset-4 hover:underline dark:text-blue-400 dark:hover:text-blue-300",
       },
       size: {
         default: "h-10 px-4 py-2",
