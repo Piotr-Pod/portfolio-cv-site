@@ -95,7 +95,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-slate-50">
+    <section id="contact" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-4xl mx-auto"
@@ -106,10 +106,10 @@ export function ContactSection() {
         >
           {/* Section Header */}
           <motion.div className="text-center mb-16" variants={itemVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
               {t('title')}
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               {t('description')}
             </p>
           </motion.div>
@@ -117,14 +117,14 @@ export function ContactSection() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <motion.div variants={itemVariants}>
-              <div className="bg-white rounded-2xl p-8 shadow-md border border-slate-200">
-                <h3 className="text-2xl font-bold text-slate-900 mb-6">
+              <div className="bg-card rounded-2xl p-8 shadow-md border border-border">
+                <h3 className="text-2xl font-bold text-foreground mb-6">
                   {t('formTitle')}
                 </h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <Label htmlFor="name" className="text-slate-700 mb-2 block">
+                    <Label htmlFor="name" className="text-foreground mb-2 block">
                       {t('nameLabel')}
                     </Label>
                     <Input
@@ -140,7 +140,7 @@ export function ContactSection() {
                   </div>
 
                   <div>
-                    <Label htmlFor="email" className="text-slate-700 mb-2 block">
+                    <Label htmlFor="email" className="text-foreground mb-2 block">
                       {t('emailLabel')}
                     </Label>
                     <Input
@@ -156,7 +156,7 @@ export function ContactSection() {
                   </div>
 
                   <div>
-                    <Label htmlFor="message" className="text-slate-700 mb-2 block">
+                    <Label htmlFor="message" className="text-foreground mb-2 block">
                       {t('messageLabel')}
                     </Label>
                     <Textarea
@@ -218,7 +218,7 @@ export function ContactSection() {
             {/* Contact Info */}
             <motion.div variants={itemVariants} className="space-y-8">
               {/* Calendar Booking */}
-              <div className="bg-white rounded-2xl p-8 shadow-md border border-slate-200">
+              <div className="bg-card rounded-2xl p-8 shadow-md border border-border">
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 bg-cyan-500 rounded-2xl flex items-center justify-center">
@@ -226,10 +226,10 @@ export function ContactSection() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    <h3 className="text-xl font-bold text-foreground mb-2">
                       {t('calendarTitle')}
                     </h3>
-                    <p className="text-slate-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       {t('calendarDescription')}
                     </p>
                     <Button
@@ -244,7 +244,7 @@ export function ContactSection() {
               </div>
 
               {/* Direct Email */}
-              <div className="bg-white rounded-2xl p-8 shadow-md border border-slate-200">
+              <div className="bg-card rounded-2xl p-8 shadow-md border border-border">
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center">
@@ -252,10 +252,10 @@ export function ContactSection() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    <h3 className="text-xl font-bold text-foreground mb-2">
                       {t('emailTitle')}
                     </h3>
-                    <p className="text-slate-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       {t('emailDescription')}
                     </p>
                     <Button

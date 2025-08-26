@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 interface NavigationProps {
   className?: string;
@@ -49,7 +50,7 @@ export function Navigation({ className = '' }: NavigationProps) {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 ${className}`}
+      className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border ${className}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -62,7 +63,7 @@ export function Navigation({ className = '' }: NavigationProps) {
               <motion.button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-slate-700 hover:text-cyan-500 font-medium transition-colors duration-200 relative group"
+                className="text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 relative group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -72,9 +73,10 @@ export function Navigation({ className = '' }: NavigationProps) {
             ))}
           </div>
 
-          {/* Right side - Locale switcher + Scroll to top */}
+          {/* Right side - Theme toggle + Locale switcher + Scroll to top */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1">
+            <ThemeToggle />
+            <div className="flex items-center gap-1 rounded-full bg-muted p-1">
               <Button asChild variant={locale === 'pl' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'pl'}>
                 <Link href={makeLocaleHref('pl')} locale="pl">PL</Link>
               </Button>

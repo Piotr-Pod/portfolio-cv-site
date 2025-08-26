@@ -76,7 +76,7 @@ export function HeroSection() {
   };
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center bg-white relative pt-16">
+    <section id="hero" className="min-h-screen flex items-center justify-center bg-background relative pt-16">
       <div className="container mx-auto px-4 py-16">
         <motion.div
           className="text-center max-w-4xl mx-auto"
@@ -89,7 +89,7 @@ export function HeroSection() {
             className="mb-8 flex justify-center"
             variants={itemVariants}
           >
-            <Avatar className="h-32 w-32 border-4 border-white rounded-2xl">
+            <Avatar className="h-32 w-32 border-4 border-background rounded-2xl shadow-lg">
               <AvatarImage
                 src="/api/avatar"
                 alt="AI Generated Avatar"
@@ -103,7 +103,7 @@ export function HeroSection() {
 
           {/* Title */}
           <motion.h1
-            className="text-5xl md:text-6xl font-bold text-slate-900 mb-4 tracking-tight"
+            className="text-5xl md:text-6xl font-bold text-foreground mb-4 tracking-tight"
             variants={itemVariants}
           >
             {t('title')}
@@ -119,7 +119,7 @@ export function HeroSection() {
 
           {/* Description */}
           <motion.p
-            className="text-lg text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
             variants={itemVariants}
           >
             {t('description')}
@@ -143,7 +143,7 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               onClick={handleContact}
-              className="group border-2 border-slate-300 hover:border-cyan-500 text-slate-700 hover:text-cyan-500 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+              className="group border-2 border-border hover:border-cyan-500 text-foreground hover:text-cyan-500 px-8 py-3 text-lg font-semibold rounded-2xl transition-all duration-300 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
             >
               <Mail className="mr-2 h-5 w-5" />
               {t('contact')}
@@ -157,9 +157,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.6 }}
           >
-            <div className="w-6 h-10 border-2 border-slate-400 rounded-full flex justify-center">
+            <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
               <motion.div
-                className="w-1 h-3 bg-slate-400 rounded-full mt-2"
+                className="w-1 h-3 bg-muted-foreground rounded-full mt-2"
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
               />

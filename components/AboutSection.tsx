@@ -58,7 +58,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-6xl mx-auto"
@@ -69,10 +69,10 @@ export function AboutSection() {
         >
           {/* Section Header */}
           <motion.div className="text-center mb-16" variants={itemVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
               {t('title')}
             </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               {t('description')}
             </p>
           </motion.div>
@@ -85,16 +85,16 @@ export function AboutSection() {
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 group"
+                className="bg-card rounded-2xl p-6 hover:shadow-lg transition-all duration-300 group border border-border"
                 whileHover={{ y: -5 }}
               >
                 <div className={`w-12 h-12 ${skill.color} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <skill.icon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
+                <h3 className="text-xl font-bold text-foreground mb-3">
                   {skill.title}
                 </h3>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   {skill.description}
                 </p>
               </motion.div>
@@ -103,21 +103,21 @@ export function AboutSection() {
 
           {/* Experience Summary */}
           <motion.div 
-            className="mt-16 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8"
+            className="mt-16 bg-muted rounded-2xl p-8 border border-border"
             variants={itemVariants}
           >
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-3xl font-bold text-blue-600 mb-2">5+</div>
-                <div className="text-slate-600">{t('experience')}</div>
+                <div className="text-muted-foreground">{t('experience')}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-cyan-600 mb-2">20+</div>
-                <div className="text-slate-600">{t('projects')}</div>
+                <div className="text-muted-foreground">{t('projects')}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-emerald-600 mb-2">15+</div>
-                <div className="text-slate-600">{t('technologies')}</div>
+                <div className="text-muted-foreground">{t('technologies')}</div>
               </div>
             </div>
           </motion.div>

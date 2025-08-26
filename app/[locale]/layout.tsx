@@ -5,6 +5,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { Navigation } from '@/components/Navigation';
+import { ThemeProvider } from '@/lib/theme-provider';
 import '@/app/globals.css';
 
 const inter = Inter({ 
@@ -61,10 +62,12 @@ export default async function LocaleLayout({
         <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}>
-        <NextIntlClientProvider messages={messages}>
-          <Navigation />
-          {children}
-        </NextIntlClientProvider>
+        <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
+          <NextIntlClientProvider messages={messages}>
+            <Navigation />
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

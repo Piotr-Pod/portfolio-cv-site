@@ -352,7 +352,7 @@ export function TimelineSection() {
   ];
 
   return (
-    <section id="timeline" className="py-16 bg-gradient-to-b from-white to-slate-50">
+    <section id="timeline" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-4xl mx-auto"
@@ -363,10 +363,10 @@ export function TimelineSection() {
         >
           {/* Section Header */}
           <motion.div className="text-center mb-12" variants={itemVariants}>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3 tracking-tight">
               {t('title')}
             </h2>
-            <p className="text-base text-slate-600 max-w-2xl mx-auto">
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto">
               {t('description')}
             </p>
           </motion.div>
@@ -387,8 +387,8 @@ export function TimelineSection() {
                   className={`
                     transition-all duration-300 hover:scale-105 text-sm
                     ${option.isActive 
-                      ? 'bg-slate-900 text-white shadow-lg' 
-                      : 'border-slate-300 text-slate-600 hover:border-slate-900 hover:text-slate-900'
+                      ? 'bg-primary text-primary-foreground shadow-lg' 
+                      : 'border-border text-muted-foreground hover:border-slate-900 hover:text-foreground'
                     }
                   `}
                 >
@@ -414,7 +414,7 @@ export function TimelineSection() {
                   variant="ghost"
                   onClick={toggleAllExpanded}
                   size="sm"
-                  className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all duration-300"
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300"
                 >
                   {allVisibleExpanded ? (
                     <>
@@ -435,7 +435,7 @@ export function TimelineSection() {
           {/* Timeline */}
           <div className="relative">
             {/* Vertical Line */}
-            <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-slate-200"></div>
+            <div className="absolute left-7 top-0 bottom-0 w-0.5 bg-border"></div>
             
             <AnimatePresence mode="wait">
               <motion.div
@@ -476,19 +476,19 @@ export function TimelineSection() {
                       </div>
 
                       {/* Content Card */}
-                      <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 group">
+                      <div className="bg-card rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 group border border-border">
                         {/* Header - always visible */}
                         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            <h3 className="text-lg font-bold text-foreground group-hover:text-blue-600 transition-colors">
                               {item.title}
                             </h3>
-                            <div className="flex items-center text-slate-600 mt-1 mb-1">
+                            <div className="flex items-center text-muted-foreground mt-1 mb-1">
                               <Building className="h-3.5 w-3.5 mr-1.5" />
                               <span className="font-medium text-sm">{item.company}</span>
                             </div>
                             {!isExpanded && (
-                              <div className="flex items-center text-slate-500 text-xs">
+                              <div className="flex items-center text-muted-foreground text-xs">
                                 <Calendar className="h-3 w-3 mr-1.5" />
                                 <span>
                                   {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}
@@ -500,7 +500,7 @@ export function TimelineSection() {
                           {/* Toggle button */}
                           <button
                             onClick={() => toggleItemExpanded(item.id)}
-                            className="flex items-center gap-1 text-slate-500 hover:text-slate-700 text-xs font-medium transition-colors mt-2 md:mt-0"
+                            className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-xs font-medium transition-colors mt-2 md:mt-0"
                           >
                             <span>{isExpanded ? t('showLess') : t('showMore')}</span>
                             {isExpanded ? (
@@ -512,7 +512,7 @@ export function TimelineSection() {
                         </div>
 
                         {/* Basic description - always visible */}
-                        <p className="text-slate-600 leading-relaxed mb-3 text-sm">
+                        <p className="text-muted-foreground leading-relaxed mb-3 text-sm">
                           {item.description}
                         </p>
 
@@ -527,13 +527,13 @@ export function TimelineSection() {
                               className="overflow-hidden"
                             >
                               {/* Extended info */}
-                              <div className="mb-4 p-3 bg-slate-50 rounded-lg">
+                              <div className="mb-4 p-3 bg-muted rounded-lg">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                                  <div className="flex items-center text-slate-600">
+                                  <div className="flex items-center text-muted-foreground">
                                     <MapPin className="h-3 w-3 mr-2 flex-shrink-0" />
                                     <span><strong>Lokalizacja:</strong> {item.location}</span>
                                   </div>
-                                  <div className="flex items-center text-slate-600">
+                                  <div className="flex items-center text-muted-foreground">
                                     <Calendar className="h-3 w-3 mr-2 flex-shrink-0" />
                                     <span><strong>Okres:</strong> {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}</span>
                                   </div>
@@ -545,14 +545,14 @@ export function TimelineSection() {
                                 {/* Technologies */}
                                 {item.technologies && (
                                   <div className="mb-4 lg:mb-0 lg:flex-1">
-                                    <h4 className="text-xs font-semibold text-slate-700 mb-2">
+                                    <h4 className="text-xs font-semibold text-foreground mb-2">
                                       {t('technologies')}:
                                     </h4>
                                     <div className="flex flex-wrap gap-1.5">
                                       {item.technologies.map((tech, techIndex) => (
                                         <span
                                           key={techIndex}
-                                          className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-xs font-medium"
+                                          className="bg-muted text-foreground px-2 py-0.5 rounded-full text-xs font-medium"
                                         >
                                           {tech}
                                         </span>
@@ -564,14 +564,14 @@ export function TimelineSection() {
                                 {/* Achievements - full list */}
                                 {item.achievements && (
                                   <div className="lg:flex-1">
-                                    <h4 className="text-xs font-semibold text-slate-700 mb-2">
+                                    <h4 className="text-xs font-semibold text-foreground mb-2">
                                       {t('achievements')}:
                                     </h4>
                                     <ul className="space-y-1">
                                       {item.achievements.map((achievement, achievementIndex) => (
                                         <li
                                           key={achievementIndex}
-                                          className="text-xs text-slate-600 flex items-start"
+                                          className="text-xs text-muted-foreground flex items-start"
                                         >
                                           <span className="inline-block w-1 h-1 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                                           {achievement}
@@ -587,7 +587,7 @@ export function TimelineSection() {
 
                         {/* Collapsed preview - only when not expanded */}
                         {!isExpanded && (item.technologies || item.achievements) && (
-                          <div className="flex items-center gap-4 text-xs text-slate-500">
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
                             {item.technologies && (
                               <span>🔧 {item.technologies.length} technologii</span>
                             )}
