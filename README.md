@@ -14,7 +14,6 @@ A modern, responsive CV portfolio website built with Next.js 14, TypeScript, and
 - **Dark Mode Support**: Automatic theme switching
 
 ## 🛠️ Tech Stack
-
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS + shadcn/ui
