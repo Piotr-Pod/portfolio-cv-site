@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { Navigation } from '@/components/Navigation';
 import { ThemeProvider } from '@/lib/theme-provider';
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
