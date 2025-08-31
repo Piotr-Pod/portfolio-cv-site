@@ -1,34 +1,47 @@
 # CV Portfolio - Backend Engineer
 
-A modern, responsive CV portfolio website built with Next.js 14, TypeScript, and Tailwind CSS. Features internationalization support (Polish/English) and follows best practices for accessibility and SEO.
+Modern portfolio website built with Next.js 15, TypeScript, and Tailwind CSS.
 
-## 🚀 Features
+## Features
 
-- **Modern Tech Stack**: Next.js 14 with App Router, TypeScript, Tailwind CSS
-- **UI Components**: shadcn/ui with Radix UI primitives
-- **Animations**: Framer Motion with reduced motion support
-- **Internationalization**: next-intl with Polish and English support
-- **SEO Optimized**: next-seo and next-sitemap integration
-- **Accessibility**: WCAG compliant with proper ARIA labels
-- **Responsive Design**: Mobile-first approach with beautiful gradients
-- **Dark Mode Support**: Automatic theme switching
+- 🌍 **Internationalization** - Polish and English support with next-intl
+- 🎨 **Modern UI** - Tailwind CSS with shadcn/ui components
+- 🌙 **Dark Mode** - Theme switching with system preference detection
+- 📱 **Responsive Design** - Mobile-first approach
+- ⚡ **Performance** - Optimized with Next.js App Router
+- 🔍 **SEO Optimized** - Meta tags, sitemap, and robots.txt
+- 🧪 **Testing** - Jest and React Testing Library
+- 🎭 **Animations** - Framer Motion with reduced motion support
+- 📊 **Analytics** - Microsoft Clarity for behavioral analysis
+- 🔒 **Privacy** - GDPR-compliant consent management
 
-## 🛠️ Tech Stack
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript (strict mode)
-- **Styling**: Tailwind CSS + shadcn/ui
-- **UI Components**: Radix UI
-- **Animations**: Framer Motion
-- **Internationalization**: next-intl
-- **Icons**: Lucide React
-- **Font**: Inter (Google Fonts)
+## Analytics & Privacy
 
-## 📦 Installation
+### Microsoft Clarity
+This project includes Microsoft Clarity for behavioral analytics:
+- Session recordings
+- Heatmaps (clicks, scroll, mouse movement)
+- User behavior insights
+- GDPR-compliant consent management
+
+### Privacy Features
+- Consent banner with granular controls
+- Local storage for user preferences
+- Respect for user privacy choices
+- No tracking without explicit consent
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
 
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd cv-portfolio
+cd kod5-cursor-vibing
 ```
 
 2. Install dependencies:
@@ -36,88 +49,118 @@ cd cv-portfolio
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+```bash
+cp env.example .env.local
+```
+
+4. Configure Microsoft Clarity:
+   - Get your Project ID from [Microsoft Clarity](https://clarity.microsoft.com/)
+   - Add `NEXT_PUBLIC_CLARITY_PROJECT_ID=your_project_id` to `.env.local`
+
+5. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## 🌐 Internationalization
-
-The website supports Polish (default) and English languages:
-
-- Polish: `/pl` or `/` (default)
-- English: `/en`
-
-Translation files are located in the `messages/` directory.
-
-## 🎨 Customization
-
-### Hero Section
-The main hero section includes:
-- AI-generated avatar (placeholder SVG with gradient)
-- Professional title and tagline
-- Description text
-- Call-to-action buttons (Download CV, Contact)
-
-### Styling
-- Uses CSS variables for theming
-- Supports light and dark modes
-- Responsive design with mobile-first approach
-- Beautiful gradient backgrounds
-
-## 📁 Project Structure
-
-```
-├── app/
-│   ├── [locale]/
-│   │   ├── layout.tsx      # Root layout with i18n
-│   │   └── page.tsx        # Home page
-│   ├── api/
-│   │   └── avatar/         # Avatar API route
-│   └── globals.css         # Global styles
-├── components/
-│   ├── ui/                 # shadcn/ui components
-│   └── HeroSection.tsx     # Main hero component
-├── lib/
-│   └── utils.ts           # Utility functions
-├── messages/              # i18n translation files
-├── middleware.ts          # i18n middleware
-└── i18n.ts               # i18n configuration
-```
-
-## 🚀 Deployment
-
-The project is optimized for deployment on Vercel:
-
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy automatically
-
-## 📝 Scripts
+## Available Scripts
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
 - `npm run type-check` - Run TypeScript type checking
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:e2e` - Run end-to-end tests
 
-## 🤝 Contributing
+## Project Structure
+
+```
+├── app/                    # Next.js App Router
+│   ├── [locale]/          # Internationalized routes
+│   ├── api/               # API routes
+│   └── globals.css        # Global styles
+├── components/            # React components
+│   ├── ui/               # shadcn/ui components
+│   └── ...               # Feature components
+├── lib/                  # Utility functions and hooks
+│   ├── hooks/            # Custom React hooks
+│   └── ...               # Other utilities
+├── messages/             # Internationalization files
+├── public/               # Static assets
+├── __tests__/            # Test files
+└── docs/                 # Documentation
+```
+
+## Analytics Configuration
+
+### Microsoft Clarity Setup
+
+1. **Get Project ID**:
+   - Visit [Microsoft Clarity](https://clarity.microsoft.com/)
+   - Create a new project for your domain
+   - Copy the Project ID from project settings
+
+2. **Environment Variables**:
+   ```bash
+   NEXT_PUBLIC_CLARITY_PROJECT_ID=your_clarity_project_id
+   ```
+
+3. **Consent Management**:
+   - Users will see a consent banner on first visit
+   - They can accept/reject all or customize individual settings
+   - Preferences are stored in localStorage
+   - Clarity only loads after user consent
+
+### Privacy Compliance
+
+The analytics implementation follows GDPR/RODO requirements:
+- ✅ Explicit consent before tracking
+- ✅ Granular control over different analytics tools
+- ✅ Easy opt-out mechanism
+- ✅ Transparent data collection practices
+- ✅ No tracking without consent
+
+## Testing
+
+### Unit Tests
+```bash
+npm test
+```
+
+### End-to-End Tests
+```bash
+npm run test:e2e
+```
+
+### Type Checking
+```bash
+npm run type-check
+```
+
+## Deployment
+
+The application is optimized for deployment on Vercel:
+
+1. Connect your repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run tests and linting
+4. Add tests for new functionality
 5. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License.
 
-## 🙏 Acknowledgments
+## Support
 
-- [shadcn/ui](https://ui.shadcn.com/) for beautiful UI components
-- [Radix UI](https://www.radix-ui.com/) for accessible primitives
-- [Framer Motion](https://www.framer.com/motion/) for animations
-- [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS
+For questions or issues, please open an issue on GitHub.

@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { Navigation } from '@/components/Navigation';
 import { ThemeProvider } from '@/lib/theme-provider';
+import { AnalyticsManager } from '@/components/ui/analytics-manager';
 import '@/app/globals.css';
 
 const inter = Inter({ 
@@ -71,8 +72,13 @@ export default async function LocaleLayout({
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>
-        <SpeedInsights />
+        {process.env.NODE_ENV === 'production' && <SpeedInsights />}
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        <AnalyticsManager
+          clarityProjectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}
+          plausibleDomain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+          umamiWebsiteId={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+        />
       </body>
     </html>
   );

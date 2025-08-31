@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ChevronUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
@@ -95,7 +95,7 @@ export function Navigation({ className = '' }: NavigationProps) {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <ChevronUp className="h-5 w-5 group-hover:animate-bounce" />
+              <ArrowUp className="h-5 w-5 group-hover:animate-bounce" />
             </motion.button>
           </div>
         </div>
