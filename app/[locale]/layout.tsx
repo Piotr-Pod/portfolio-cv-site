@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Navigation } from '@/components/Navigation';
 import { ThemeProvider } from '@/lib/theme-provider';
@@ -71,6 +72,7 @@ export default async function LocaleLayout({
           </NextIntlClientProvider>
         </ThemeProvider>
         <SpeedInsights />
+        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   );
