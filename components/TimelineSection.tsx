@@ -568,7 +568,7 @@ export function TimelineSection() {
                               {/* Technologies and Achievements - full view */}
                               <div className="flex flex-col lg:flex-row lg:gap-6">
                                 {/* Technologies */}
-                                {item.technologies && (
+                                {item.technologies && item.technologies.length > 0 && (
                                   <div className="mb-4 lg:mb-0 lg:w-[40%]">
                                     <h4 className="text-xs font-semibold text-foreground mb-2">
                                       {t('technologies')}:
@@ -587,7 +587,7 @@ export function TimelineSection() {
                                 )}
 
                                 {/* Achievements - full list */}
-                                {item.achievements && (
+                                {item.achievements && item.achievements.length > 0 && (
                                   <div className="lg:w-[60%]">
                                     <h4 className="text-xs font-semibold text-foreground mb-2">
                                       {t('achievements')}:

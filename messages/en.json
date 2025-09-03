@@ -112,30 +112,26 @@
         "subtitle": "Fullstack Developer",
         "location": "Łódź, Poland",
         "description": "Łódź startup developing UnitDoseOne system streamlining drug distribution process for hospital patients. Development of web panel (angular) and application backend (spring). First deployment at CZMP Institute in Łódź",
-        "technologies": ["Java", "Spring", "Angular", "JavaScript", "Healthcare", "Drug Distribution"],
-        "achievements": []
+        "technologies": ["Java", "Spring", "Angular", "JavaScript", "Healthcare", "Drug Distribution"]
       },
       "work-6": {
         "title": "Comarch",
         "subtitle": "Intern / Junior Java Developer",
         "location": "Łódź, Poland",
         "description": "Implementation, development and maintenance of FSM system and responsibility for new functionalities in eBilling (T-Mobile) and other legacy system of Play company.",
-        "technologies": ["Java", "Spring", "FSM", "eBilling", "Legacy Systems", "T-Mobile", "Play"],
-        "achievements": []
+        "technologies": ["Java", "Spring", "FSM", "eBilling", "Legacy Systems", "T-Mobile", "Play"]
       },
       "education-1": {
         "title": "Computer Science (WEEIA) Bachelor and Master Degree",
         "subtitle": "Łódź University of Technology",
         "location": "Łódź, Poland",
-        "description": "Computer science studies at the Faculty of Electrical Engineering, Electronics, Computer Science and Automation.",
-        "achievements": []
+        "description": "Computer science studies at the Faculty of Electrical Engineering, Electronics, Computer Science and Automation."
       },
       "education-2": {
         "title": "MOSTECH Program - AI",
         "subtitle": "AGH University of Science and Technology",
         "location": "Kraków, Poland",
-        "description": "University exchange for the first semester of master's degree in computer science specializing in Intelligent Systems - focused on artificial intelligence topics.",
-        "achievements": []
+        "description": "University exchange for the first semester of master's degree in computer science specializing in Intelligent Systems - focused on artificial intelligence topics."
       },
       "training-1": {
         "title": "AI Devs 3 Agents",
@@ -168,15 +164,13 @@
         "title": "Interdisciplinary School of Innovation",
         "subtitle": "3rd edition",
         "location": "Łódź, Poland",
-        "description": "The project aimed to provide knowledge about entrepreneurship and development of innovative, interdisciplinary solutions. Within its framework, we create a product or service that can be implemented on the market under spin-off company principles.",
-        "achievements": []
+        "description": "The project aimed to provide knowledge about entrepreneurship and development of innovative, interdisciplinary solutions. Within its framework, we create a product or service that can be implemented on the market under spin-off company principles."
       },
       "training-4": {
         "title": "ICTPower Program - Mobile Applications",
         "subtitle": "Łódź University of Technology",
         "location": "Łódź, Poland",
-        "description": "Within the project, training sessions were conducted in entrepreneurship, law, PR, design thinking, and English language. Simultaneously, we worked on a prototype of an automatic barrier controlled by vision.",
-        "achievements": []
+        "description": "Within the project, training sessions were conducted in entrepreneurship, law, PR, design thinking, and English language. Simultaneously, we worked on a prototype of an automatic barrier controlled by vision."
       },
       "projects-1": {
         "title": "CV Website",
