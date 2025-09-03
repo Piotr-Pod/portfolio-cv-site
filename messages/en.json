@@ -1,8 +1,8 @@
 {
   "hero": {
-    "title": "Backend Engineer",
-    "subtitle": "Java/Spring, Microservices, Kafka",
-    "description": "Experienced backend engineer with a passion for building scalable and reliable systems. I specialize in Java, Spring Boot, microservices, and stream data processing technologies.",
+    "title": "Piotr Podgórski",
+    "subtitle": "Senior Java Developer | AI Enthusiast",
+    "description": "For 8 years I've been building scalable systems in Java - mostly with Spring Boot in the microservices world - and I'm increasingly focusing my attention on artificial intelligence.",
     "downloadCv": "Download CV",
     "contact": "Contact"
   },
@@ -15,14 +15,15 @@
   },
   "about": {
     "title": "About Me",
-    "description": "Experienced backend engineer with over 5 years of experience in building scalable and reliable systems. I specialize in Java technologies, microservices, and stream data processing.",
+    "description": "Senior Java Developer with over 8 years of experience in developing scalable systems for large companies. I work daily with Java, Spring Boot and microservices architecture, supporting backend solutions with DevOps tools, automation and artificial intelligence. When needed, I jump into the frontend world 😉 I gained experience, among others, in building the backend development of the IKO mobile application (PKO BP) serving 8 million customers, in an international team developing the TVaaS platform (Orange), in a startup (QuizIT) and on key internal products at a large insurance company.",
     "experience": "Years of Experience",
-    "projects": "Projects Completed",
-    "technologies": "Technologies Mastered"
+    "projects": "Supported Projects",
+    "technologies": "Lines of code (and a few bugs..)",
+    "footnote": "*This number may slightly differ from reality :)"
   },
   "projects": {
     "title": "Projects",
-    "description": "Selected projects demonstrating my skills in building scalable backend applications and microservices architecture.",
+    "description": "Selected examples from my commercial experience and individual projects.",
     "featured": "Featured Project",
     "viewMore": "View More Projects",
     "sourceCode": "Source Code",
@@ -32,19 +33,173 @@
   },
   "timeline": {
     "title": "My Professional Journey",
-    "description": "Overview of my professional experience, education, and personal projects. Use filters to focus on specific areas.",
+    "description": "Professional experience, training, private projects and education. Filters allow you to display specific areas.",
     "achievements": "Key achievements",
     "technologies": "Technologies",
     "showMore": "Show more",
     "showLess": "Show less",
     "expandAll": "Expand all",
     "collapseAll": "Collapse all",
+    "currently": "Currently",
+    "location": "Location",
+    "period": "Period",
+    "technologiesCount": "technologies",
+    "achievementsCount": "achievements",
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
     "filters": {
       "all": "All",
       "work": "Work",
       "education": "Education",
       "training": "Training",
       "projects": "Projects"
+    },
+    "items": {
+      "work-1": {
+        "title": "B2B Contract in Insurance Industry",
+        "subtitle": "Senior Java Developer",
+        "location": "Remote / Warsaw, Poland",
+        "description": "Development of a platform for consultants and ecosystem related to documents, email and SMS sending (microservices, Spring, Java, Kotlin). Monitoring and solving production issues (ElasticSearch, Grafana).",
+        "technologies": ["Java", "Spring", "Kotlin", "Groovy", "Spock", "Microservices", "ElasticSearch", "Grafana", "db-scheduler", "Contactis", "Genesys", "JFreeChart"],
+        "achievements": [
+          "Improvement of PLE - Paperless Link Encryption",
+          "Creation of library for generating passwords for email attachments",
+          "Asynchronous email and SMS sending during business hours (db-scheduler)",
+          "Generation of potential profit charts over years (JFreeChart)"
+        ]
+      },
+      "work-2": {
+        "title": "PKO BP",
+        "subtitle": "Senior Java Developer",
+        "location": "Remote / Warsaw, Poland",
+        "description": "One year in IKO product team - mobile application (8 million customers, 239 million transactions). Two years in technical IKO replatforming - transforming selected functionalities to cloud (GCP, OCP) and optimizing processes (including geolocation, search, Spring Boot migration, Redis).",
+        "technologies": ["Java", "Spring Boot", "Spring Cloud", "GCP", "OCP", "Apache Lucene", "Redis", "SQL", "Groovy", "Spock", "Grafana", "Kibana"],
+        "achievements": [
+          "Optimization of geolocation and search for ATMs and branches (Apache Lucene)",
+          "Migration of microservices to Spring Boot 3.x",
+          "Optimization of BLIK recipient verification (Redis / Redis Sentinel)",
+          "Survey module, gold purchase, call center redirects based on language and many more"
+        ]
+      },
+      "work-3": {
+        "title": "Orange",
+        "subtitle": "Senior Java Developer",
+        "location": "Remote / Łódź/Warsaw, Poland",
+        "description": "Product in international team \"TV as a Service\" like \"Netflix\". I implemented a multitenancy library for Spring and developed several microservices out of over 50.",
+        "technologies": ["Java", "Spring", "spring-cloud-config", "Multitenancy", "TVaaS", "VOD"],
+        "achievements": [
+          "Implementation of multitenancy library for Spring - easily deployable in existing architecture and working with spring-cloud-config",
+          "Responsibility for microservices serving properties for all other MS - focus on high performance",
+          "Second project - photo editing - order management",
+          "Third project - internal CV management project"
+        ]
+      },
+      "work-4": {
+        "title": "OEConnection",
+        "subtitle": "Fullstack Developer",
+        "location": "Remote / Kraków, Poland",
+        "description": "Development of automotive industry application for managing service parts – from design by engineer to sale.",
+        "technologies": ["Java", "Spring", "Microservices", "DDD", "Clean Code", "Automotive"],
+        "achievements": [
+          "Collaboration with foreign team",
+          "Implementation of DDD and clean code"
+        ]
+      },
+      "work-5": {
+        "title": "Quizit",
+        "subtitle": "Fullstack Developer",
+        "location": "Łódź, Poland",
+        "description": "Łódź startup developing UnitDoseOne system streamlining drug distribution process for hospital patients. Development of web panel (angular) and application backend (spring). First deployment at CZMP Institute in Łódź",
+        "technologies": ["Java", "Spring", "Angular", "JavaScript", "Healthcare", "Drug Distribution"],
+        "achievements": []
+      },
+      "work-6": {
+        "title": "Comarch",
+        "subtitle": "Intern / Junior Java Developer",
+        "location": "Łódź, Poland",
+        "description": "Implementation, development and maintenance of FSM system and responsibility for new functionalities in eBilling (T-Mobile) and other legacy system of Play company.",
+        "technologies": ["Java", "Spring", "FSM", "eBilling", "Legacy Systems", "T-Mobile", "Play"],
+        "achievements": []
+      },
+      "education-1": {
+        "title": "Computer Science (WEEIA) Bachelor and Master Degree",
+        "subtitle": "Łódź University of Technology",
+        "location": "Łódź, Poland",
+        "description": "Computer science studies at the Faculty of Electrical Engineering, Electronics, Computer Science and Automation.",
+        "achievements": []
+      },
+      "education-2": {
+        "title": "MOSTECH Program - AI",
+        "subtitle": "AGH University of Science and Technology",
+        "location": "Kraków, Poland",
+        "description": "University exchange for the first semester of master's degree in computer science specializing in Intelligent Systems - focused on artificial intelligence topics.",
+        "achievements": []
+      },
+      "training-1": {
+        "title": "AI Devs 3 Agents",
+        "subtitle": "J.Mrugalski, M.Chrobok, A.Gospodarczyk",
+        "location": "Online",
+        "description": "6 weeks of learning, 50 hours of materials - LLMs, RAGs, API/Agents AI, local LLMS. Artificial intelligence certificate.",
+        "technologies": ["LangChain", "LLMs API", "Firecrawl", "llama", "embeddings", "Qdrant", "Neo4j", "Algolia", "Langfuse", "Tiktokenizer", "ComfyUI", "Cursor"],
+        "achievements": [
+          "Actually over 8 weeks of intensive learning and many more hours than just the 50 from materials",
+          "Own agent using RAG, LLM API and own MCP to answer questions or perform tasks",
+          "Skills in good prompting (Tiktokenizer, best practices), LLM parameters (playground) and using various LLM APIs (LangChain)",
+          "Fine tuning model",
+          "Understanding of local LLMs and what to analyze when choosing (including llama)",
+          "Model monitoring (langfuse)",
+          "How to enhance RAG with vector search (Qdrant/embeddings), graph search (Neo4j/Cypher) or hybrid search (Algolia)"
+        ]
+      },
+      "training-2": {
+        "title": "Skills of Tomorrow AI, Google, SGH",
+        "subtitle": "Using AI in Business Development",
+        "location": "Online",
+        "description": "Certificate in using artificial intelligence in business development. Skills of Tomorrow AI program in cooperation with Google and SGH.",
+        "achievements": [
+          "Skills of Tomorrow AI certificate",
+          "Many solutions from Google ecosystem and others",
+          "Creating Gemini agents, graphics, company strategies, product campaigns or voice narrator (eleven labs)"
+        ]
+      },
+      "training-3": {
+        "title": "Interdisciplinary School of Innovation",
+        "subtitle": "3rd edition",
+        "location": "Łódź, Poland",
+        "description": "The project aimed to provide knowledge about entrepreneurship and development of innovative, interdisciplinary solutions. Within its framework, we create a product or service that can be implemented on the market under spin-off company principles.",
+        "achievements": []
+      },
+      "training-4": {
+        "title": "ICTPower Program - Mobile Applications",
+        "subtitle": "Łódź University of Technology",
+        "location": "Łódź, Poland",
+        "description": "Within the project, training sessions were conducted in entrepreneurship, law, PR, design thinking, and English language. Simultaneously, we worked on a prototype of an automatic barrier controlled by vision.",
+        "achievements": []
+      },
+      "projects-1": {
+        "title": "CV Website",
+        "subtitle": "Personal Project",
+        "location": "Online",
+        "description": "Starting the creation of a personal CV website realizing many of my ideas and presenting my experiences. Project created as part of experimenting with vibe coding.",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel", "Vibe Coding"],
+        "achievements": [
+          "Website in technologies I'm just learning",
+          "Case studies from website creation on blog",
+          "Virtual assistant with RAG in form of chat"
+        ]
+      }
     }
   },
   "contact": {

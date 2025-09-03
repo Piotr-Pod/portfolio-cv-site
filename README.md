@@ -1,6 +1,6 @@
-# CV Portfolio - Backend Engineer
+# CV Portfolio - Piotr Podgórski
 
-Modern portfolio website built with Next.js 15, TypeScript, and Tailwind CSS.
+Modern portfolio website for Piotr Podgórski - Senior Java Developer | AI Enthusiast, built with Next.js 15, TypeScript, and Tailwind CSS.
 
 ## Features
 

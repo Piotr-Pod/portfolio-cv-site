@@ -16,20 +16,12 @@ import {
   ChevronUp,
   Expand,
   Minimize,
-  // Custom timeline icons - small size optimized
-  Award,
   Rocket,
-  Target,
   Zap,
   Star,
-  Trophy,
-  Crown,
-  Gem,
   Shield,
-  Heart,
-  Users,
-  Globe,
-  type LucideIcon
+  type LucideIcon,
+  Handshake
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -40,13 +32,17 @@ interface TimelineItem {
   id: string;
   type: 'work' | 'education' | 'training' | 'projects';
   title: string;
-  company: string;
+  subtitle: string;
   location: string;
   startDate: string;
   endDate: string | null;
   description: string;
   technologies?: string[];
   achievements?: string[];
+  category: {
+    label: string;
+    color: string;
+  };
   customIcon?: LucideIcon; // Optional custom Lucide icon override
   iconColor?: string; // Optional custom color override
   iconImage?: string; // Optional custom image path (takes precedence over customIcon)
@@ -82,163 +78,184 @@ export function TimelineSection() {
     },
   };
 
-  const timelineData: TimelineItem[] = [
-    // Prace (3)
+  const getCategoryInfo = (type: TimelineType) => {
+    switch (type) {
+      case 'work':
+        return {
+          label: t('filters.work'),
+          color: 'bg-blue-600 text-white'
+        };
+      case 'education':
+        return {
+          label: t('filters.education'),
+          color: 'bg-amber-200 text-amber-900'
+        };
+      case 'training':
+        return {
+          label: t('filters.training'),
+          color: 'bg-green-600 text-white'
+        };
+      case 'projects':
+        return {
+          label: t('filters.projects'),
+          color: 'bg-orange-500 text-white'
+        };
+      default:
+        return {
+          label: t('filters.work'),
+          color: 'bg-gray-500 text-white'
+        };
+    }
+  };
+
+  // Timeline data structure with translation keys
+  const timelineDataStructure: Array<{
+    id: string;
+    type: TimelineType;
+    startDate: string;
+    endDate: string | null;
+    customIcon?: LucideIcon;
+    iconColor?: string;
+    iconImage?: string;
+  }> = [
+    // Work (6)
     {
       id: 'work-1',
       type: 'work',
-      title: 'Senior Backend Developer',
-      company: 'TechCorp Solutions',
-      location: 'Warszawa, Polska',
-      startDate: '2022-03',
+      startDate: '2025-05',
       endDate: null,
-      description: 'Prowadzenie zespołu developerów w tworzeniu skalowalnej architektury mikrousług. Odpowiedzialność za design i implementację systemów przetwarzających miliony transakcji dziennie.',
-      technologies: ['Java', 'Spring Boot', 'Apache Kafka', 'PostgreSQL', 'Docker', 'Kubernetes'],
-      achievements: [
-        'Zwiększenie wydajności systemu o 40%',
-        'Redukcja czasu wdrażania z 2h do 15min',
-        'Mentoring 3 junior developerów'
-      ],
-      iconImage: '/images/timeline-icons/whatsapp_logo.png',
-      customIcon: Crown, // Senior position - crown icon
-      iconColor: 'bg-gradient-to-br from-yellow-400 to-orange-500'
+      customIcon: Handshake,
+      iconColor: 'bg-gradient-to-br from-blue-600 to-indigo-700'
     },
     {
       id: 'work-2',
       type: 'work',
-      title: 'Backend Developer',
-      company: 'FinanceApp Sp. z o.o.',
-      location: 'Kraków, Polska',
-      startDate: '2020-06',
-      endDate: '2022-02',
-      description: 'Rozwój systemu płatności online z integracją zewnętrznych dostawców. Implementacja algorytmów wykrywania fraudu i systemów raportowania w czasie rzeczywistym.',
-      technologies: ['Java', 'Spring Framework', 'Redis', 'MySQL', 'RabbitMQ'],
-      achievements: [
-        'Implementacja systemu anti-fraud',
-        'Integracja z 5 dostawcami płatności',
-        'Optymalizacja bazy danych - 60% szybsze zapytania'
-      ],
-      customIcon: Shield, // Security/fraud detection - shield icon
-      iconColor: 'bg-gradient-to-br from-green-500 to-emerald-600'
+      startDate: '2022-05',
+      endDate: '2025-05',
+      customIcon: Shield,
+      iconImage: '/images/pkobp_128.png',
+      iconColor: 'bg-gradient-to-br from-yellow-400 to-orange-500'
     },
     {
       id: 'work-3',
       type: 'work',
-      title: 'Java Developer',
-      company: 'StartupLab',
-      location: 'Gdańsk, Polska',
-      startDate: '2019-01',
-      endDate: '2020-05',
-      description: 'Tworzenie MVP dla startupów technologicznych. Praca w środowisku agile z szybkim prototypowaniem i iteracyjnym rozwojem produktu.',
-      technologies: ['Java', 'Spring Boot', 'MongoDB', 'AWS'],
-      achievements: [
-        'Dostarczenie 3 MVP w terminie',
-        'Implementacja CI/CD pipeline',
-        'Redukcja kosztów infrastruktury o 30%'
-      ],
-      // Example of using custom image (would need actual logo file)
-      // iconImage: '/images/timeline-icons/startuplab-logo.png'
+      startDate: '2019-09',
+      endDate: '2022-05',
+      customIcon: Shield,
+      iconImage: '/images/orange.png',
+      iconColor: 'bg-gradient-to-br from-green-500 to-emerald-600'
     },
-    // Edukacja (1)
+    {
+      id: 'work-4',
+      type: 'work',
+      startDate: '2018-07',
+      endDate: '2019-08',
+      customIcon: Building,
+      iconColor: 'bg-gradient-to-br from-blue-500 to-cyan-600'
+    },
+    {
+      id: 'work-5',
+      type: 'work',
+      startDate: '2017-08',
+      endDate: '2018-04',
+      customIcon: Rocket,
+      iconColor: 'bg-gradient-to-br from-purple-500 to-pink-500'
+    },
+    {
+      id: 'work-6',
+      type: 'work',
+      startDate: '2016-07',
+      endDate: '2017-03',
+      customIcon: Code,
+      iconImage: '/images/comarch.png',
+      iconColor: 'bg-gradient-to-br from-gray-500 to-slate-600'
+    },
+    // Education (2)
     {
       id: 'education-1',
       type: 'education',
-      title: 'Magister Informatyki',
-      company: 'Politechnika Warszawska',
-      location: 'Warszawa, Polska',
-      startDate: '2017-10',
+      startDate: '2014-10',
       endDate: '2019-06',
-      description: 'Specjalizacja: Inżynieria Oprogramowania. Praca magisterska na temat "Optymalizacja wydajności aplikacji Java w środowisku chmurowym".',
-      achievements: [
-        'Średnia ocen: 4.8/5.0',
-        'Wyróżnienie za pracę magisterską',
-        'Staż w laboratorium badawczym'
-      ],
-      // Example: Using custom image instead of icon
-      // iconImage: '/images/timeline-icons/pw-logo.png',
-      customIcon: Trophy, // Fallback if no image
-      iconColor: 'bg-gradient-to-br from-amber-400 to-yellow-500'
+      customIcon: GraduationCap,
+      iconImage: '/images/weeia-logo.png',
+      iconColor: 'bg-gradient-to-br from-green-500 to-emerald-600'
     },
-    // Szkolenia (2)
+    {
+      id: 'education-2',
+      type: 'education',
+      startDate: '2018-02',
+      endDate: '2018-09',
+      customIcon: GraduationCap,
+      iconImage: '/images/agh.png',
+      iconColor: 'bg-gradient-to-br from-blue-500 to-indigo-600'
+    },
+    // Training (4)
     {
       id: 'training-1',
       type: 'training',
-      title: 'AWS Solutions Architect',
-      company: 'Amazon Web Services',
-      location: 'Online',
-      startDate: '2023-01',
-      endDate: '2023-03',
-      description: 'Intensywne szkolenie z architektury chmurowej AWS. Nauka best practices w projektowaniu skalowalnych i bezpiecznych systemów w chmurze.',
-      achievements: [
-        'Certyfikat AWS Solutions Architect - Associate',
-        'Hands-on projekty z EC2, RDS, Lambda',
-        'Design patterns dla architektury serverless'
-      ],
-      customIcon: Globe, // Cloud/global architecture - globe icon
+      startDate: '2024-11',
+      endDate: '2025-01',
+      customIcon: Zap,
+      iconImage: '/images/ai-devs-3-logo.png',
       iconColor: 'bg-gradient-to-br from-blue-400 to-cyan-500'
     },
     {
       id: 'training-2',
       type: 'training',
-      title: 'Apache Kafka Fundamentals',
-      company: 'Confluent',
-      location: 'Online',
-      startDate: '2021-09',
-      endDate: '2021-11',
-      description: 'Pogłębione szkolenie z Apache Kafka i stream processing. Nauka wzorców projektowych dla event-driven architecture.',
-      achievements: [
-        'Certyfikat Confluent Kafka Developer',
-        'Implementacja real-time data pipeline',
-        'Optymalizacja performance Kafka clusters'
-      ],
-      // Example of using custom image for certification
-      // iconImage: '/images/timeline-icons/confluent-certification.png'
-    },
-    // Projekty własne (2)
-    {
-      id: 'project-1',
-      type: 'projects',
-      title: 'DevOps Automation Suite',
-      company: 'Projekt osobisty',
-      location: 'Praca zdalna',
-      startDate: '2023-06',
-      endDate: null,
-      description: 'Open-source narzędzie do automatyzacji procesów DevOps. Integracja z popularnymi CI/CD platformami i monitoringiem infrastruktury.',
-      technologies: ['Java', 'Spring Boot', 'Docker', 'Terraform', 'Prometheus'],
-      achievements: [
-        '500+ GitHub stars',
-        'Użytkowane przez 10+ firm',
-        'Prezentacja na konferencji DevOps Warsaw'
-      ],
-      customIcon: Rocket, // Launch/automation project - rocket icon
-      iconColor: 'bg-gradient-to-br from-purple-500 to-pink-500'
-    },
-    {
-      id: 'project-2',
-      type: 'projects',
-      title: 'Crypto Trading Bot',
-      company: 'Projekt osobisty',
-      location: 'Praca zdalna',
-      startDate: '2022-08',
-      endDate: '2023-01',
-      description: 'Algorytmiczny bot do handlu kryptowalutami z machine learning do predykcji trendów. Real-time analiza rynku i automatyczne wykonywanie transakcji.',
-      technologies: ['Java', 'Spring WebFlux', 'Apache Kafka', 'TensorFlow Java', 'InfluxDB'],
-      achievements: [
-        '15% ROI w okresie testowym',
-        'Przetwarzanie 1M+ zdarzeń/dzień',
-        'Integration z 3 giełdami krypto'
-      ],
-      customIcon: Target, // Precision trading/targeting - target icon
+      startDate: '2025-02',
+      endDate: '2025-03',
+      customIcon: Star,
+      iconImage: '/images/um_jutra_ai.png',
       iconColor: 'bg-gradient-to-br from-emerald-400 to-teal-500'
+    },
+    {
+      id: 'training-3',
+      type: 'training',
+      startDate: '2017-02',
+      endDate: '2018-02',
+      customIcon: BookOpen,
+      iconColor: 'bg-gradient-to-br from-purple-500 to-violet-600'
+    },
+    {
+      id: 'training-4',
+      type: 'training',
+      startDate: '2017-04',
+      endDate: '2018-02',
+      customIcon: BookOpen,
+      iconColor: 'bg-gradient-to-br from-indigo-500 to-blue-600'
+    },
+    // Projects (1)
+    {
+      id: 'projects-1',
+      type: 'projects',
+      startDate: '2025-08',
+      endDate: null,
+      customIcon: Code,
+      iconColor: 'bg-gradient-to-br from-purple-500 to-pink-500'
     }
   ];
 
+  // Build timeline data with translations
+  const timelineData: TimelineItem[] = timelineDataStructure.map(item => {
+    const itemTranslations = t.raw(`items.${item.id}`);
+    return {
+      ...item,
+      title: itemTranslations.title,
+      subtitle: itemTranslations.subtitle,
+      location: itemTranslations.location,
+      description: itemTranslations.description,
+      technologies: itemTranslations.technologies,
+      achievements: itemTranslations.achievements,
+      category: getCategoryInfo(item.type),
+    };
+  });
+
   const filteredItems = timelineData.filter(item => enabledFilters.has(item.type));
 
-  // Sortowanie po dacie (najnowsze pierwsze)
+  // Sortowanie po startDate (najnowsze pierwsze)
   const sortedItems = [...filteredItems].sort((a, b) => {
-    const dateA = a.endDate || '9999-12'; // Aktualne pozycje na górze
-    const dateB = b.endDate || '9999-12';
+    const dateA = a.startDate;
+    const dateB = b.startDate;
     return dateB.localeCompare(dateA);
   });
 
@@ -262,11 +279,11 @@ export function TimelineSection() {
       case 'work':
         return 'bg-blue-500';
       case 'education':
-        return 'bg-green-500';
+        return 'bg-amber-200 text-amber-900';
       case 'training':
-        return 'bg-purple-500';
+        return 'bg-green-600 text-white';
       case 'projects':
-        return 'bg-orange-500';
+        return 'bg-orange-500 text-white';
       default:
         return 'bg-gray-500';
     }
@@ -286,11 +303,12 @@ export function TimelineSection() {
 
   const formatDate = (dateStr: string) => {
     const [year, month] = dateStr.split('-');
-    const monthNames = [
-      'Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze',
-      'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'
+    const monthKeys = [
+      'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+      'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
     ];
-    return `${monthNames[parseInt(month) - 1]} ${year}`;
+    const monthName = t(`months.${monthKeys[parseInt(month) - 1]}`);
+    return `${monthName} ${year}`;
   };
 
   const toggleFilter = (filterType: TimelineType) => {
@@ -480,18 +498,25 @@ export function TimelineSection() {
                         {/* Header - always visible */}
                         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                           <div className="flex-1">
-                            <h3 className="text-lg font-bold text-foreground group-hover:text-blue-600 transition-colors">
-                              {item.title}
-                            </h3>
+                            <div className="flex items-center gap-2 mb-2">
+                              <h3 className="text-lg font-bold text-foreground group-hover:text-blue-600 transition-colors">
+                                {item.title}
+                              </h3>
+                              {item.category && (
+                                <span className={`px-2 py-1 text-xs font-medium rounded-full ${item.category.color}`}>
+                                  {item.category.label}
+                                </span>
+                              )}
+                            </div>
                             <div className="flex items-center text-muted-foreground mt-1 mb-1">
                               <Building className="h-3.5 w-3.5 mr-1.5" />
-                              <span className="font-medium text-sm">{item.company}</span>
+                              <span className="font-medium text-sm">{item.subtitle}</span>
                             </div>
                             {!isExpanded && (
                               <div className="flex items-center text-muted-foreground text-xs">
                                 <Calendar className="h-3 w-3 mr-1.5" />
                                 <span>
-                                  {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}
+                                  {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : t('currently')}
                                 </span>
                               </div>
                             )}
@@ -531,11 +556,11 @@ export function TimelineSection() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                                   <div className="flex items-center text-muted-foreground">
                                     <MapPin className="h-3 w-3 mr-2 flex-shrink-0" />
-                                    <span><strong>Lokalizacja:</strong> {item.location}</span>
+                                    <span><strong>{t('location')}:</strong> {item.location}</span>
                                   </div>
                                   <div className="flex items-center text-muted-foreground">
                                     <Calendar className="h-3 w-3 mr-2 flex-shrink-0" />
-                                    <span><strong>Okres:</strong> {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : 'Obecnie'}</span>
+                                    <span><strong>{t('period')}:</strong> {formatDate(item.startDate)} - {item.endDate ? formatDate(item.endDate) : t('currently')}</span>
                                   </div>
                                 </div>
                               </div>
@@ -544,7 +569,7 @@ export function TimelineSection() {
                               <div className="flex flex-col lg:flex-row lg:gap-6">
                                 {/* Technologies */}
                                 {item.technologies && (
-                                  <div className="mb-4 lg:mb-0 lg:flex-1">
+                                  <div className="mb-4 lg:mb-0 lg:w-[40%]">
                                     <h4 className="text-xs font-semibold text-foreground mb-2">
                                       {t('technologies')}:
                                     </h4>
@@ -563,7 +588,7 @@ export function TimelineSection() {
 
                                 {/* Achievements - full list */}
                                 {item.achievements && (
-                                  <div className="lg:flex-1">
+                                  <div className="lg:w-[60%]">
                                     <h4 className="text-xs font-semibold text-foreground mb-2">
                                       {t('achievements')}:
                                     </h4>
@@ -586,13 +611,13 @@ export function TimelineSection() {
                         </AnimatePresence>
 
                         {/* Collapsed preview - only when not expanded */}
-                        {!isExpanded && (item.technologies || item.achievements) && (
+                        {!isExpanded && (
                           <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                            {item.technologies && (
-                              <span>🔧 {item.technologies.length} technologii</span>
+                            {item.technologies && item.technologies.length > 0 && (
+                              <span>🔧 {item.technologies.length} {t('technologiesCount')}</span>
                             )}
-                            {item.achievements && (
-                              <span>🏆 {item.achievements.length} osiągnięć</span>
+                            {item.achievements && item.achievements.length > 0 && (
+                              <span>🏆 {item.achievements.length} {t('achievementsCount')}</span>
                             )}
                           </div>
                         )}

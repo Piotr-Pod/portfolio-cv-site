@@ -1,8 +1,8 @@
 {
   "hero": {
-    "title": "Backend Engineer",
-    "subtitle": "Java/Spring, Microservices, Kafka",
-    "description": "Doświadczony inżynier backend z pasją do tworzenia skalowalnych i niezawodnych systemów. Specjalizuję się w technologiach Java, Spring Boot, mikrousługach i przetwarzaniu strumieni danych.",
+    "title": "Piotr Podgórski",
+    "subtitle": "Senior Java Developer | AI Enthusiast",
+    "description": "Od 8 lat buduję skalowalne systemy w Javie - najczęściej ze Spring Bootem w świecie mikrousług - a coraz więcej swojej uwagi poświęcam sztucznej inteligencji.",
     "downloadCv": "Pobierz CV",
     "contact": "Kontakt"
   },
@@ -15,14 +15,15 @@
   },
   "about": {
     "title": "O mnie",
-    "description": "Doświadczony inżynier backend z ponad 5-letnim doświadczeniem w tworzeniu skalowalnych i niezawodnych systemów. Specjalizuję się w technologiach Java, mikrousługach i przetwarzaniu strumieni danych.",
+    "description": "Senior Java Developer z 8 letnim doświadczeniem w rozwijaniu skalowalnych systemów dla dużych firm. Na co dzień pracuję z Java, Spring Bootem i architekturą mikrousług, a backendowe rozwiązania wspieram narzędziami DevOps, automatyzacją i sztuczną inteligencją. W razie potrzeby wskoczę do świata frontendu 😉 Doświadczenie zdobywałem m.in. przy budowie rozwoju backendu mobilnej aplikacji IKO (PKO BP) obsługującej 8 mln klientów, w międzynarodowym zespole rozwijającym platformę TVaaS (Orange), w startupie (QuizIT) czy przy kluczowych produktach wewnętrznych dużej firmy ubezpieczeniowej.",
     "experience": "Lat doświadczenia",
-    "projects": "Projektów ukończonych",
-    "technologies": "Technologii opanowanych"
+    "projects": "Wspartych projektów",
+    "technologies": "Linii kodu (i kilka bugów..)",
+    "footnote": "*Ta liczba może się delikatnie mijać z prawdą :)"
   },
   "projects": {
     "title": "Projekty",
-    "description": "Wybrane projekty demonstrujące moje umiejętności w tworzeniu skalowalnych aplikacji backend i architektury mikrousług.",
+    "description": "Wybrane przykłady z mojego doświadczenia komercyjnego i indywidualnych projektów.",
     "featured": "Projekt wyróżniony",
     "viewMore": "Zobacz więcej projektów",
     "sourceCode": "Kod źródłowy",
@@ -32,19 +33,173 @@
   },
   "timeline": {
     "title": "Moja droga zawodowa",
-    "description": "Przegląd mojego doświadczenia zawodowego, edukacji i projektów osobistych. Filtry pozwalają skupić się na konkretnych obszarach.",
+    "description": "Doświadczenie zawodowe, szkolenia, prywatne projekty i edukacja. Filtry pozwalają wyświetlić konkretne obszary.",
     "achievements": "Główne osiągnięcia",
     "technologies": "Technologie",
     "showMore": "Pokaż więcej",
     "showLess": "Pokaż mniej",
     "expandAll": "Rozwiń wszystko",
     "collapseAll": "Zwiń wszystko",
+    "currently": "Obecnie",
+    "location": "Lokalizacja",
+    "period": "Okres",
+    "technologiesCount": "technologii",
+    "achievementsCount": "osiągnięć",
+    "months": {
+      "jan": "Sty",
+      "feb": "Lut",
+      "mar": "Mar",
+      "apr": "Kwi",
+      "may": "Maj",
+      "jun": "Cze",
+      "jul": "Lip",
+      "aug": "Sie",
+      "sep": "Wrz",
+      "oct": "Paź",
+      "nov": "Lis",
+      "dec": "Gru"
+    },
     "filters": {
       "all": "Wszystko",
       "work": "Praca",
       "education": "Edukacja",
       "training": "Szkolenia",
       "projects": "Projekty"
+    },
+    "items": {
+      "work-1": {
+        "title": "Kontrakt B2B w branży ubezpieczeniowej",
+        "subtitle": "Senior Java Developer",
+        "location": "Zdalnie / Warszawa, Polska",
+        "description": "Rozwój platformy dla konsultantów oraz ekosystemu związanego z dokumentami, wysyłką maili oraz SMSów (mikroserwisy, Spring, Java, Kotlin). Monitorowanie i rozwiązywanie problemów na produkcji (ElasticSearch, Grafana).",
+        "technologies": ["Java", "Spring", "Kotlin", "Groovy", "Spock","Mikroserwisy", "ElasticSearch", "Grafana", "db-scheduler", "Contactis", "Genesys", "JFreeChart"],
+        "achievements": [
+          "Usprawnienie PLE - Paperless Link Encryption",
+          "Utworzenie biblioteki do generowania haseł dla załączników w mailach",
+          "Asynchroniczna wysyłka maili i SMSów w godzinach roboczych (db-scheduler)",
+          "Generowanie wykresów potencjalnych zysków przez lata (JFreeChart)"
+        ]
+      },
+      "work-2": {
+        "title": "PKO BP",
+        "subtitle": "Senior Java Developer",
+        "location": "Zdalnie / Warszawa, Polska",
+        "description": "Rok w zespole produktowym IKO - aplikacja mobilna (8 mln klientów, 239 mln transakcji). Dwa lata w technicznym tzw. replatforming IKO - transformując wybrane funkcjonalności do chmury (GCP, OCP) oraz optymalizując procesy (m.in. geolokalizacji, wyszukiwania, migracji Spring Boot, Redis).",
+        "technologies": ["Java", "Spring Boot", "Spring Cloud", "GCP", "OCP", "Apache Lucene", "Redis", "SQL", "Groovy", "Spock", "Grafana", "Kibana"],
+        "achievements": [
+          "Optymalizacja geolokalizacji i wyszukiwania bankomatów i oddziałów (Apache Lucene)",
+          "Migracja mikroserwisów do Spring Boot 3.x",
+          "Optymalizacja sprawdzania odbiorców BLIK (Redis / Redis Sentinel)",
+          "Moduł ankietowania, zakup złota, przekierowania infolinii zależnie od języka i wiele innych"
+        ]
+      },
+      "work-3": {
+        "title": "Orange",
+        "subtitle": "Senior Java Developer",
+        "location": "Zdalnie / Łódź/Warszawa, Polska",
+        "description": "Produkt w zespole międzynarodowym \"TV as a Service\" jak \"Netflix\". Zaimplementowałem bibliotekę multitenancy dla Spring oraz rozwijałem kilkanaście mikroserwisów z ponad 50.",
+        "technologies": ["Java", "Spring", "spring-cloud-config","Multitenancy", "TVaaS", "VOD"],
+        "achievements": [
+          "Implementacja biblioteki multitenancy dla Spring - łatwo wdrażalna w istniejącą architekturę i działająca z spring-cloud-config",
+          "Odpowiedzialność za mikreserwisy serwujące properties dla wszystkich innych MS - nacisk na wysoką wydajność",
+          "Drugi projekt - fotomontaż - zarządzanie zleceniami montażu",
+          "Trzeci projekt - wewnętrzny projekt do zarządzania CV"
+        ]
+      },
+      "work-4": {
+        "title": "OEConnection",
+        "subtitle": "Fullstack Developer",
+        "location": "Zdalnie / Kraków, Polska",
+        "description": "Rozwijanie aplikacji z branży automotive pozwalającej zarządzać częściami serwisowymi - od jej zaprojektowania przez inżyniera po sprzedaż.",
+        "technologies": ["Java", "Spring", "Mikrousługi", "DDD", "Clean Code", "Automotive"],
+        "achievements": [
+          "Współpraca z zagranicznym zespołem",
+          "Implementacja DDD i clean code"
+        ]
+      },
+      "work-5": {
+        "title": "Quizit",
+        "subtitle": "Fullstack Developer",
+        "location": "Łódź, Polska",
+        "description": "Łódzki startup rozwijający system UnitDoseOne usprawniający proces dystrybucji leków dla pacjentów w szpitalach. Rozwijanie panelu www (angular) oraz backendu aplikacji (spring). Pierwsze wdrożenie w Instytucie CZMP w Łodzi",
+        "technologies": ["Java", "Spring", "Angular", "JavaScript", "Healthcare", "Drug Distribution"],
+        "achievements": []
+      },
+      "work-6": {
+        "title": "Comarch",
+        "subtitle": "Staż / Junior Java Developer",
+        "location": "Łódź, Polska",
+        "description": "Wdrożenie, rozwój i utrzymanie systemu FSM oraz odpowiedzialność za nowe funkcjonalności w eBilling (T-Mobile) oraz innym systemie legacy firmy Play.",
+        "technologies": ["Java", "Spring", "FSM", "eBilling", "Legacy Systems", "T-Mobile", "Play"],
+        "achievements": []
+      },
+      "education-1": {
+        "title": "Informatyka (WEEIA) I oraz II stopień",
+        "subtitle": "Politechnika Łódzka",
+        "location": "Łódź, Polska",
+        "description": "Studia informatyczne na Wydziale Elektrotechniki, Elektroniki, Informatyki i Automatyki. ",
+        "achievements": []
+      },
+      "education-2": {
+        "title": "Program MOSTECH - AI",
+        "subtitle": "Akademia Górniczo-Hutnicza",
+        "location": "Kraków, Polska",
+        "description": "Wymiana uczelniana na I semestr magisterski informatyki na specjalizacje Systemy Inteligentne - ukierunkowaną na tematykę sztucznej inteligencji.",
+        "achievements": []
+      },
+      "training-1": {
+        "title": "AI Devs 3 Agents",
+        "subtitle": "J.Mrugalski, M.Chrobok, A.Gospodarczyk",
+        "location": "Online",
+        "description": "6 tygodni nauki, 50 godzin materiałów - LLMs, RAGs, API/Agents AI, local LLMS. Certyfikat z zakresu sztucznej inteligencji.",
+        "technologies": ["LangChain", "LLMs API", "Firecrawl", "llama", "embeddings", "Qdrant", "Neo4j", "Algolia","Langfuse", "Tiktokenizer",  "ComfyUI", "Cursor"],
+        "achievements": [
+          "Realnie ponad 8 tygodni intensywnej nauki i o wiele więcej godzin niż same 50 z materiałów",
+          "Własny agent wykorzystujący RAG, API LLM i własne MCP do odpowiedzi na pytania lub wykonania zadania",
+          "Umiejętności z zakresu dobrego promptowania (Tiktokenizer, dobre praktyki), parametrów LLM (playground) i użycia API różnych LLM (LangChain)",
+          "Fine tuning modelu",
+          "Zrozumienie lokalnych LLM i co analizować przy wyborze (m.in. llama)",
+          "Monitoring modeli (langfuse)",
+          "Jak wzmocnić RAG wyszukiwaniem wektorowym (Qdrant/embeddings), grafowym (Neo4j/Cypher) czy hybrydowym (Algolia)"
+        ]
+      },
+      "training-2": {
+        "title": "Umiejętności Jutra AI, Google, SGH",
+        "subtitle": "Wykorzystanie AI w rozwoju firmy",
+        "location": "Online",
+        "description": "Certyfikat z zakresu wykorzystania sztucznej inteligencji w rozwoju firmy. Program Umiejętności Jutra AI we współpracy z Google i SGH.",
+        "achievements": [
+          "Certyfikat Umiejętności Jutra AI",
+          "Wiele rozwiązań z ekosystemu Google i innych",
+          "Tworzenie agentów Gemini, grafik, strategii firmy, kampanii produktu czy głosu lektora (eleven labs)"
+        ]
+      },
+      "training-3": {
+        "title": "Interdyscyplinarna Szkoła Innowacji",
+        "subtitle": "3 edycja",
+        "location": "Łódź, Polska",
+        "description": "Projekt miał na celu przekazanie wiedzy na temat przedsiębiorczości i rozwoju innowacyjnych, interdyscyplinarnych rozwiązań. W jego ramach tworzymy produkt lub usługę, którą można wdrożyć na rynek na zasadach spółki spin-off.",
+        "achievements": []
+      },
+      "training-4": {
+        "title": "ICTPower Program - Aplikacje Mobilne",
+        "subtitle": "Politechnika Łódzka",
+        "location": "Łódź, Polska",
+        "description": "W ramach projektu prowadzone były szkolenia z m.in. przedsiębiorczości, prawa, PR, design thinking, języka angielskiego. Równolegle pracowaliśmy nad prototypem automatycznego szlabanu sterowanego wizją.",
+        "achievements": []
+      },
+      "projects-1": {
+        "title": "Strona CV",
+        "subtitle": "Projekt osobisty",
+        "location": "Online",
+        "description": "Rozpoczęcie tworzenia własnej strony CV realizującej wiele moich pomysłów i przedstawiającej moje doświadczenia. Projekt tworzę w ramach eksperymentowania z vibe coding.",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel", "Vibe Coding"],
+        "achievements": [
+          "Strona w technologiach, które dopiero poznaje.",
+          "Case studies z tworzenia strony na blogu.",
+          "Wirtualny asystent z RAG w postaci czata."
+        ]
+      }
     }
   },
   "contact": {

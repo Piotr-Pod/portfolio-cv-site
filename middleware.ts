@@ -8,6 +8,14 @@ const intlMiddleware = createMiddleware({
 });
 
 export default async function middleware(request: NextRequest) {
+  // Block direct access to CV PDF generation endpoint
+  if (request.nextUrl.pathname === '/api/cv/pdf') {
+    return NextResponse.json(
+      { error: 'Direct access not allowed. Use the download button instead.' },
+      { status: 403 }
+    );
+  }
+  
   const response = await intlMiddleware(request);
   
   // Security headers
@@ -22,7 +30,6 @@ export default async function middleware(request: NextRequest) {
     "default-src 'self'",
     "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https:",
     "connect-src 'self' https://vercel.live https://va.vercel-scripts.com",
     "frame-ancestors 'none'",
@@ -33,7 +40,7 @@ export default async function middleware(request: NextRequest) {
   response.headers.set('Content-Security-Policy', csp);
   
   // Block indexing by all bots at the HTTP header level
-  response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
+  response.headers.set('X-Robots-Tags', 'noindex, nofollow, noarchive, nosnippet');
   
   return response;
 }

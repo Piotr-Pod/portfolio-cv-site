@@ -21,8 +21,9 @@ describe('HeroSection - Download CV Button', () => {
     const downloadButton = screen.getByRole('button', { name: /downloadcv/i })
     await user.click(downloadButton)
     
-    // Check if console.log was called (from handleDownloadCV)
-    expect(console.log).toHaveBeenCalledWith('Download CV clicked')
+    // Check if popup appears (indicates function was called)
+    const popup = screen.getByText('CV zostało pobrane!')
+    expect(popup).toBeInTheDocument()
   })
 
   it('should show popup notification when clicked', async () => {

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Code, Database, Cloud, Zap } from 'lucide-react';
+import { Code, Cloud, Zap, Bot } from 'lucide-react';
 
 export function AboutSection() {
   const t = useTranslations('about');
@@ -33,26 +33,26 @@ export function AboutSection() {
   const skills = [
     {
       icon: Code,
-      title: 'Java & Spring',
-      description: 'Doświadczenie w tworzeniu aplikacji enterprise z wykorzystaniem Spring Boot, Spring Security i Spring Data.',
+      title: 'Backend',
+      description: 'Java, Kotlin, Spring Boot, Spring Cloud, JUnit, Groovy, Spock, Kafka, Redis, MongoDB, SQL, Liquibase, Hibernate, Lucene',
       color: 'bg-blue-500',
     },
     {
-      icon: Database,
-      title: 'Mikrousługi',
-      description: 'Architektura rozproszona, komunikacja między usługami, wzorce projektowe i najlepsze praktyki.',
+      icon: Bot,
+      title: 'AI',
+      description: 'LLM, RAG, Neo4j, API/Agents AI, MCP, Vibe Coding, local LLMS',
       color: 'bg-cyan-500',
     },
     {
       icon: Cloud,
-      title: 'Cloud & DevOps',
-      description: 'Wdrażanie w chmurze, konteneryzacja z Docker, orkiestracja z Kubernetes, CI/CD pipelines.',
+      title: 'DevOps / Tools',
+      description: 'GCP, OCP, Docker, K8s, Grafana, Prometheus, Gradle, Maven, SonarQube',
       color: 'bg-emerald-500',
     },
     {
       icon: Zap,
-      title: 'Przetwarzanie danych',
-      description: 'Apache Kafka, stream processing, event-driven architecture, real-time data processing.',
+      title: 'Frontend',
+      description: 'JavaScript, TypeScript, React, Next.js, HTML, CSS',
       color: 'bg-purple-500',
     },
   ];
@@ -108,16 +108,17 @@ export function AboutSection() {
           >
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
-                <div className="text-3xl font-bold text-blue-600 mb-2">5+</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">8+</div>
                 <div className="text-muted-foreground">{t('experience')}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-cyan-600 mb-2">20+</div>
+                <div className="text-3xl font-bold text-cyan-600 mb-2">6+</div>
                 <div className="text-muted-foreground">{t('projects')}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-emerald-600 mb-2">15+</div>
+                <div className="text-3xl font-bold text-emerald-600 mb-2">500k+</div>
                 <div className="text-muted-foreground">{t('technologies')}</div>
+                <div className="text-xs text-muted-foreground/60 mt-1">{t('footnote')}</div>
               </div>
             </div>
           </motion.div>

@@ -1,5 +1,5 @@
 {
-  "name": "cv-portfolio",
+  "name": "piotr-podgorski-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -32,6 +32,7 @@
     "next-intl": "^3.0.0",
     "next-seo": "^6.4.0",
     "next-sitemap": "^4.2.3",
+    "playwright": "^1.40.0",
     "postcss": "^8",
     "react": "^18",
     "react-dom": "^18",

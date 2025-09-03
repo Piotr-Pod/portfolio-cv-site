@@ -21,10 +21,10 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'CV Portfolio - Backend Engineer',
-  description: 'Backend Engineer specializing in Java/Spring, Microservices, and Kafka',
-  keywords: ['backend engineer', 'java', 'spring', 'microservices', 'kafka'],
-  authors: [{ name: 'Backend Engineer' }],
+  title: 'Piotr Podgórski - Senior Java Developer | AI Enthusiast',
+  description: 'Senior Java Developer with 8 years of experience in enterprise systems, Spring Boot, microservices, and AI integration. Currently working at PKO BP on IKO mobile app replatforming.',
+  keywords: ['senior java developer', 'spring boot', 'microservices', 'ai', 'chatgpt', 'llm', 'enterprise', 'pko bp', 'iko'],
+  authors: [{ name: 'Piotr Podgórski' }],
   robots: {
     index: false,
     follow: false,
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: 'CV Portfolio - Backend Engineer',
-    description: 'Backend Engineer specializing in Java/Spring, Microservices, and Kafka',
+    title: 'Piotr Podgórski - Senior Java Developer | AI Enthusiast',
+    description: 'Senior Java Developer with 8 years of experience in enterprise systems, Spring Boot, microservices, and AI integration.',
     type: 'website',
   },
 };

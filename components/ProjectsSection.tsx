@@ -34,27 +34,27 @@ export function ProjectsSection() {
 
   const projects = [
     {
-      title: 'E-commerce Microservices Platform',
-      description: 'Skalowalna platforma e-commerce zbudowana z mikrousług w Spring Boot, z integracją Kafka dla przetwarzania zamówień w czasie rzeczywistym.',
-      technologies: ['Java', 'Spring Boot', 'Kafka', 'PostgreSQL', 'Docker'],
-      image: '/api/avatar', // Placeholder - would be replaced with actual project image
+      title: 'Platform',
+      description: 'Rozwój platformy dla konsultantów oraz ekosystemu związanego z dokumentami, wysyłką maili oraz SMSów (mikroserwisy, Spring, Java, Kotlin). Monitorowanie i rozwiązywanie problemów na produkcji (ElasticSearch, Grafana).',
+      technologies: ['Java', 'Spring', 'Kotlin', 'Mikroserwisy', 'ElasticSearch', 'Grafana'],
+      image: '/api/avatar',
       githubUrl: '#',
       liveUrl: '#',
       featured: true,
     },
     {
-      title: 'Real-time Analytics Dashboard',
-      description: 'Dashboard do analizy danych w czasie rzeczywistym z wykorzystaniem Apache Kafka Streams i React dla frontendu.',
-      technologies: ['Java', 'Kafka Streams', 'React', 'TypeScript', 'Redis'],
+      title: 'IKO Mobile App Replatforming',
+      description: 'Replatforming IKO – aplikacja mobilna (8 mln klientów, 239 mln transakcji) – migracja funkcjonalności z monolitu do mikroserwisów w chmurze (GCP, OCP). Optymalizacja geolokalizacji (clustering) i wyszukiwania (Apache Lucene).',
+      technologies: ['Java', 'Spring Boot', 'Spring Cloud', 'GCP', 'OCP', 'Apache Lucene', 'Redis', 'SQL', 'Groovy', 'Spock'],
       image: '/api/avatar',
       githubUrl: '#',
       liveUrl: '#',
       featured: false,
     },
     {
-      title: 'API Gateway & Authentication Service',
-      description: 'Centralny punkt dostępu do API z autoryzacją JWT, rate limiting i monitoringiem z wykorzystaniem Spring Cloud Gateway.',
-      technologies: ['Spring Cloud', 'JWT', 'Redis', 'Prometheus', 'Grafana'],
+      title: 'TV as a Service Platform',
+      description: 'Produkt w zespole międzynarodowym "TV as a Service" jak "Netflix". Implementacja biblioteki multitenancy dla Spring. System zarządzania zleceniami fotomontażu oraz CVApp.',
+      technologies: ['Java', 'Spring', 'Multitenancy', 'TVaaS', 'VOD'],
       image: '/api/avatar',
       githubUrl: '#',
       liveUrl: '#',
@@ -122,8 +122,8 @@ export function ProjectsSection() {
                 </div>
                 <div className="bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center p-8">
                   <div className="text-white text-center">
-                    <div className="text-6xl mb-4">🚀</div>
-                    <p className="text-xl font-medium">E-commerce Platform</p>
+                                      <div className="text-6xl mb-4">📱</div>
+                  <p className="text-xl font-medium">IKO Mobile App</p>
                   </div>
                 </div>
               </div>
@@ -142,7 +142,7 @@ export function ProjectsSection() {
                 whileHover={{ y: -5 }}
               >
                 <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-white text-2xl">📊</div>
+                  <div className="text-white text-2xl">{index === 0 ? '📺' : '💊'}</div>
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-4">
                   {project.title}

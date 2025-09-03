@@ -12,18 +12,18 @@
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 186 100% 42%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
     --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 160 84% 39%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
-    --radius: 1rem;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -35,12 +35,12 @@
     --popover-foreground: 210 40% 98%;
     --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 186 100% 42%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 160 84% 39%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
@@ -55,11 +55,43 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), 'Inter', sans-serif;
+  }
+}
+
+/* Print styles for CV page */
+@media print {
+  /* Hide navigation and other non-essential elements */
+  nav, 
+  button, 
+  .no-print {
+    display: none !important;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-space-grotesk), 'Space Grotesk', 'IBM Plex Sans', sans-serif;
-    @apply tracking-tight;
+  /* Ensure proper page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+  
+  /* Optimize for A4 paper */
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  
+  /* Ensure text is readable */
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  /* Ensure proper contrast for printing */
+  * {
+    color: black !important;
+    background: white !important;
+  }
+  
+  /* Ensure links are visible */
+  a {
+    text-decoration: underline;
   }
 }

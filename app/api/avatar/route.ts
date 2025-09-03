@@ -10,7 +10,7 @@ export async function GET() {
         </linearGradient>
       </defs>
       <circle cx="64" cy="64" r="64" fill="url(#grad)"/>
-      <text x="64" y="80" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="white">BE</text>
+      <text x="64" y="80" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="white">PP</text>
     </svg>
   `;
 

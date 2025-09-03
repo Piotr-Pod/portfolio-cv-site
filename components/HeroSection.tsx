@@ -58,8 +58,17 @@ export function HeroSection() {
   };
 
   const handleDownloadCV = () => {
-    // TODO: Implement CV download functionality
-    console.log('Download CV clicked');
+    // Get current locale from URL or default to 'pl'
+    const locale = window.location.pathname.split('/')[1] || 'pl';
+    
+    // Download static CV PDF file
+    const downloadUrl = `/cv/cv-piotr-podgorski-${locale}.pdf`;
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = `cv-piotr-podgorski-${locale}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     
     // Show popup
     setShowPopup(true);
