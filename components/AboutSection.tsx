@@ -112,8 +112,8 @@ export function AboutSection() {
                 <div className="text-muted-foreground">{t('experience')}</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-cyan-600 mb-2">6+</div>
-                <div className="text-muted-foreground">{t('projects')}</div>
+                <div className="text-3xl font-bold text-cyan-600 mb-2">6</div>
+                <div className="text-muted-foreground">{t('supportedProjects')}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-emerald-600 mb-2">500k+</div>
