@@ -112,30 +112,26 @@
         "subtitle": "Fullstack Developer",
         "location": "Łódź, Polska",
         "description": "Łódzki startup rozwijający system UnitDoseOne usprawniający proces dystrybucji leków dla pacjentów w szpitalach. Rozwijanie panelu www (angular) oraz backendu aplikacji (spring). Pierwsze wdrożenie w Instytucie CZMP w Łodzi",
-        "technologies": ["Java", "Spring", "Angular", "JavaScript", "Healthcare", "Drug Distribution"],
-        "achievements": []
+        "technologies": ["Java", "Spring", "Angular", "JavaScript", "Healthcare", "Drug Distribution"]
       },
       "work-6": {
         "title": "Comarch",
         "subtitle": "Staż / Junior Java Developer",
         "location": "Łódź, Polska",
         "description": "Wdrożenie, rozwój i utrzymanie systemu FSM oraz odpowiedzialność za nowe funkcjonalności w eBilling (T-Mobile) oraz innym systemie legacy firmy Play.",
-        "technologies": ["Java", "Spring", "FSM", "eBilling", "Legacy Systems", "T-Mobile", "Play"],
-        "achievements": []
+        "technologies": ["Java", "Spring", "FSM", "eBilling", "Legacy Systems", "T-Mobile", "Play"]
       },
       "education-1": {
         "title": "Informatyka (WEEIA) I oraz II stopień",
         "subtitle": "Politechnika Łódzka",
         "location": "Łódź, Polska",
-        "description": "Studia informatyczne na Wydziale Elektrotechniki, Elektroniki, Informatyki i Automatyki. ",
-        "achievements": []
+        "description": "Studia informatyczne na Wydziale Elektrotechniki, Elektroniki, Informatyki i Automatyki. "
       },
       "education-2": {
         "title": "Program MOSTECH - AI",
         "subtitle": "Akademia Górniczo-Hutnicza",
         "location": "Kraków, Polska",
-        "description": "Wymiana uczelniana na I semestr magisterski informatyki na specjalizacje Systemy Inteligentne - ukierunkowaną na tematykę sztucznej inteligencji.",
-        "achievements": []
+        "description": "Wymiana uczelniana na I semestr magisterski informatyki na specjalizacje Systemy Inteligentne - ukierunkowaną na tematykę sztucznej inteligencji."
       },
       "training-1": {
         "title": "AI Devs 3 Agents",
@@ -168,15 +164,13 @@
         "title": "Interdyscyplinarna Szkoła Innowacji",
         "subtitle": "3 edycja",
         "location": "Łódź, Polska",
-        "description": "Projekt miał na celu przekazanie wiedzy na temat przedsiębiorczości i rozwoju innowacyjnych, interdyscyplinarnych rozwiązań. W jego ramach tworzymy produkt lub usługę, którą można wdrożyć na rynek na zasadach spółki spin-off.",
-        "achievements": []
+        "description": "Projekt miał na celu przekazanie wiedzy na temat przedsiębiorczości i rozwoju innowacyjnych, interdyscyplinarnych rozwiązań. W jego ramach tworzymy produkt lub usługę, którą można wdrożyć na rynek na zasadach spółki spin-off."
       },
       "training-4": {
         "title": "ICTPower Program - Aplikacje Mobilne",
         "subtitle": "Politechnika Łódzka",
         "location": "Łódź, Polska",
-        "description": "W ramach projektu prowadzone były szkolenia z m.in. przedsiębiorczości, prawa, PR, design thinking, języka angielskiego. Równolegle pracowaliśmy nad prototypem automatycznego szlabanu sterowanego wizją.",
-        "achievements": []
+        "description": "W ramach projektu prowadzone były szkolenia z m.in. przedsiębiorczości, prawa, PR, design thinking, języka angielskiego. Równolegle pracowaliśmy nad prototypem automatycznego szlabanu sterowanego wizją."
       },
       "projects-1": {
         "title": "Strona CV",
