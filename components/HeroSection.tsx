@@ -98,9 +98,9 @@ export function HeroSection() {
             className="mb-8 flex justify-center"
             variants={itemVariants}
           >
-            <Avatar className="h-32 w-32 border-4 border-background rounded-2xl shadow-lg">
+            <Avatar className="h-64 w-64 border-4 border-background rounded-2xl shadow-lg">
               <AvatarImage
-                src="/api/avatar"
+                src="/images/avatar.png"
                 alt="AI Generated Avatar"
                 className="object-cover"
               />
