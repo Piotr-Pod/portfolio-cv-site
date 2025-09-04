@@ -106,9 +106,9 @@ export function HeroSection() {
                 alt="AI Generated Avatar"
                 className="object-cover"
               />
-              <AvatarFallback className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-2xl">
+              {/* <AvatarFallback className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-2xl">
                 PP
-              </AvatarFallback>
+              </AvatarFallback> */}
             </Avatar>
           </motion.div>
 
