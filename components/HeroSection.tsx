@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, Mail, CheckCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,18 @@ export function HeroSection() {
   const t = useTranslations('hero');
   const { theme } = useTheme();
   const [showPopup, setShowPopup] = useState(false);
+  const [avatarAchievement, setAvatarAchievement] = useState(false);
+  const [showAchievementPopup, setShowAchievementPopup] = useState(false);
+  const [isAvatarFlipped, setIsAvatarFlipped] = useState(false);
+
+  // Check localStorage for avatar achievement on component mount
+  useEffect(() => {
+    const savedAchievement = localStorage.getItem('avatar-achievement');
+    if (savedAchievement === 'true') {
+      setAvatarAchievement(true);
+      setIsAvatarFlipped(true);
+    }
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -86,6 +98,25 @@ export function HeroSection() {
     console.log('Contact clicked');
   };
 
+  const handleAvatarClick = () => {
+    if (!avatarAchievement && theme === 'dark') {
+      // Flip the avatar
+      setIsAvatarFlipped(true);
+      setAvatarAchievement(true);
+      
+      // Save to localStorage
+      localStorage.setItem('avatar-achievement', 'true');
+      
+      // Show achievement popup
+      setShowAchievementPopup(true);
+      
+      // Hide achievement popup after 3 seconds
+      setTimeout(() => {
+        setShowAchievementPopup(false);
+      }, 3000);
+    }
+  };
+
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center bg-background relative pt-16">
       <div className="container mx-auto px-4 py-16">
@@ -100,16 +131,51 @@ export function HeroSection() {
             className="mb-8 flex justify-center"
             variants={itemVariants}
           >
-            <Avatar className="h-64 w-64 border-4 border-background rounded-2xl shadow-lg">
-              <AvatarImage
-                src={theme === 'dark' ? "/images/avatar.png" : "/images/avatar2.png"}
-                alt="AI Generated Avatar"
-                className="object-cover"
-              />
-              {/* <AvatarFallback className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-2xl">
-                PP
-              </AvatarFallback> */}
-            </Avatar>
+            <motion.div
+              className="relative"
+              whileHover={!avatarAchievement && theme === 'dark' ? { scale: 1.05 } : {}}
+              transition={{ duration: 0.2 }}
+              style={{ cursor: !avatarAchievement && theme === 'dark' ? 'pointer' : 'default' }}
+              onClick={handleAvatarClick}
+            >
+              {/* Glowing effect for dark mode avatar before achievement */}
+              {!avatarAchievement && theme === 'dark' && (
+                <motion.div
+                  className="absolute inset-0 rounded-2xl"
+                  animate={{
+                    boxShadow: [
+                      '0 0 20px rgba(59, 130, 246, 0.3)',
+                      '0 0 40px rgba(59, 130, 246, 0.6)',
+                      '0 0 20px rgba(59, 130, 246, 0.3)'
+                    ]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut'
+                  }}
+                />
+              )}
+              
+              <motion.div
+                className="relative"
+                animate={isAvatarFlipped ? { rotateY: 180 } : { rotateY: 0 }}
+                transition={{ duration: 0.8, ease: 'easeInOut' }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <Avatar className="h-64 w-64 border-4 border-background rounded-2xl shadow-lg">
+                  <AvatarImage
+                    src={
+                      avatarAchievement 
+                        ? (theme === 'dark' ? "/images/avatar-dark.png" : "/images/avatar-light.png")
+                        : "/images/avatar-light.png"
+                    }
+                    alt="AI Generated Avatar"
+                    className="object-cover"
+                  />
+                </Avatar>
+              </motion.div>
+            </motion.div>
           </motion.div>
 
           {/* Title */}
@@ -217,7 +283,7 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Popup */}
+      {/* CV Download Popup */}
       <AnimatePresence>
         {showPopup && (
           <motion.div
@@ -230,6 +296,29 @@ export function HeroSection() {
             <div className="bg-emerald-500 text-white px-6 py-4 rounded-2xl shadow-md flex items-center space-x-3 border border-emerald-400">
               <CheckCircle className="h-5 w-5 flex-shrink-0" />
               <span className="font-medium">CV zostało pobrane!</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Achievement Popup */}
+      <AnimatePresence>
+        {showAchievementPopup && (
+          <motion.div
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
+            variants={popupVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-6 rounded-2xl shadow-lg flex items-center space-x-3 border border-purple-400">
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 0.5, repeat: 2 }}
+              >
+                🎉
+              </motion.div>
+              <span className="font-bold text-lg">Odkryto achievement! :)</span>
             </div>
           </motion.div>
         )}
