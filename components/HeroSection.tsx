@@ -7,9 +7,11 @@ import { useState } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/lib/theme-provider';
 
 export function HeroSection() {
   const t = useTranslations('hero');
+  const { theme } = useTheme();
   const [showPopup, setShowPopup] = useState(false);
 
   const containerVariants = {
@@ -100,7 +102,7 @@ export function HeroSection() {
           >
             <Avatar className="h-64 w-64 border-4 border-background rounded-2xl shadow-lg">
               <AvatarImage
-                src="/images/avatar.png"
+                src={theme === 'dark' ? "/images/avatar.png" : "/images/avatar2.png"}
                 alt="AI Generated Avatar"
                 className="object-cover"
               />
