@@ -119,7 +119,7 @@ export function HeroSection() {
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center bg-background relative pt-16">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-4">
         <motion.div
           className="text-center max-w-4xl mx-auto"
           variants={containerVariants}
@@ -159,7 +159,7 @@ export function HeroSection() {
               
               <motion.div
                 className="relative"
-                animate={isAvatarFlipped ? { rotateY: 180 } : { rotateY: 0 }}
+                animate={isAvatarFlipped ? { rotateY: 360 } : { rotateY: 0 }}
                 transition={{ duration: 0.8, ease: 'easeInOut' }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
