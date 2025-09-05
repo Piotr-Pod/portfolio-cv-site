@@ -48,7 +48,7 @@ export async function GET(req: Request) {
     await browser.close();
 
     // Zwróć PDF z odpowiednimi nagłówkami
-    return new NextResponse(pdf, {
+    return new NextResponse(new Uint8Array(pdf), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="cv-piotr-podgorski-${locale}.pdf"`,
