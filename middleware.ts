@@ -8,6 +8,10 @@ const intlMiddleware = createMiddleware({
 });
 
 export default async function middleware(request: NextRequest) {
+  // Debug logs
+  console.log('🔍 Middleware called for:', request.nextUrl.pathname);
+  console.log('🔍 Cookies:', request.cookies.getAll().map(c => `${c.name}=${c.value}`));
+
   // Block direct access to CV PDF generation endpoint
   if (request.nextUrl.pathname === '/api/cv/pdf') {
     return NextResponse.json(
@@ -15,7 +19,35 @@ export default async function middleware(request: NextRequest) {
       { status: 403 }
     );
   }
+
+  // Sprawdź autoryzację dla wszystkich ścieżek oprócz API, statycznych plików i strony logowania
+  const isProtectedPath = !request.nextUrl.pathname.startsWith('/api/') && 
+                         !request.nextUrl.pathname.startsWith('/_next/') &&
+                         !request.nextUrl.pathname.startsWith('/_vercel/') &&
+                         !request.nextUrl.pathname.includes('/login') &&
+                         !request.nextUrl.pathname.includes('.');
+
+  console.log('🔍 Is protected path:', isProtectedPath);
+
+  if (isProtectedPath) {
+    // Sprawdź czy użytkownik jest zalogowany (cookie)
+    const isAuthenticated = request.cookies.get('authenticated')?.value === 'true';
+    
+    console.log('🔍 Is authenticated:', isAuthenticated);
+    
+    // Jeśli nie jest zalogowany, przekieruj do logowania
+    if (!isAuthenticated) {
+      console.log('❌ Not authenticated, redirecting to login');
+      // Użyj domyślnego locale (pl) dla strony logowania
+      const loginUrl = new URL('/pl/login', request.url);
+      loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    
+    console.log('✅ Authenticated, continuing...');
+  }
   
+  // Jeśli użytkownik jest zalogowany lub ścieżka nie wymaga autoryzacji, kontynuuj z next-intl
   const response = await intlMiddleware(request);
   
   // Security headers
