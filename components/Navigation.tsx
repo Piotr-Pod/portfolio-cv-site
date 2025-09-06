@@ -4,9 +4,18 @@ import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetClose,
+} from '@/components/ui/sheet';
 
 interface NavigationProps {
   className?: string;
@@ -54,8 +63,8 @@ export function Navigation({ className = '' }: NavigationProps) {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Left side - Navigation links */}
-          <div className="flex items-center space-x-8">
+          {/* Desktop Navigation - Hidden on mobile */}
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <motion.button
                 key={item.id}
@@ -70,6 +79,37 @@ export function Navigation({ className = '' }: NavigationProps) {
             ))}
           </div>
 
+          {/* Mobile Navigation - Visible only on mobile */}
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle className="text-left">Menu</SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col space-y-4 mt-6">
+                  {navItems.map((item) => (
+                    <SheetClose asChild key={item.id}>
+                      <motion.button
+                        onClick={() => scrollToSection(item.id)}
+                        className="text-left text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 py-2 px-1 border-b border-border/50"
+                        whileHover={{ x: 4 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {item.label}
+                      </motion.button>
+                    </SheetClose>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+
           {/* Right side - Theme toggle + Locale switcher */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
@@ -82,8 +122,6 @@ export function Navigation({ className = '' }: NavigationProps) {
                 <Link href={makeLocaleHref('en')}>EN</Link>
               </Button>
             </div>
-
-            
           </div>
         </div>
       </div>
