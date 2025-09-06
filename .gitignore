@@ -85,3 +85,7 @@ jspm_packages/
 
 # local files for AI
 .local/
+
+# test result directories
+test-results/
+playwright-report/

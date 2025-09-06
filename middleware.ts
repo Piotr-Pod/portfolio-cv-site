@@ -20,13 +20,17 @@ export default async function middleware(request: NextRequest) {
     );
   }
 
-  // Sprawdź autoryzację dla wszystkich ścieżek oprócz API, statycznych plików i strony logowania
-  const isProtectedPath = !request.nextUrl.pathname.startsWith('/api/') && 
+  // Sprawdź autoryzację tylko w środowisku produkcyjnym
+  const isProduction = process.env.NODE_ENV === 'production';
+  const isProtectedPath = isProduction && 
+                         !request.nextUrl.pathname.startsWith('/api/') && 
                          !request.nextUrl.pathname.startsWith('/_next/') &&
                          !request.nextUrl.pathname.startsWith('/_vercel/') &&
                          !request.nextUrl.pathname.includes('/login') &&
                          !request.nextUrl.pathname.includes('.');
 
+  console.log('🔍 Environment:', process.env.NODE_ENV);
+  console.log('🔍 Is production:', isProduction);
   console.log('🔍 Is protected path:', isProtectedPath);
 
   if (isProtectedPath) {
@@ -45,6 +49,8 @@ export default async function middleware(request: NextRequest) {
     }
     
     console.log('✅ Authenticated, continuing...');
+  } else if (!isProduction) {
+    console.log('🔓 Development mode - authentication disabled');
   }
   
   // Jeśli użytkownik jest zalogowany lub ścieżka nie wymaga autoryzacji, kontynuuj z next-intl
