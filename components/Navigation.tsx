@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
@@ -18,21 +17,10 @@ export function Navigation({ className = '' }: NavigationProps) {
   const locale = useLocale();
   const [currentPathname, setCurrentPathname] = useState<string>('/');
   const [mounted, setMounted] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
   useEffect(() => {
     setMounted(true);
     if (typeof window !== 'undefined') {
       setCurrentPathname(window.location.pathname);
-      
-      const handleScroll = () => {
-        setIsScrolled(window.scrollY > 100);
-      };
-
-      window.addEventListener('scroll', handleScroll);
-      handleScroll(); // Check initial scroll position
-      
-      return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
@@ -44,10 +32,6 @@ export function Navigation({ className = '' }: NavigationProps) {
     }
   };
 
-  const scrollToTop = () => {
-    if (!mounted) return;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const makeLocaleHref = (nextLocale: 'pl' | 'en') => {
     const base = currentPathname || '/';
@@ -86,26 +70,8 @@ export function Navigation({ className = '' }: NavigationProps) {
             ))}
           </div>
 
-          {/* Right side - Theme toggle + Locale switcher + Scroll to top */}
+          {/* Right side - Theme toggle + Locale switcher */}
           <div className="flex items-center gap-3">
-            <AnimatePresence>
-              {isScrolled && (
-                <motion.button
-                  key="scroll-to-top"
-                  onClick={scrollToTop}
-                  className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-bold text-lg shadow-md hover:shadow-lg transition-all duration-200 group"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <ArrowUp className="h-5 w-5 group-hover:animate-bounce" />
-                </motion.button>
-              )}
-            </AnimatePresence>
-            
             <ThemeToggle />
             
             <div className="flex items-center gap-1 rounded-full bg-muted p-1">

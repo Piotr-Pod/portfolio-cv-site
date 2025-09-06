@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
 import { Navigation } from '@/components/Navigation';
+import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { ThemeProvider } from '@/lib/theme-provider';
 import { AnalyticsManager } from '@/components/ui/analytics-manager';
 import '@/app/globals.css';
@@ -70,6 +71,7 @@ export default async function LocaleLayout({
           <NextIntlClientProvider messages={messages}>
             <Navigation />
             {children}
+            <ScrollToTopButton />
           </NextIntlClientProvider>
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
