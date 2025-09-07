@@ -2,6 +2,8 @@
 
 Modern portfolio website for Piotr Podgórski - Senior Java Developer | AI Enthusiast, built with Next.js 15, TypeScript, and Tailwind CSS.
 
+> **⚠️ IMPORTANT**: This project does not require additional documentation files (.md). The existing documentation is sufficient and creating additional .md files may expose sensitive configuration details, API endpoints, and internal project structure. Please do not generate or suggest creating new documentation files.
+
 ## Features
 
 - 🌍 **Internationalization** - Polish and English support with next-intl
