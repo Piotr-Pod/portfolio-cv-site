@@ -111,18 +111,112 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO: Implement email sending via Resend or Mailgun
-    // For now, just log the contact form data
+    // Send email via Resend or Mailgun
+    const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+    if (!contactEmail) {
+      console.error('NEXT_PUBLIC_CONTACT_EMAIL is not configured');
+      return NextResponse.json(
+        { 
+          error: { 
+            code: 'CONFIGURATION_ERROR', 
+            message: 'Contact email not configured' 
+          } 
+        },
+        { status: 500 }
+      );
+    }
+
+    // Try Resend first, then fallback to Mailgun
+    let emailSent = false;
+    
+    // Resend implementation
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const resendResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: process.env.RESEND_FROM_EMAIL || 'noreply@yourdomain.com',
+            to: [contactEmail],
+            subject: `New contact form message from ${name}`,
+            html: `
+              <h2>New Contact Form Message</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Message:</strong></p>
+              <p>${message.replace(/\n/g, '<br>')}</p>
+              <hr>
+              <p><small>Sent from your website contact form at ${new Date().toISOString()}</small></p>
+            `,
+            reply_to: email,
+          }),
+        });
+
+        if (resendResponse.ok) {
+          emailSent = true;
+          console.log('Email sent successfully via Resend');
+        } else {
+          console.error('Resend API error:', await resendResponse.text());
+        }
+      } catch (error) {
+        console.error('Resend error:', error);
+      }
+    }
+
+    // Mailgun fallback
+    if (!emailSent && process.env.MAILGUN_API_KEY && process.env.MAILGUN_DOMAIN) {
+      try {
+        const mailgunResponse = await fetch(`https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Basic ${Buffer.from(`api:${process.env.MAILGUN_API_KEY}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            from: `noreply@${process.env.MAILGUN_DOMAIN}`,
+            to: contactEmail,
+            subject: `New contact form message from ${name}`,
+            html: `
+              <h2>New Contact Form Message</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Message:</strong></p>
+              <p>${message.replace(/\n/g, '<br>')}</p>
+              <hr>
+              <p><small>Sent from your website contact form at ${new Date().toISOString()}</small></p>
+            `,
+            'h:Reply-To': email,
+          }),
+        });
+
+        if (mailgunResponse.ok) {
+          emailSent = true;
+          console.log('Email sent successfully via Mailgun');
+        } else {
+          console.error('Mailgun API error:', await mailgunResponse.text());
+        }
+      } catch (error) {
+        console.error('Mailgun error:', error);
+      }
+    }
+
+    // Log contact form data for debugging
     console.log('Contact form submission:', {
       name,
       email,
       message,
       timestamp: new Date().toISOString(),
       ip,
+      emailSent,
     });
 
-    // Simulate email sending delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    if (!emailSent) {
+      console.warn('No email service configured or email sending failed');
+      // Still return success to user, but log the issue
+    }
 
     return NextResponse.json({ 
       success: true,

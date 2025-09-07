@@ -116,7 +116,12 @@ export function ContactSection() {
 
   const handleEmailClick = () => {
     if (!mounted) return;
-    window.location.href = 'mailto:your-email@example.com';
+    const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+    if (contactEmail) {
+      window.location.href = `mailto:${contactEmail}`;
+    } else {
+      console.error('NEXT_PUBLIC_CONTACT_EMAIL is not configured');
+    }
   };
 
   return (
@@ -295,7 +300,7 @@ export function ContactSection() {
                       variant="outline"
                       className="border-blue-600 text-blue-600 hover:bg-blue-50"
                     >
-                      your-email@example.com
+                      {process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'piotr.podgorski.software@gmail.com'}
                     </Button>
                   </div>
                 </div>

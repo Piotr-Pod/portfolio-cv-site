@@ -94,8 +94,13 @@ export function HeroSection() {
   };
 
   const handleContact = () => {
-    // TODO: Implement contact functionality
-    console.log('Contact clicked');
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   };
 
   const handleAvatarClick = () => {
