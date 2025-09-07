@@ -2,15 +2,6 @@
 
 import { useEffect } from 'react';
 
-interface ClarityConfig {
-  projectId: string;
-  upload?: string;
-  delay?: number;
-  cookieDomain?: string;
-  sessionReplay?: boolean;
-  heatmap?: boolean;
-}
-
 declare global {
   interface Window {
     clarity?: {
@@ -22,54 +13,50 @@ declare global {
 
 interface ClarityProps {
   projectId: string;
-  config?: Partial<ClarityConfig>;
+  enabled?: boolean;
 }
 
-export function Clarity({ projectId, config = {} }: ClarityProps) {
+export function Clarity({ projectId, enabled = true }: ClarityProps) {
   useEffect(() => {
-    if (!projectId || typeof window === 'undefined') {
+    // Don't load Clarity if disabled or no project ID
+    if (!enabled || !projectId || typeof window === 'undefined') {
       return;
     }
 
-    // Load Clarity script
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = 'https://www.clarity.ms/tag/' + projectId;
+    // Don't load Clarity on localhost in development
+    if (process.env.NODE_ENV === 'development' && 
+        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      console.log('Microsoft Clarity: Skipping initialization on localhost');
+      return;
+    }
 
-    // Configure Clarity
-    const clarityConfig: ClarityConfig = {
-      projectId,
-      upload: 'https://c.clarity.ms/collect',
-      delay: 1000,
-      cookieDomain: window.location.hostname,
-      sessionReplay: true,
-      heatmap: true,
-      ...config,
-    };
+    // Check if Clarity is already loaded
+    if (window.clarity) {
+      console.log('Microsoft Clarity: Already initialized');
+      return;
+    }
 
-    // Initialize Clarity
-    window.clarity = function(command: string, ...args: any[]) {
-      if (window.clarity && window.clarity.q) {
-        window.clarity.q.push([command, ...args]);
+    // Official Microsoft Clarity initialization code
+    (function(c: any, l: any, a: any, r: any, i: any, t: any, y: any) {
+      c[a] = c[a] || function() { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; 
+      if (y && y.parentNode) {
+        y.parentNode.insertBefore(t, y);
+      } else {
+        // Fallback: append to head if no script tag found
+        l.head.appendChild(t);
       }
-    };
-    window.clarity.q = [];
+    })(window, document, "clarity", "script", projectId);
 
-    // Set configuration
-    window.clarity('consent');
-    window.clarity('set', 'clarity_config', clarityConfig);
-
-    // Add script to document
-    document.head.appendChild(script);
+    console.log('Microsoft Clarity: Initialized with project ID:', projectId);
 
     // Cleanup function
     return () => {
-      if (document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
+      // Note: Clarity doesn't provide a cleanup method, so we just log
+      console.log('Microsoft Clarity: Component unmounted');
     };
-  }, [projectId, config]);
+  }, [projectId, enabled]);
 
   return null;
 }

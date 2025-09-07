@@ -13,6 +13,13 @@ describe('Analytics Components', () => {
     // Clear localStorage before each test
     localStorage.clear();
     
+    // Clear DOM scripts
+    const scripts = document.querySelectorAll('script[src*="clarity.ms"]');
+    scripts.forEach(script => script.remove());
+    
+    // Clear window.clarity
+    delete (window as any).clarity;
+    
     // Mock window.matchMedia
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
@@ -47,6 +54,10 @@ describe('Analytics Components', () => {
     });
 
     it('should render Clarity when consent is given', () => {
+      // Mock production environment
+      const originalEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = 'production';
+      
       mockUseAnalyticsConsent.mockReturnValue({
         consent: { clarity: true, plausible: false, umami: false },
         isLoaded: true,
@@ -62,6 +73,9 @@ describe('Analytics Components', () => {
       // Clarity script should be added to document
       const clarityScript = document.querySelector('script[src*="clarity.ms"]');
       expect(clarityScript).toBeInTheDocument();
+      
+      // Restore original environment
+      process.env.NODE_ENV = originalEnv;
     });
 
     it('should not render Clarity when consent is not given', () => {
@@ -79,6 +93,38 @@ describe('Analytics Components', () => {
 
       const clarityScript = document.querySelector('script[src*="clarity.ms"]');
       expect(clarityScript).not.toBeInTheDocument();
+    });
+
+    it('should not render Clarity on localhost in development', () => {
+      // Mock development environment
+      const originalEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = 'development';
+      
+      // Mock localhost
+      Object.defineProperty(window, 'location', {
+        value: {
+          hostname: 'localhost'
+        },
+        writable: true
+      });
+      
+      mockUseAnalyticsConsent.mockReturnValue({
+        consent: { clarity: true, plausible: false, umami: false },
+        isLoaded: true,
+        updateConsent: jest.fn(),
+        acceptAll: jest.fn(),
+        rejectAll: jest.fn(),
+      });
+
+      render(
+        <AnalyticsManager clarityProjectId="test-clarity-id" />
+      );
+
+      const clarityScript = document.querySelector('script[src*="clarity.ms"]');
+      expect(clarityScript).not.toBeInTheDocument();
+      
+      // Restore original environment
+      process.env.NODE_ENV = originalEnv;
     });
 
     it('should show banner for new users (no consent)', () => {

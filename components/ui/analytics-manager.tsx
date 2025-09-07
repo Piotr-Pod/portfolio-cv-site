@@ -37,11 +37,7 @@ export function AnalyticsManager({
       {consent?.clarity && clarityProjectId && (
         <Clarity 
           projectId={clarityProjectId}
-          config={{
-            sessionReplay: true,
-            heatmap: true,
-            delay: 1000,
-          }}
+          enabled={true}
         />
       )}
 
