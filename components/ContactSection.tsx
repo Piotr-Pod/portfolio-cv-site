@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Mail, Calendar, Send, CheckCircle, XCircle } from 'lucide-react';
+import { Mail, Calendar, Send, CheckCircle, XCircle, SendHorizonal } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -142,6 +142,9 @@ export function ContactSection() {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               {t('description')}
             </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-1">
+              {t('descriptionAdditional')}
+            </p>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -272,7 +275,7 @@ export function ContactSection() {
                     <Button
                       onClick={handleCalendarClick}
                       variant="outline"
-                      className="border-cyan-500 text-cyan-500 hover:bg-cyan-50"
+                      className="border-cyan-500 text-cyan-500"
                     >
                       {t('bookMeeting')}
                     </Button>
@@ -298,8 +301,9 @@ export function ContactSection() {
                     <Button
                       onClick={handleEmailClick}
                       variant="outline"
-                      className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                      className="border-cyan-500 text-cyan-500"
                     >
+                      <SendHorizonal className="mr-2 h-4 w-4" />
                       {process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'piotr.podgorski.software@gmail.com'}
                     </Button>
                   </div>

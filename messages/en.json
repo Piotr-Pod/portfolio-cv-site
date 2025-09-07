@@ -188,7 +188,8 @@
   },
   "contact": {
     "title": "Get in Touch",
-    "description": "Have questions or want to discuss a project? I'm here to help. Choose your preferred contact method.",
+    "description": "Want to talk about recruitment or an interesting project? I'm open to new challenges and happy to tell you more about my experience.",
+    "descriptionAdditional": "If you're interested in cooperation in another form (e.g., project consulting) - we can also talk about that.",
     "formTitle": "Send Message",
     "nameLabel": "Full Name",
     "namePlaceholder": "Enter your full name",

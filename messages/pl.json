@@ -188,7 +188,8 @@
   },
   "contact": {
     "title": "Skontaktuj się ze mną",
-    "description": "Masz pytania lub chcesz omówić projekt? Jestem tutaj, aby pomóc. Wybierz preferowaną metodę kontaktu.",
+    "description": "Chcesz porozmawiać o rekrutacji lub ciekawym projekcie? Jestem otwarty na nowe wyzwania i chętnie opowiem więcej o moich doświadczeniach.",
+    "descriptionAdditional": "Jeśli interesuje Cię współpraca w innej formie (np. konsultacje projektowe) - również możemy o tym porozmawiać.",
     "formTitle": "Wyślij wiadomość",
     "nameLabel": "Imię i nazwisko",
     "namePlaceholder": "Wprowadź swoje imię i nazwisko",
@@ -201,7 +202,7 @@
     "successMessage": "Wiadomość została wysłana pomyślnie!",
     "errorMessage": "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.",
     "calendarTitle": "Umów spotkanie",
-    "calendarDescription": "Zarezerwuj 30-minutowe spotkanie, aby omówić Twój projekt lub współpracę.",
+    "calendarDescription": "Zarezerwuj spotkanie, aby omówić projekt lub współpracę.",
     "bookMeeting": "Zarezerwuj spotkanie",
     "emailTitle": "Napisz bezpośrednio",
     "emailDescription": "Preferujesz bezpośredni kontakt e-mail? Kliknij poniżej, aby otworzyć swoją aplikację e-mail."
