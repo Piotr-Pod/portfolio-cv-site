@@ -106,8 +106,12 @@ export function ContactSection() {
 
   const handleCalendarClick = () => {
     if (!mounted) return;
-    // TODO: Replace with actual Cal.com or Calendly URL
-    window.open('https://cal.com/your-username', '_blank');
+    const calendarUrl = process.env.NEXT_PUBLIC_CALENDAR_URL;
+    if (calendarUrl) {
+      window.open(calendarUrl, '_blank');
+    } else {
+      console.error('NEXT_PUBLIC_CALENDAR_URL is not configured');
+    }
   };
 
   const handleEmailClick = () => {
