@@ -1,11 +1,60 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 // Simple in-memory rate limiting (for production, use Redis or similar)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 5; // 5 requests per minute
+
+// Configure DOMPurify for Node.js environment
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
+
+// HTML sanitization function for email content
+function sanitizeForEmail(input: string): string {
+  // Remove all HTML tags and escape special characters
+  const sanitized = purify.sanitize(input, { 
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: []
+  });
+  
+  // Additional escape for any remaining special characters
+  return sanitized.replace(/[&<>"']/g, (char) => {
+    const map: { [key: string]: string } = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return map[char];
+  });
+}
+
+// Function to detect potentially malicious content
+function detectSuspiciousContent(input: string): boolean {
+  const suspiciousPatterns = [
+    /<script/i,
+    /javascript:/i,
+    /data:/i,
+    /vbscript:/i,
+    /onload=/i,
+    /onerror=/i,
+    /onclick=/i,
+    /onmouseover=/i,
+    /<iframe/i,
+    /<object/i,
+    /<embed/i,
+    /<link/i,
+    /<meta/i,
+    /<style/i
+  ];
+  
+  return suspiciousPatterns.some(pattern => pattern.test(input));
+}
 
 function checkRateLimit(identifier: string): boolean {
   const now = new Date().getTime();
@@ -25,9 +74,19 @@ function checkRateLimit(identifier: string): boolean {
 }
 
 const ContactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(80, 'Name must be less than 80 characters'),
-  email: z.string().email('Invalid email address'),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message must be less than 2000 characters'),
+  name: z.string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(80, 'Name must be less than 80 characters')
+    .regex(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s\-'\.]+$/, 'Name contains invalid characters')
+    .refine((val) => !detectSuspiciousContent(val), 'Name contains potentially dangerous content'),
+  email: z.string()
+    .email('Invalid email address')
+    .max(254, 'Email address is too long')
+    .refine((val) => !detectSuspiciousContent(val), 'Email contains potentially dangerous content'),
+  message: z.string()
+    .min(10, 'Message must be at least 10 characters')
+    .max(2000, 'Message must be less than 2000 characters')
+    .refine((val) => !detectSuspiciousContent(val), 'Message contains potentially dangerous content'),
   csrfToken: z.string().min(1, 'CSRF token is required'),
 });
 
@@ -97,6 +156,24 @@ export async function POST(req: Request) {
 
     const { name, email, message, csrfToken } = parsed.data;
 
+    // Check for suspicious content and log if detected
+    const suspiciousFields = [];
+    if (detectSuspiciousContent(name)) suspiciousFields.push('name');
+    if (detectSuspiciousContent(email)) suspiciousFields.push('email');
+    if (detectSuspiciousContent(message)) suspiciousFields.push('message');
+
+    if (suspiciousFields.length > 0) {
+      console.warn('Suspicious content detected in contact form:', {
+        ip,
+        suspiciousFields,
+        timestamp: new Date().toISOString(),
+        userAgent: req.headers.get('user-agent'),
+        name: name.substring(0, 50) + (name.length > 50 ? '...' : ''),
+        email: email.substring(0, 50) + (email.length > 50 ? '...' : ''),
+        message: message.substring(0, 100) + (message.length > 100 ? '...' : ''),
+      });
+    }
+
     // TODO: Implement proper CSRF token validation
     // For now, just check if token exists
     if (!csrfToken) {
@@ -126,6 +203,11 @@ export async function POST(req: Request) {
       );
     }
 
+    // Sanitize all user input for email content
+    const safeName = sanitizeForEmail(name);
+    const safeEmail = sanitizeForEmail(email);
+    const safeMessage = sanitizeForEmail(message);
+
     // Try Resend first, then fallback to Mailgun
     let emailSent = false;
     
@@ -141,17 +223,17 @@ export async function POST(req: Request) {
           body: JSON.stringify({
             from: process.env.RESEND_FROM_EMAIL || 'noreply@yourdomain.com',
             to: [contactEmail],
-            subject: `New contact form message from ${name}`,
+            subject: `New contact form message from ${safeName}`,
             html: `
               <h2>New Contact Form Message</h2>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Name:</strong> ${safeName}</p>
+              <p><strong>Email:</strong> ${safeEmail}</p>
               <p><strong>Message:</strong></p>
-              <p>${message.replace(/\n/g, '<br>')}</p>
+              <p>${safeMessage.replace(/\n/g, '<br>')}</p>
               <hr>
               <p><small>Sent from your website contact form at ${new Date().toISOString()}</small></p>
             `,
-            reply_to: email,
+            reply_to: safeEmail,
           }),
         });
 
@@ -178,17 +260,17 @@ export async function POST(req: Request) {
           body: new URLSearchParams({
             from: `noreply@${process.env.MAILGUN_DOMAIN}`,
             to: contactEmail,
-            subject: `New contact form message from ${name}`,
+            subject: `New contact form message from ${safeName}`,
             html: `
               <h2>New Contact Form Message</h2>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Name:</strong> ${safeName}</p>
+              <p><strong>Email:</strong> ${safeEmail}</p>
               <p><strong>Message:</strong></p>
-              <p>${message.replace(/\n/g, '<br>')}</p>
+              <p>${safeMessage.replace(/\n/g, '<br>')}</p>
               <hr>
               <p><small>Sent from your website contact form at ${new Date().toISOString()}</small></p>
             `,
-            'h:Reply-To': email,
+            'h:Reply-To': safeEmail,
           }),
         });
 
@@ -203,14 +285,15 @@ export async function POST(req: Request) {
       }
     }
 
-    // Log contact form data for debugging
+    // Log contact form data for debugging (using sanitized data)
     console.log('Contact form submission:', {
-      name,
-      email,
-      message,
+      name: safeName,
+      email: safeEmail,
+      message: safeMessage.substring(0, 100) + (safeMessage.length > 100 ? '...' : ''),
       timestamp: new Date().toISOString(),
       ip,
       emailSent,
+      suspiciousContentDetected: suspiciousFields.length > 0,
     });
 
     if (!emailSent) {
