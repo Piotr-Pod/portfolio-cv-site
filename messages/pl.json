@@ -201,10 +201,39 @@
     "sending": "Wysyłanie...",
     "successMessage": "Wiadomość została wysłana pomyślnie!",
     "errorMessage": "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.",
+    "rateLimitMessage": "Zbyt wiele prób wysłania wiadomości.",
+    "rateLimitWaitTime": "Spróbuj ponownie za {time}.",
     "calendarTitle": "Umów spotkanie",
     "calendarDescription": "Zarezerwuj spotkanie, aby omówić projekt lub współpracę.",
     "bookMeeting": "Zarezerwuj spotkanie",
     "emailTitle": "Napisz bezpośrednio",
-    "emailDescription": "Preferujesz bezpośredni kontakt e-mail? Kliknij poniżej, aby otworzyć swoją aplikację e-mail."
+    "emailDescription": "Preferujesz bezpośredni kontakt e-mail? Kliknij poniżej, aby otworzyć swoją aplikację e-mail.",
+    "errors": {
+      "validation": {
+        "nameMinLength": "Imię musi mieć co najmniej 2 znaki",
+        "nameMaxLength": "Imię musi mieć mniej niż 80 znaków",
+        "nameInvalidChars": "Imię zawiera nieprawidłowe znaki",
+        "nameDangerousContent": "Imię zawiera potencjalnie niebezpieczną zawartość",
+        "emailInvalid": "Nieprawidłowy adres e-mail",
+        "emailTooLong": "Adres e-mail jest za długi",
+        "emailDangerousContent": "Adres e-mail zawiera potencjalnie niebezpieczną zawartość",
+        "messageMinLength": "Wiadomość musi mieć co najmniej 10 znaków",
+        "messageMaxLength": "Wiadomość musi mieć mniej niż 2000 znaków",
+        "messageDangerousContent": "Wiadomość zawiera potencjalnie niebezpieczną zawartość",
+        "csrfRequired": "Token CSRF jest wymagany"
+      },
+      "api": {
+        "rateLimitExceeded": "Zbyt wiele żądań. Spróbuj ponownie później.",
+        "invalidOrigin": "Nieprawidłowe źródło",
+        "invalidJson": "Nieprawidłowy format JSON",
+        "invalidPayload": "Nieprawidłowe dane",
+        "invalidCsrfToken": "Nieprawidłowy token CSRF",
+        "contactEmailNotConfigured": "Adres e-mail kontaktowy nie jest skonfigurowany",
+        "unauthorizedEmailTarget": "Nieautoryzowana próba wysłania wiadomości",
+        "suspiciousPayload": "Podejrzane dane w żądaniu",
+        "internalError": "Błąd wewnętrzny serwera",
+        "contactFormSubmitted": "Formularz kontaktowy został wysłany pomyślnie"
+      }
+    }
   }
 }

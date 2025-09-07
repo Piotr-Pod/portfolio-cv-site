@@ -201,10 +201,39 @@
     "sending": "Sending...",
     "successMessage": "Message sent successfully!",
     "errorMessage": "An error occurred while sending the message. Please try again.",
+    "rateLimitMessage": "Too many message attempts.",
+    "rateLimitWaitTime": "Please try again in {time}.",
     "calendarTitle": "Schedule a Meeting",
     "calendarDescription": "Book a 30-minute meeting to discuss your project or collaboration.",
     "bookMeeting": "Book Meeting",
     "emailTitle": "Write Directly",
-    "emailDescription": "Prefer direct email contact? Click below to open your email application."
+    "emailDescription": "Prefer direct email contact? Click below to open your email application.",
+    "errors": {
+      "validation": {
+        "nameMinLength": "Name must be at least 2 characters",
+        "nameMaxLength": "Name must be less than 80 characters",
+        "nameInvalidChars": "Name contains invalid characters",
+        "nameDangerousContent": "Name contains potentially dangerous content",
+        "emailInvalid": "Invalid email address",
+        "emailTooLong": "Email address is too long",
+        "emailDangerousContent": "Email contains potentially dangerous content",
+        "messageMinLength": "Message must be at least 10 characters",
+        "messageMaxLength": "Message must be less than 2000 characters",
+        "messageDangerousContent": "Message contains potentially dangerous content",
+        "csrfRequired": "CSRF token is required"
+      },
+      "api": {
+        "rateLimitExceeded": "Too many requests. Please try again later.",
+        "invalidOrigin": "Invalid origin",
+        "invalidJson": "Invalid JSON payload",
+        "invalidPayload": "Invalid payload",
+        "invalidCsrfToken": "Invalid CSRF token",
+        "contactEmailNotConfigured": "Contact email not configured",
+        "unauthorizedEmailTarget": "Unauthorized email sending attempt",
+        "suspiciousPayload": "Suspicious request data",
+        "internalError": "Internal server error",
+        "contactFormSubmitted": "Contact form submitted successfully"
+      }
+    }
   }
 }

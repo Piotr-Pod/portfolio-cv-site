@@ -17,6 +17,18 @@ interface ContactForm {
   csrfToken: string;
 }
 
+interface ValidationErrors {
+  name?: string[];
+  email?: string[];
+  message?: string[];
+  csrfToken?: string[];
+}
+
+interface RateLimitInfo {
+  waitTimeSeconds: number;
+  resetTime: string;
+}
+
 export function ContactSection() {
   const t = useTranslations('contact');
   const [formData, setFormData] = useState<ContactForm>({
@@ -26,7 +38,9 @@ export function ContactSection() {
     csrfToken: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'rateLimited'>('idle');
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+  const [rateLimitInfo, setRateLimitInfo] = useState<RateLimitInfo | null>(null);
   const [mounted, setMounted] = useState(false);
 
   // Generate CSRF token on component mount
@@ -74,12 +88,54 @@ export function ContactSection() {
       ...prev,
       [name]: value,
     }));
+    
+    // Clear validation error for this field when user starts typing
+    if (validationErrors[name as keyof ValidationErrors]) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
+  };
+
+  const renderFieldError = (fieldName: keyof ValidationErrors) => {
+    const errors = validationErrors[fieldName];
+    if (!errors || errors.length === 0) return null;
+    
+    return (
+      <div className="mt-1 text-sm text-red-600">
+        {errors.map((error, index) => (
+          <div key={index}>{error}</div>
+        ))}
+      </div>
+    );
+  };
+
+  const formatWaitTime = (seconds: number): string => {
+    // Get current locale from the translation hook
+    const locale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'en' : 'en';
+    
+    if (seconds < 60) {
+      if (locale === 'pl') {
+        return `${seconds} ${seconds === 1 ? 'sekundę' : 'sekund'}`;
+      } else {
+        return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`;
+      }
+    }
+    const minutes = Math.ceil(seconds / 60);
+    if (locale === 'pl') {
+      return `${minutes} ${minutes === 1 ? 'minutę' : 'minut'}`;
+    } else {
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setValidationErrors({});
+    setRateLimitInfo(null);
 
     try {
       const response = await fetch('/api/contact', {
@@ -94,7 +150,23 @@ export function ContactSection() {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', message: '', csrfToken: formData.csrfToken });
       } else {
-        setSubmitStatus('error');
+        const errorData = await response.json();
+        
+        if (errorData.error?.code === 'VALIDATION_ERROR' && errorData.error?.details) {
+          // Handle validation errors
+          setValidationErrors(errorData.error.details.fieldErrors || {});
+          setSubmitStatus('error');
+        } else if (errorData.error?.code === 'RATE_LIMIT_EXCEEDED' && errorData.error?.details) {
+          // Handle rate limit errors
+          setRateLimitInfo(errorData.error.details);
+          setSubmitStatus('rateLimited');
+        } else if (errorData.error?.code === 'SECURITY_ERROR') {
+          // Handle security errors (unauthorized email target, suspicious payload)
+          setSubmitStatus('error');
+        } else {
+          // Handle other errors
+          setSubmitStatus('error');
+        }
       }
     } catch (error) {
       console.error('Contact form error:', error);
@@ -168,8 +240,9 @@ export function ContactSection() {
                       onChange={handleInputChange}
                       placeholder={t('namePlaceholder')}
                       required
-                      className="w-full"
+                      className={`w-full ${validationErrors.name ? 'border-red-500 focus:border-red-500' : ''}`}
                     />
+                    {renderFieldError('name')}
                   </div>
 
                   <div>
@@ -184,8 +257,9 @@ export function ContactSection() {
                       onChange={handleInputChange}
                       placeholder={t('emailPlaceholder')}
                       required
-                      className="w-full"
+                      className={`w-full ${validationErrors.email ? 'border-red-500 focus:border-red-500' : ''}`}
                     />
+                    {renderFieldError('email')}
                   </div>
 
                   <div>
@@ -200,8 +274,9 @@ export function ContactSection() {
                       placeholder={t('messagePlaceholder')}
                       required
                       rows={5}
-                      className="w-full resize-none"
+                      className={`w-full resize-none ${validationErrors.message ? 'border-red-500 focus:border-red-500' : ''}`}
                     />
+                    {renderFieldError('message')}
                   </div>
 
                   {/* Hidden CSRF token field */}
@@ -249,6 +324,22 @@ export function ContactSection() {
                     >
                       <XCircle className="h-5 w-5 mr-2 flex-shrink-0" />
                       <span className="font-medium">{t('errorMessage')}</span>
+                    </motion.div>
+                  )}
+
+                  {submitStatus === 'rateLimited' && rateLimitInfo && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center p-4 bg-orange-50 border border-orange-200 rounded-2xl text-orange-700"
+                    >
+                      <XCircle className="h-5 w-5 mr-2 flex-shrink-0" />
+                      <div>
+                        <div className="font-medium">{t('rateLimitMessage')}</div>
+                        <div className="text-sm mt-1">
+                          {t('rateLimitWaitTime', { time: formatWaitTime(rateLimitInfo.waitTimeSeconds) })}
+                        </div>
+                      </div>
                     </motion.div>
                   )}
                 </form>

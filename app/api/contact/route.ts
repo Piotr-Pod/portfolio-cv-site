@@ -2,12 +2,35 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
+import { getTranslations } from 'next-intl/server';
 
 // Simple in-memory rate limiting (for production, use Redis or similar)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 5; // 5 requests per minute
+
+// Function to get translations based on locale from request
+async function getContactTranslations(req: Request) {
+  try {
+    // Extract locale from URL or headers
+    const url = new URL(req.url);
+    const pathname = url.pathname;
+    const locale = pathname.split('/')[1] || 'en'; // Default to 'en' if no locale
+    
+    // Validate locale
+    const validLocales = ['pl', 'en'];
+    const finalLocale = validLocales.includes(locale) ? locale : 'en';
+    
+    const t = await getTranslations({ locale: finalLocale, namespace: 'contact' });
+    return t;
+  } catch (error) {
+    console.error('Error getting translations:', error);
+    // Fallback to English
+    const t = await getTranslations({ locale: 'en', namespace: 'contact' });
+    return t;
+  }
+}
 
 // Configure DOMPurify for Node.js environment
 const window = new JSDOM('').window;
@@ -56,52 +79,49 @@ function detectSuspiciousContent(input: string): boolean {
   return suspiciousPatterns.some(pattern => pattern.test(input));
 }
 
-function checkRateLimit(identifier: string): boolean {
+function checkRateLimit(identifier: string): { allowed: boolean; resetTime?: number } {
   const now = new Date().getTime();
   const record = rateLimitMap.get(identifier);
   
   if (!record || now > record.resetTime) {
     rateLimitMap.set(identifier, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return true;
+    return { allowed: true };
   }
   
   if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false;
+    return { allowed: false, resetTime: record.resetTime };
   }
   
   record.count++;
-  return true;
+  return { allowed: true };
 }
 
-const ContactSchema = z.object({
-  name: z.string()
-    .min(2, 'Name must be at least 2 characters')
-    .max(80, 'Name must be less than 80 characters')
-    .regex(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s\-'\.]+$/, 'Name contains invalid characters')
-    .refine((val) => !detectSuspiciousContent(val), 'Name contains potentially dangerous content'),
-  email: z.string()
-    .email('Invalid email address')
-    .max(254, 'Email address is too long')
-    .refine((val) => !detectSuspiciousContent(val), 'Email contains potentially dangerous content'),
-  message: z.string()
-    .min(10, 'Message must be at least 10 characters')
-    .max(2000, 'Message must be less than 2000 characters')
-    .refine((val) => !detectSuspiciousContent(val), 'Message contains potentially dangerous content'),
-  csrfToken: z.string().min(1, 'CSRF token is required'),
-});
+// Contact schema will be created inside POST function with translations
 
 export async function POST(req: Request) {
   try {
+    // Get translations for the request
+    const t = await getContactTranslations(req);
+    
     // Rate limiting based on IP address
     const forwarded = req.headers.get('x-forwarded-for');
     const ip = forwarded ? forwarded.split(',')[0] : 'unknown';
     
-    if (!checkRateLimit(ip)) {
+    const rateLimitResult = checkRateLimit(ip);
+    if (!rateLimitResult.allowed) {
+      const resetTime = rateLimitResult.resetTime!;
+      const now = new Date().getTime();
+      const waitTimeSeconds = Math.ceil((resetTime - now) / 1000);
+      
       return NextResponse.json(
         { 
           error: { 
             code: 'RATE_LIMIT_EXCEEDED', 
-            message: 'Too many requests. Please try again later.' 
+            message: t('errors.api.rateLimitExceeded'),
+            details: {
+              waitTimeSeconds,
+              resetTime: new Date(resetTime).toISOString()
+            }
           } 
         },
         { status: 429 }
@@ -113,12 +133,13 @@ export async function POST(req: Request) {
     const referer = req.headers.get('referer');
     
     // In production, validate against your domain
-    if (origin && !origin.includes('localhost') && !origin.includes('yourdomain.com')) {
+    const allowedDomain = process.env.NEXT_PUBLIC_DOMAIN || 'localhost';
+    if (origin && !origin.includes('localhost') && !origin.includes(allowedDomain)) {
       return NextResponse.json(
         { 
           error: { 
             code: 'CSRF_ERROR', 
-            message: 'Invalid origin' 
+            message: t('errors.api.invalidOrigin')
           } 
         },
         { status: 403 }
@@ -132,12 +153,30 @@ export async function POST(req: Request) {
         { 
           error: { 
             code: 'INVALID_JSON', 
-            message: 'Invalid JSON payload' 
+            message: t('errors.api.invalidJson')
           } 
         },
         { status: 400 }
       );
     }
+
+    // Create contact schema with translations
+    const ContactSchema = z.object({
+      name: z.string()
+        .min(2, t('errors.validation.nameMinLength'))
+        .max(80, t('errors.validation.nameMaxLength'))
+        .regex(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s\-'\.]+$/, t('errors.validation.nameInvalidChars'))
+        .refine((val) => !detectSuspiciousContent(val), t('errors.validation.nameDangerousContent')),
+      email: z.string()
+        .email(t('errors.validation.emailInvalid'))
+        .max(254, t('errors.validation.emailTooLong'))
+        .refine((val) => !detectSuspiciousContent(val), t('errors.validation.emailDangerousContent')),
+      message: z.string()
+        .min(10, t('errors.validation.messageMinLength'))
+        .max(2000, t('errors.validation.messageMaxLength'))
+        .refine((val) => !detectSuspiciousContent(val), t('errors.validation.messageDangerousContent')),
+      csrfToken: z.string().min(1, t('errors.validation.csrfRequired')),
+    }).strict(); // Strict mode prevents additional fields
 
     const parsed = ContactSchema.safeParse(body);
     
@@ -146,11 +185,35 @@ export async function POST(req: Request) {
         { 
           error: { 
             code: 'VALIDATION_ERROR', 
-            message: 'Invalid payload', 
+            message: t('errors.api.invalidPayload'), 
             details: parsed.error.flatten() 
           } 
         },
         { status: 400 }
+      );
+    }
+
+    // Security: Check for suspicious fields that might indicate email target manipulation
+    const emailTargetFields = ['to', 'recipient', 'target', 'destination', 'sendTo'];
+    const hasEmailTargetFields = emailTargetFields.some(field => field in body);
+    
+    if (hasEmailTargetFields) {
+      console.warn('Suspicious email target manipulation attempt:', {
+        ip,
+        userAgent: req.headers.get('user-agent'),
+        suspiciousFields: emailTargetFields.filter(field => field in body),
+        timestamp: new Date().toISOString(),
+        bodyKeys: Object.keys(body)
+      });
+      
+      return NextResponse.json(
+        { 
+          error: { 
+            code: 'SECURITY_ERROR', 
+            message: t('errors.api.suspiciousPayload')
+          } 
+        },
+        { status: 403 }
       );
     }
 
@@ -181,7 +244,7 @@ export async function POST(req: Request) {
         { 
           error: { 
             code: 'CSRF_ERROR', 
-            message: 'Invalid CSRF token' 
+            message: t('errors.api.invalidCsrfToken')
           } 
         },
         { status: 403 }
@@ -196,10 +259,35 @@ export async function POST(req: Request) {
         { 
           error: { 
             code: 'CONFIGURATION_ERROR', 
-            message: 'Contact email not configured' 
+            message: t('errors.api.contactEmailNotConfigured')
           } 
         },
         { status: 500 }
+      );
+    }
+
+    // Security: Validate that contactEmail is properly configured and not manipulated
+    const allowedContactEmails = [
+      process.env.NEXT_PUBLIC_CONTACT_EMAIL,
+      'piotr.podgorski.software@gmail.com' // Fallback email
+    ].filter(Boolean);
+
+    if (!allowedContactEmails.includes(contactEmail)) {
+      console.error('Unauthorized contact email attempt:', {
+        attemptedEmail: contactEmail,
+        ip,
+        userAgent: req.headers.get('user-agent'),
+        timestamp: new Date().toISOString()
+      });
+      
+      return NextResponse.json(
+        { 
+          error: { 
+            code: 'SECURITY_ERROR', 
+            message: t('errors.api.unauthorizedEmailTarget')
+          } 
+        },
+        { status: 403 }
       );
     }
 
@@ -221,9 +309,9 @@ export async function POST(req: Request) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: process.env.RESEND_FROM_EMAIL || 'noreply@yourdomain.com',
+            from: `Formularz SANTRUM <${process.env.RESEND_FROM_EMAIL || 'noreply@resend.dev'}>`,
             to: [contactEmail],
-            subject: `New contact form message from ${safeName}`,
+            subject: `Contact from ${safeName}`,
             html: `
               <h2>New Contact Form Message</h2>
               <p><strong>Name:</strong> ${safeName}</p>
@@ -303,20 +391,34 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ 
       success: true,
-      message: 'Contact form submitted successfully' 
+      message: t('errors.api.contactFormSubmitted')
     });
 
   } catch (error) {
     console.error('Contact form error:', error);
     
-    return NextResponse.json(
-      { 
-        error: { 
-          code: 'INTERNAL_ERROR', 
-          message: 'Internal server error' 
-        } 
-      },
-      { status: 500 }
-    );
+    // Try to get translations for error message, fallback to English if fails
+    try {
+      const t = await getContactTranslations(req);
+      return NextResponse.json(
+        { 
+          error: { 
+            code: 'INTERNAL_ERROR', 
+            message: t('errors.api.internalError')
+          } 
+        },
+        { status: 500 }
+      );
+    } catch (translationError) {
+      return NextResponse.json(
+        { 
+          error: { 
+            code: 'INTERNAL_ERROR', 
+            message: 'Internal server error' 
+          } 
+        },
+        { status: 500 }
+      );
+    }
   }
 }
