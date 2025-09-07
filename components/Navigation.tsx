@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
@@ -24,8 +24,10 @@ interface NavigationProps {
 export function Navigation({ className = '' }: NavigationProps) {
   const t = useTranslations('navigation');
   const locale = useLocale();
+  const router = useRouter();
   const [currentPathname, setCurrentPathname] = useState<string>('/');
   const [mounted, setMounted] = useState(false);
+  
   useEffect(() => {
     setMounted(true);
     if (typeof window !== 'undefined') {
@@ -45,6 +47,18 @@ export function Navigation({ className = '' }: NavigationProps) {
   const makeLocaleHref = (nextLocale: 'pl' | 'en') => {
     const base = currentPathname || '/';
     return base.replace(/^\/[a-z]{2}(?=\/|$)/, `/${nextLocale}`);
+  };
+
+  const handleLocaleChange = (nextLocale: 'pl' | 'en') => {
+    if (!mounted || nextLocale === locale) return;
+    
+    // Zapisz aktualną pozycję scroll
+    const scrollPosition = window.scrollY;
+    sessionStorage.setItem('scrollPosition', scrollPosition.toString());
+    
+    // Przejdź do nowej strony z nowym językiem
+    const newHref = makeLocaleHref(nextLocale);
+    router.push(newHref);
   };
 
   const navItems = [
@@ -115,11 +129,23 @@ export function Navigation({ className = '' }: NavigationProps) {
             <ThemeToggle />
             
             <div className="flex items-center gap-1 rounded-full bg-muted p-1">
-              <Button asChild variant={locale === 'pl' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'pl'}>
-                <Link href={makeLocaleHref('pl')}>PL</Link>
+              <Button 
+                variant={locale === 'pl' ? 'default' : 'ghost'} 
+                size="sm" 
+                className="h-8 px-3" 
+                aria-pressed={locale === 'pl'}
+                onClick={() => handleLocaleChange('pl')}
+              >
+                PL
               </Button>
-              <Button asChild variant={locale === 'en' ? 'default' : 'ghost'} size="sm" className="h-8 px-3" aria-pressed={locale === 'en'}>
-                <Link href={makeLocaleHref('en')}>EN</Link>
+              <Button 
+                variant={locale === 'en' ? 'default' : 'ghost'} 
+                size="sm" 
+                className="h-8 px-3" 
+                aria-pressed={locale === 'en'}
+                onClick={() => handleLocaleChange('en')}
+              >
+                EN
               </Button>
             </div>
           </div>

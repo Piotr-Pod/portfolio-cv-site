@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { Navigation } from '@/components/Navigation';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
+import { ScrollRestoration } from '@/components/ScrollRestoration';
 import { ThemeProvider } from '@/lib/theme-provider';
 import { AnalyticsManager } from '@/components/ui/analytics-manager';
 import '@/app/globals.css';
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans`} suppressHydrationWarning>
         <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
           <NextIntlClientProvider messages={messages}>
+            <ScrollRestoration />
             <Navigation />
             {children}
             <ScrollToTopButton />
