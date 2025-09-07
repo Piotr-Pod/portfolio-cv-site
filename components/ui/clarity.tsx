@@ -37,7 +37,7 @@ export function Clarity({ projectId, enabled = true }: ClarityProps) {
     }
 
     // Official Microsoft Clarity initialization code
-    (function(c: any, l: any, a: any, r: any, i: any, t: any, y: any) {
+    (function(c: any, l: any, a: any, r: any, i: any, t?: any, y?: any) {
       c[a] = c[a] || function() { (c[a].q = c[a].q || []).push(arguments) };
       t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
       y = l.getElementsByTagName(r)[0]; 
