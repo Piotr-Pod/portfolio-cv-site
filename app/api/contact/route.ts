@@ -133,7 +133,8 @@ export async function POST(req: Request) {
     const referer = req.headers.get('referer');
     
     // In production, validate against your domain
-    const allowedDomain = process.env.NEXT_PUBLIC_DOMAIN || 'localhost';
+    // Prefer private APP_DOMAIN; fallback to legacy NEXT_PUBLIC_DOMAIN for backward compatibility
+    const allowedDomain = process.env.APP_DOMAIN || process.env.NEXT_PUBLIC_DOMAIN || 'localhost';
     if (origin && !origin.includes('localhost') && !origin.includes(allowedDomain)) {
       return NextResponse.json(
         { 
