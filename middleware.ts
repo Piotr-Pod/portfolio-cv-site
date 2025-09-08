@@ -63,7 +63,7 @@ export default async function middleware(request: NextRequest) {
     "script-src-elem 'self' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms https://scripts.clarity.ms" + (process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL).origin}` : ''),
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
-    "connect-src 'self' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms https://scripts.clarity.ms https://k.clarity.ms" + (process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL).origin}` : ''),
+    "connect-src 'self' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms https://scripts.clarity.ms https://k.clarity.ms https://api-gateway.umami.dev" + (process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL).origin}` : ''),
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'"
