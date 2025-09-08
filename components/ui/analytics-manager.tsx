@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Clarity } from '@/components/ui/clarity';
 import { useAnalyticsConsent } from '@/lib/hooks/use-analytics-consent';
 import { AnalyticsConsentBanner } from '@/components/ui/analytics-consent-banner';
+import Script from 'next/script';
 
 interface AnalyticsManagerProps {
   clarityProjectId?: string;
@@ -79,10 +80,24 @@ export function AnalyticsManager({
 
       {/* Umami Analytics */}
       {consent?.umami && umamiWebsiteId && (
-        <script
-          defer
+        <Script
+          id="umami-script"
           src={`${resolvedUmamiScriptUrl}`}
+          strategy="afterInteractive"
           data-website-id={umamiWebsiteId}
+          data-auto-track="true"
+          onLoad={() => {
+            try {
+              // eslint-disable-next-line no-console
+              console.log('Umami: script loaded', { src: resolvedUmamiScriptUrl });
+            } catch (_) {}
+          }}
+          onError={(e) => {
+            try {
+              // eslint-disable-next-line no-console
+              console.error('Umami: script failed to load', { src: resolvedUmamiScriptUrl, error: e });
+            } catch (_) {}
+          }}
         />
       )}
 
