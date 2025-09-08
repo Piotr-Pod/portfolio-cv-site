@@ -74,16 +74,16 @@ export default async function LocaleLayout({
             <Navigation />
             {children}
             <ScrollToTopButton />
+            <AnalyticsManager
+              clarityProjectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}
+              plausibleDomain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+              umamiWebsiteId={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+              umamiScriptUrl={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
+            />
           </NextIntlClientProvider>
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
         {process.env.NODE_ENV === 'production' && <Analytics />}
-        <AnalyticsManager
-          clarityProjectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}
-          plausibleDomain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-          umamiWebsiteId={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-          umamiScriptUrl={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
-        />
       </body>
     </html>
   );

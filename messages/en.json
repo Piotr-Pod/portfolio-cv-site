@@ -235,5 +235,26 @@
         "contactFormSubmitted": "Contact form submitted successfully"
       }
     }
+  },
+  "analyticsConsent": {
+    "title": "Cookies & analytics settings",
+    "intro": "Hi! I use cookies and analytics tools to better tailor the site and understand how anonymous users interact with it. If you prefer not to, feel free to decline. If you agree to their use, I’d really appreciate it. Thank you! :)",
+    "details": {
+      "clarity": {
+        "title": "Microsoft Clarity",
+        "description": "User behavior insights and session recordings"
+      },
+      "plausible": {
+        "title": "Plausible Analytics",
+        "description": "Privacy-friendly, anonymous website analytics"
+      }
+    },
+    "buttons": {
+      "acceptAll": "Accept all",
+      "rejectAll": "Reject all",
+      "showDetails": "Show details",
+      "hideDetails": "Hide details",
+      "savePreferences": "Save preferences"
+    }
   }
 }

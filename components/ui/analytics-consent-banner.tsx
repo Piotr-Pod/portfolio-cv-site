@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Settings, Check, X as XIcon } from 'lucide-react';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { useAnalyticsConsent } from '@/lib/hooks/use-analytics-consent';
 
@@ -11,6 +13,7 @@ interface AnalyticsConsentBannerProps {
 }
 
 export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps) {
+  const t = useTranslations('analyticsConsent');
   const { consent, isLoaded, updateConsent, acceptAll, rejectAll } = useAnalyticsConsent();
   const [showDetails, setShowDetails] = useState(false);
 
@@ -44,12 +47,14 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
         <div className="max-w-4xl mx-auto">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Ustawienia analityki
-              </h3>
+              <div className="flex items-center gap-3 mb-2">
+                <Image src="/images/cookie.svg" alt="cookie" width={28} height={28} />
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {t('title')}
+                </h3>
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                Używamy plików cookie i narzędzi analitycznych, aby poprawić doświadczenia użytkowników 
-                i zrozumieć, jak korzystasz z naszej strony. Możesz zarządzać swoimi preferencjami poniżej.
+                {t('intro')}
               </p>
 
               {showDetails && (
@@ -61,10 +66,8 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
                 >
                   <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">Microsoft Clarity</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Analiza zachowań użytkowników i nagrywanie sesji
-                      </p>
+                      <h4 className="font-medium text-gray-900 dark:text-white">{t('details.clarity.title')}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{t('details.clarity.description')}</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -79,10 +82,8 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
 
                   <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">Plausible Analytics</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Anonimowa analityka ruchu na stronie
-                      </p>
+                      <h4 className="font-medium text-gray-900 dark:text-white">{t('details.plausible.title')}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">{t('details.plausible.description')}</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -104,7 +105,7 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
                   className="bg-blue-600 hover:bg-blue-700 text-white"
                 >
                   <Check className="w-4 h-4 mr-2" />
-                  Akceptuj wszystkie
+                  {t('buttons.acceptAll')}
                 </Button>
                 <Button
                   onClick={handleRejectAll}
@@ -112,7 +113,7 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
                   size="sm"
                 >
                   <XIcon className="w-4 h-4 mr-2" />
-                  Odrzuć wszystkie
+                  {t('buttons.rejectAll')}
                 </Button>
                 <Button
                   onClick={() => setShowDetails(!showDetails)}
@@ -120,7 +121,7 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
                   size="sm"
                 >
                   <Settings className="w-4 h-4 mr-2" />
-                  {showDetails ? 'Ukryj szczegóły' : 'Pokaż szczegóły'}
+                  {showDetails ? t('buttons.hideDetails') : t('buttons.showDetails')}
                 </Button>
                 {showDetails && (
                   <Button
@@ -128,7 +129,7 @@ export function AnalyticsConsentBanner({ onClose }: AnalyticsConsentBannerProps)
                     variant="outline"
                     size="sm"
                   >
-                    Zapisz preferencje
+                    {t('buttons.savePreferences')}
                   </Button>
                 )}
               </div>

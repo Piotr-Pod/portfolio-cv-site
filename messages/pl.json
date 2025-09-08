@@ -235,5 +235,26 @@
         "contactFormSubmitted": "Formularz kontaktowy został wysłany pomyślnie"
       }
     }
+  },
+  "analyticsConsent": {
+    "title": "Ustawienia ciasteczek i analityki",
+    "intro": "Cześć, używam plików cookie oraz narzędzi analitycznych, aby lepiej dostosować stronę i zrozumieć jak korzystają z niej anonimowi użytkownicy. Jeśli nie chcesz – śmiało anuluj. Jeśli zgodzisz się na ich użycie, będę Ci bardzo wdzięczny. Dziękuję :)",
+    "details": {
+      "clarity": {
+        "title": "Microsoft Clarity",
+        "description": "Analiza zachowań użytkowników i nagrywanie sesji"
+      },
+      "plausible": {
+        "title": "Plausible Analytics",
+        "description": "Anonimowa analityka ruchu na stronie"
+      }
+    },
+    "buttons": {
+      "acceptAll": "Akceptuj wszystkie",
+      "rejectAll": "Odrzuć wszystkie",
+      "showDetails": "Pokaż szczegóły",
+      "hideDetails": "Ukryj szczegóły",
+      "savePreferences": "Zapisz preferencje"
+    }
   }
 }
