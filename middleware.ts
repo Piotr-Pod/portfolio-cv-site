@@ -66,11 +66,11 @@ export default async function middleware(request: NextRequest) {
   // Content Security Policy
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms",
-    "script-src-elem 'self' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms",
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms" + (process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL).origin}` : ''),
+    "script-src-elem 'self' 'unsafe-inline' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms" + (process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL).origin}` : ''),
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
-    "connect-src 'self' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms",
+    "connect-src 'self' https://vercel.live https://va.vercel-scripts.com https://www.clarity.ms https://clarity.ms" + (process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ? ` ${new URL(process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL).origin}` : ''),
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'"

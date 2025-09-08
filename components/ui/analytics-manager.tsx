@@ -9,12 +9,14 @@ interface AnalyticsManagerProps {
   clarityProjectId?: string;
   plausibleDomain?: string;
   umamiWebsiteId?: string;
+  umamiScriptUrl?: string;
 }
 
 export function AnalyticsManager({ 
   clarityProjectId, 
   plausibleDomain, 
-  umamiWebsiteId 
+  umamiWebsiteId,
+  umamiScriptUrl
 }: AnalyticsManagerProps) {
   const { consent, isLoaded } = useAnalyticsConsent();
   const [showBanner, setShowBanner] = useState(false);
@@ -30,10 +32,11 @@ export function AnalyticsManager({
           clarityProjectId: Boolean(clarityProjectId) ? '[set]' : '[missing]',
           plausibleDomain: Boolean(plausibleDomain) ? '[set]' : '[missing]',
           umamiWebsiteId: Boolean(umamiWebsiteId) ? '[set]' : '[missing]',
+          umamiScriptUrl: Boolean(umamiScriptUrl || process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL) ? '[set]' : '[missing]'
         });
       } catch (_) {}
     }
-  }, [clarityProjectId, plausibleDomain, umamiWebsiteId]);
+  }, [clarityProjectId, plausibleDomain, umamiWebsiteId, umamiScriptUrl]);
 
   useEffect(() => {
     // Show banner if consent hasn't been given yet
@@ -52,6 +55,8 @@ export function AnalyticsManager({
   if (!isLoaded) {
     return null;
   }
+
+  const resolvedUmamiScriptUrl = umamiScriptUrl || process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL || 'https://umami.example.com/script.js';
 
   return (
     <>
@@ -76,7 +81,7 @@ export function AnalyticsManager({
       {consent?.umami && umamiWebsiteId && (
         <script
           defer
-          src={`https://umami.example.com/script.js`}
+          src={`${resolvedUmamiScriptUrl}`}
           data-website-id={umamiWebsiteId}
         />
       )}
