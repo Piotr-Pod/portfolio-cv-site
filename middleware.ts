@@ -9,8 +9,7 @@ const intlMiddleware = createMiddleware({
 
 export default async function middleware(request: NextRequest) {
   // Debug logs
-  console.log('🔍 Middleware called for:', request.nextUrl.pathname);
-  console.log('🔍 Cookies:', request.cookies.getAll().map(c => `${c.name}=${c.value}`));
+  
 
 
   // Sprawdź autoryzację tylko w środowisku produkcyjnym
@@ -22,28 +21,26 @@ export default async function middleware(request: NextRequest) {
                          !request.nextUrl.pathname.includes('/login') &&
                          !request.nextUrl.pathname.includes('.');
 
-  console.log('🔍 Environment:', process.env.NODE_ENV);
-  console.log('🔍 Is production:', isProduction);
-  console.log('🔍 Is protected path:', isProtectedPath);
+  
 
   if (isProtectedPath) {
     // Sprawdź czy użytkownik jest zalogowany (cookie)
     const isAuthenticated = request.cookies.get('authenticated')?.value === 'true';
     
-    console.log('🔍 Is authenticated:', isAuthenticated);
+    
     
     // Jeśli nie jest zalogowany, przekieruj do logowania
     if (!isAuthenticated) {
-      console.log('❌ Not authenticated, redirecting to login');
+      
       // Użyj domyślnego locale (pl) dla strony logowania
       const loginUrl = new URL('/pl/login', request.url);
       loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
       return NextResponse.redirect(loginUrl);
     }
     
-    console.log('✅ Authenticated, continuing...');
+    
   } else if (!isProduction) {
-    console.log('🔓 Development mode - authentication disabled');
+    
   }
   
   // Jeśli użytkownik jest zalogowany lub ścieżka nie wymaga autoryzacji, kontynuuj z next-intl

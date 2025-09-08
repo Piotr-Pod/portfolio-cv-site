@@ -23,32 +23,12 @@ export function AnalyticsManager({
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Diagnostic logs for verifying on Vercel
-    if (typeof window !== 'undefined') {
-      try {
-        // eslint-disable-next-line no-console
-        console.log('AnalyticsManager: init', {
-          env: process.env.NODE_ENV,
-          hostname: window.location.hostname,
-          clarityProjectId: Boolean(clarityProjectId) ? '[set]' : '[missing]',
-          plausibleDomain: Boolean(plausibleDomain) ? '[set]' : '[missing]',
-          umamiWebsiteId: Boolean(umamiWebsiteId) ? '[set]' : '[missing]',
-          umamiScriptUrl: Boolean(umamiScriptUrl || process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL) ? '[set]' : '[missing]'
-        });
-      } catch (_) {}
-    }
   }, [clarityProjectId, plausibleDomain, umamiWebsiteId, umamiScriptUrl]);
 
   useEffect(() => {
     // Show banner if consent hasn't been given yet
     if (isLoaded && consent === null) {
       setShowBanner(true);
-    }
-    if (isLoaded) {
-      try {
-        // eslint-disable-next-line no-console
-        console.log('AnalyticsManager: consent state', consent);
-      } catch (_) {}
     }
   }, [isLoaded, consent]);
 
@@ -86,12 +66,7 @@ export function AnalyticsManager({
           strategy="afterInteractive"
           data-website-id={umamiWebsiteId}
           data-auto-track="true"
-          onLoad={() => {
-            try {
-              // eslint-disable-next-line no-console
-              console.log('Umami: script loaded', { src: resolvedUmamiScriptUrl });
-            } catch (_) {}
-          }}
+          onLoad={() => {}}
           onError={(e) => {
             try {
               // eslint-disable-next-line no-console

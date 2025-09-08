@@ -26,13 +26,11 @@ export function Clarity({ projectId, enabled = true }: ClarityProps) {
     // Don't load Clarity on localhost in development
     if (process.env.NODE_ENV === 'development' && 
         (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-      console.log('Microsoft Clarity: Skipping initialization on localhost');
       return;
     }
 
     // Check if Clarity is already loaded
     if (window.clarity) {
-      console.log('Microsoft Clarity: Already initialized');
       return;
     }
 
@@ -49,12 +47,10 @@ export function Clarity({ projectId, enabled = true }: ClarityProps) {
       }
     })(window, document, "clarity", "script", projectId);
 
-    console.log('Microsoft Clarity: Initialized with project ID:', projectId);
 
     // Cleanup function
     return () => {
-      // Note: Clarity doesn't provide a cleanup method, so we just log
-      console.log('Microsoft Clarity: Component unmounted');
+      // Note: Clarity doesn't provide a cleanup method
     };
   }, [projectId, enabled]);
 

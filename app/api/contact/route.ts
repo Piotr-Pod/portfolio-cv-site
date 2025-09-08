@@ -328,7 +328,6 @@ export async function POST(req: Request) {
 
         if (resendResponse.ok) {
           emailSent = true;
-          console.log('Email sent successfully via Resend');
         } else {
           console.error('Resend API error:', await resendResponse.text());
         }
@@ -365,7 +364,6 @@ export async function POST(req: Request) {
 
         if (mailgunResponse.ok) {
           emailSent = true;
-          console.log('Email sent successfully via Mailgun');
         } else {
           console.error('Mailgun API error:', await mailgunResponse.text());
         }
@@ -374,16 +372,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // Log contact form data for debugging (using sanitized data)
-    console.log('Contact form submission:', {
-      name: safeName,
-      email: safeEmail,
-      message: safeMessage.substring(0, 100) + (safeMessage.length > 100 ? '...' : ''),
-      timestamp: new Date().toISOString(),
-      ip,
-      emailSent,
-      suspiciousContentDetected: suspiciousFields.length > 0,
-    });
+    // Avoid verbose logging of submissions in production
 
     if (!emailSent) {
       console.warn('No email service configured or email sending failed');
