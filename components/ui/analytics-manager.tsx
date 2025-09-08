@@ -20,9 +20,31 @@ export function AnalyticsManager({
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
+    // Diagnostic logs for verifying on Vercel
+    if (typeof window !== 'undefined') {
+      try {
+        // eslint-disable-next-line no-console
+        console.log('AnalyticsManager: init', {
+          env: process.env.NODE_ENV,
+          hostname: window.location.hostname,
+          clarityProjectId: Boolean(clarityProjectId) ? '[set]' : '[missing]',
+          plausibleDomain: Boolean(plausibleDomain) ? '[set]' : '[missing]',
+          umamiWebsiteId: Boolean(umamiWebsiteId) ? '[set]' : '[missing]',
+        });
+      } catch (_) {}
+    }
+  }, [clarityProjectId, plausibleDomain, umamiWebsiteId]);
+
+  useEffect(() => {
     // Show banner if consent hasn't been given yet
     if (isLoaded && consent === null) {
       setShowBanner(true);
+    }
+    if (isLoaded) {
+      try {
+        // eslint-disable-next-line no-console
+        console.log('AnalyticsManager: consent state', consent);
+      } catch (_) {}
     }
   }, [isLoaded, consent]);
 

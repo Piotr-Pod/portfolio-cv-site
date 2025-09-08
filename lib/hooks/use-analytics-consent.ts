@@ -19,13 +19,32 @@ export function useAnalyticsConsent() {
     const storedConsent = localStorage.getItem(CONSENT_STORAGE_KEY);
     if (storedConsent) {
       try {
-        setConsent(JSON.parse(storedConsent));
+        const parsed = JSON.parse(storedConsent);
+        setConsent(parsed);
+        try {
+          // Diagnostic logs for verifying on Vercel
+          // eslint-disable-next-line no-console
+          console.log('AnalyticsConsent: loaded from localStorage', {
+            consent: parsed,
+            env: process.env.NODE_ENV,
+            hostname: typeof window !== 'undefined' ? window.location.hostname : 'n/a',
+          });
+        } catch (_) {
+          // ignore logging failures
+        }
       } catch (error) {
         console.warn('Failed to parse stored analytics consent:', error);
         setConsent(null); // No consent given yet
       }
     } else {
       setConsent(null); // No consent given yet
+      try {
+        // eslint-disable-next-line no-console
+        console.log('AnalyticsConsent: no stored consent', {
+          env: process.env.NODE_ENV,
+          hostname: typeof window !== 'undefined' ? window.location.hostname : 'n/a',
+        });
+      } catch (_) {}
     }
     setIsLoaded(true);
   }, []);
@@ -35,6 +54,14 @@ export function useAnalyticsConsent() {
     const updatedConsent = { ...currentConsent, ...newConsent };
     setConsent(updatedConsent);
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(updatedConsent));
+    try {
+      // eslint-disable-next-line no-console
+      console.log('AnalyticsConsent: updated', {
+        consent: updatedConsent,
+        env: process.env.NODE_ENV,
+        hostname: typeof window !== 'undefined' ? window.location.hostname : 'n/a',
+      });
+    } catch (_) {}
   };
 
   const acceptAll = () => {
