@@ -12,13 +12,6 @@ export default async function middleware(request: NextRequest) {
   console.log('🔍 Middleware called for:', request.nextUrl.pathname);
   console.log('🔍 Cookies:', request.cookies.getAll().map(c => `${c.name}=${c.value}`));
 
-  // Block direct access to CV PDF generation endpoint
-  if (request.nextUrl.pathname === '/api/cv/pdf') {
-    return NextResponse.json(
-      { error: 'Direct access not allowed. Use the download button instead.' },
-      { status: 403 }
-    );
-  }
 
   // Sprawdź autoryzację tylko w środowisku produkcyjnym
   const isProduction = process.env.NODE_ENV === 'production';

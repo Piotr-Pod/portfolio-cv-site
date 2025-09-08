@@ -14,7 +14,7 @@
   },
   "about": {
     "title": "About Me",
-    "description": "Senior Java Developer with over 8 years of experience in developing scalable systems for large companies. I work daily with Java, Spring Boot and microservices architecture, supporting backend solutions with DevOps tools, automation and artificial intelligence. When needed, I jump into the frontend world 😉 I gained experience, among others, in building the backend development of the IKO mobile application (PKO BP) serving 8 million customers, in an international team developing the TVaaS platform (Orange), in a startup (QuizIT) and on key internal products at a large insurance company.",
+    "description": "Senior Java Developer with over 8 years of experience in developing systems for large companies. I work daily with Java, Spring Boot and microservices architecture, supporting backend solutions with DevOps tools, automation and artificial intelligence. When needed, I jump into the frontend world 😉 I gained experience, among others, in building the backend development of the IKO mobile application (PKO BP) serving 8 million customers, in an international team developing the TVaaS platform (Orange), in a startup (QuizIT) and on key internal products at a large insurance company.",
     "experience": "Years of Experience",
     "supportedProjects": "Supported companies",
     "technologies": "Lines of code (and a few bugs..)",

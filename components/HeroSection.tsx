@@ -76,10 +76,10 @@ export function HeroSection() {
     const locale = window.location.pathname.split('/')[1] || 'pl';
     
     // Download static CV PDF file
-    const downloadUrl = `/cv/cv-piotr-podgorski-${locale}.pdf`;
+    const downloadUrl = `/cv/Piotr-Podgorski-CV-${locale}.pdf`;
     const link = document.createElement('a');
     link.href = downloadUrl;
-    link.download = `cv-piotr-podgorski-${locale}.pdf`;
+    link.download = `Piotr-Podgorski-CV-${locale}.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -165,7 +165,7 @@ export function HeroSection() {
               <motion.div
                 className="relative"
                 animate={isAvatarFlipped ? { rotateY: 360 } : { rotateY: 0 }}
-                transition={{ duration: 0.8, ease: 'easeInOut' }}
+                transition={{ duration: 2, ease: 'easeInOut' }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <Avatar className="h-64 w-64 border-4 border-background rounded-2xl shadow-lg">
