@@ -4,7 +4,8 @@
     "subtitle": "Senior Java Developer | AI Enthusiast",
     "description": "Od 8 lat buduję skalowalne systemy w Javie - najczęściej ze Spring Bootem w świecie mikrousług - a coraz więcej swojej uwagi poświęcam sztucznej inteligencji.",
     "downloadCv": "Pobierz CV",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "scroll": "przewiń"
   },
   "navigation": {
     "home": "Strona główna",
@@ -14,7 +15,7 @@
   },
   "about": {
     "title": "O mnie",
-    "description": "Senior Java Developer z 8 letnim doświadczeniem w rozwijaniu systemów dla dużych firm. Na co dzień pracuję z Java, Spring Bootem i architekturą mikrousług, a backendowe rozwiązania wspieram narzędziami DevOps, automatyzacją i sztuczną inteligencją. W razie potrzeby wskoczę do świata frontendu 😉 Doświadczenie zdobywałem m.in. przy budowie rozwoju backendu mobilnej aplikacji IKO (PKO BP) obsługującej 8 mln klientów, w międzynarodowym zespole rozwijającym platformę TVaaS (Orange), w startupie (QuizIT) czy przy kluczowych produktach wewnętrznych dużej firmy ubezpieczeniowej.",
+    "description": "Na co dzień pracuję z Java, Spring Bootem i architekturą mikrousług, a backendowe rozwiązania wspieram narzędziami DevOps, automatyzacją i sztuczną inteligencją. W razie potrzeby wskoczę do świata frontendu 😉 Doświadczenie zdobywałem m.in. przy budowie rozwoju backendu mobilnej aplikacji IKO (PKO BP) obsługującej 8 mln klientów, w międzynarodowym zespole rozwijającym platformę TVaaS (Orange), w startupie (QuizIT) czy przy kluczowych produktach wewnętrznych dużej firmy ubezpieczeniowej.",
     "experience": "Lat doświadczenia",
     "supportedProjects": "Wspartych firm",
     "technologies": "Linii kodu (i kilka bugów..)",
@@ -91,7 +92,7 @@
         "technologies": ["Java", "Spring", "spring-cloud-config","Multitenancy", "TVaaS", "VOD"],
         "achievements": [
           "Implementacja biblioteki multitenancy dla Spring - łatwo wdrażalna w istniejącą architekturę i działająca z spring-cloud-config",
-          "Odpowiedzialność za mikreserwisy serwujące properties dla wszystkich innych MS - nacisk na wysoką wydajność",
+          "Odpowiedzialność za mikroserwisy serwujące properties dla wszystkich innych MS - nacisk na wysoką wydajność",
           "Drugi projekt - fotomontaż - zarządzanie zleceniami montażu",
           "Trzeci projekt - wewnętrzny projekt do zarządzania CV"
         ]
@@ -177,12 +178,8 @@
         "subtitle": "Projekt osobisty",
         "location": "Online",
         "description": "Rozpoczęcie tworzenia własnej strony CV realizującej wiele moich pomysłów i przedstawiającej moje doświadczenia. Projekt tworzę w ramach eksperymentowania z vibe coding.",
-        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel", "Vibe Coding"],
-        "achievements": [
-          "Strona w technologiach, które dopiero poznaje.",
-          "Case studies z tworzenia strony na blogu.",
-          "Wirtualny asystent z RAG w postaci czata."
-        ]
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "zod/dompurify", "Playwright", "MS Clarity/Umami", "Vercel", "Vibe Coding"],
+        "achievements": []
       }
     }
   },

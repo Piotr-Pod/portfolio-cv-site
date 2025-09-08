@@ -4,7 +4,8 @@
     "subtitle": "Senior Java Developer | AI Enthusiast",
     "description": "For 8 years I've been building scalable systems in Java - mostly with Spring Boot in the microservices world - and I'm increasingly focusing my attention on artificial intelligence.",
     "downloadCv": "Download CV",
-    "contact": "Contact"
+    "contact": "Contact",
+    "scroll": "Scroll"
   },
   "navigation": {
     "home": "Home",
@@ -177,12 +178,8 @@
         "subtitle": "Personal Project",
         "location": "Online",
         "description": "Starting the creation of a personal CV website realizing many of my ideas and presenting my experiences. Project created as part of experimenting with vibe coding.",
-        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel", "Vibe Coding"],
-        "achievements": [
-          "Website in technologies I'm just learning",
-          "Case studies from website creation on blog",
-          "Virtual assistant with RAG in form of chat"
-        ]
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "zod/dompurify", "Playwright", "MS Clarity/Umami","Vercel", "Vibe Coding"],
+        "achievements": []
       }
     }
   },
@@ -204,7 +201,7 @@
     "rateLimitMessage": "Too many message attempts.",
     "rateLimitWaitTime": "Please try again in {time}.",
     "calendarTitle": "Schedule a Meeting",
-    "calendarDescription": "Book a 30-minute meeting to discuss your project or collaboration.",
+    "calendarDescription": "Book a meeting to discuss your project or collaboration.",
     "bookMeeting": "Book Meeting",
     "emailTitle": "Write Directly",
     "emailDescription": "Prefer direct email contact? Click below to open your email application.",

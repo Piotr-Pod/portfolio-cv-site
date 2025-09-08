@@ -40,7 +40,7 @@ export function AboutSection() {
     {
       icon: Bot,
       title: 'AI',
-      description: 'LLM, RAG, Neo4j, API/Agents AI, MCP, Vibe Coding, local LLMS',
+      description: 'LLM, RAG, Neo4j, API/Agents AI, MCP, Vibe Coding, local LLMs, Firecrawl, Qdrant, Algolia, LangChain',
       color: 'bg-cyan-500',
     },
     {
@@ -52,7 +52,7 @@ export function AboutSection() {
     {
       icon: Zap,
       title: 'Frontend',
-      description: 'JavaScript, TypeScript, React, Next.js, HTML, CSS',
+      description: 'React, TypeScript, Next.js, Vercel, HTML, CSS',
       color: 'bg-purple-500',
     },
   ];

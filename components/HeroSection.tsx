@@ -252,7 +252,7 @@ export function HeroSection() {
                    ease: 'easeInOut' 
                  }}
                >
-                 Scroll
+                 {t('scroll')}
                </motion.p>
                
                {/* Down arrow */}
