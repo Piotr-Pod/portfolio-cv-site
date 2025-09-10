@@ -68,6 +68,46 @@
   }
 }
 
+@layer components {
+  /* Enhanced blog typography */
+  .prose {
+    @apply prose-neutral max-w-none leading-7;
+  }
+  .prose :where(h1, h2, h3, h4){
+    @apply scroll-mt-28 font-semibold tracking-tight text-foreground;
+  }
+  .prose :where(h2){
+    @apply mt-12 border-b pb-2;
+  }
+  .prose :where(p){
+    @apply text-foreground/90;
+  }
+  .prose :where(code):not(:where(pre code)){
+    @apply rounded bg-muted px-1.5 py-0.5 text-sm font-medium;
+  }
+  .prose pre {
+    @apply rounded-lg border bg-muted/50 p-4 shadow-sm;
+  }
+  .prose img {
+    @apply rounded-lg border shadow-sm;
+  }
+  .prose a {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-primary/30 bg-muted/40 p-4 italic;
+  }
+  .prose table {
+    @apply w-full table-auto overflow-hidden rounded-md border text-sm;
+  }
+  .prose thead th {
+    @apply bg-muted font-semibold;
+  }
+  .prose tbody tr {
+    @apply even:bg-muted/40;
+  }
+}
+
 /* Print styles for CV page */
 @media print {
   /* Hide navigation and other non-essential elements */

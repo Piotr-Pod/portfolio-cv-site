@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug } from '@/lib/blog'
 import { formatDateISO } from '@/lib/utils'
@@ -16,12 +17,33 @@ export default async function BlogPostPage({ params }: PageProps) {
   const html = await renderMarkdownToHtml(content)
 
   return (
-    <main className="container mx-auto px-4 pt-24 pb-16">
-      <div className="prose dark:prose-invert prose-headings:scroll-mt-24 prose-img:rounded-lg max-w-3xl">
-        <h1 className="mb-2">{frontmatter.title}</h1>
-        <p className="text-sm text-muted-foreground">{formatDateISO(frontmatter.date)}</p>
-        {frontmatter.description && <p className="mt-2">{frontmatter.description}</p>}
-        <article className="mt-8" dangerouslySetInnerHTML={{ __html: html }} />
+    <main className="container mx-auto px-4 pt-24 pb-20">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-6 text-sm">
+          <Link className="text-muted-foreground underline-offset-4 hover:underline" href={`/${locale}/blog`}>
+            {locale === 'pl' ? '← Wróć do bloga' : '← Back to blog'}
+          </Link>
+        </div>
+        <div className="prose dark:prose-invert">
+          <h1 className="mb-2">{frontmatter.title}</h1>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <time dateTime={frontmatter.date}>{formatDateISO(frontmatter.date)}</time>
+            <span>•</span>
+            <span>{Math.max(1, Math.round(content.split(/\s+/).length / 220))} min</span>
+            {frontmatter.tags && frontmatter.tags.length > 0 && (
+              <>
+                <span>•</span>
+                <div className="flex flex-wrap gap-2">
+                  {frontmatter.tags.map((tag) => (
+                    <span key={tag} className="rounded-full bg-muted px-2 py-0.5 text-xs">#{tag}</span>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          {frontmatter.description && <p className="mt-2 text-base text-foreground/80">{frontmatter.description}</p>}
+          <article className="mt-8" dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
       </div>
     </main>
   )

@@ -18,6 +18,7 @@ export interface BlogPostIndexItem {
   description: string
   date: string
   tags: string[]
+  readingTimeMinutes: number
 }
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'blog')
@@ -48,7 +49,7 @@ export function getAllPosts(locale: 'pl' | 'en'): BlogPostIndexItem[] {
   const slugs = getPostSlugs()
   const posts = slugs
     .map((slug) => {
-      const { frontmatter } = getPostBySlug(slug)
+      const { frontmatter, content } = getPostBySlug(slug)
       const fm = frontmatter
       if (fm.draft) return null
       const postLocale = (fm.locale as 'pl' | 'en') ?? 'pl'
@@ -60,6 +61,7 @@ export function getAllPosts(locale: 'pl' | 'en'): BlogPostIndexItem[] {
         description: fm.description ?? '',
         date: fm.date,
         tags: fm.tags ?? [],
+        readingTimeMinutes: Math.max(1, Math.round(content.split(/\s+/).length / 220))
       } satisfies BlogPostIndexItem
     })
     .filter(Boolean) as BlogPostIndexItem[]

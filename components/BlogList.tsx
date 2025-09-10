@@ -1,0 +1,137 @@
+"use client"
+
+import React from 'react'
+import Link from 'next/link'
+import { type BlogPostIndexItem } from '@/lib/blog'
+import { formatDateISO } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+
+interface BlogListProps {
+  posts: BlogPostIndexItem[]
+  locale: 'pl' | 'en'
+}
+
+export default function BlogList({ posts, locale }: BlogListProps) {
+  const allTags = React.useMemo(() => {
+    const set = new Set<string>()
+    for (const p of posts) for (const t of p.tags) set.add(t)
+    return Array.from(set).sort((a, b) => a.localeCompare(b))
+  }, [posts])
+
+  const [selectedTags, setSelectedTags] = React.useState<Set<string>>(new Set())
+  const [isCompact, setIsCompact] = React.useState(false)
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => {
+      const next = new Set(prev)
+      if (next.has(tag)) next.delete(tag)
+      else next.add(tag)
+      return next
+    })
+  }
+
+  const clearTags = () => setSelectedTags(new Set())
+
+  const filtered = React.useMemo(() => {
+    if (selectedTags.size === 0) return posts
+    return posts.filter(p => p.tags.some(t => selectedTags.has(t)))
+  }, [posts, selectedTags])
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          {allTags.map(tag => {
+            const active = selectedTags.has(tag)
+            return (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => toggleTag(tag)}
+                className={`rounded-full border px-3 py-1 text-xs transition ${
+                  active ? 'bg-primary text-primary-foreground border-primary' : 'bg-muted hover:bg-muted/70'
+                }`}
+                aria-pressed={active}
+              >
+                #{tag}
+              </button>
+            )
+          })}
+          {allTags.length > 0 && (
+            <button
+              type="button"
+              onClick={clearTags}
+              className="rounded-full px-3 py-1 text-xs text-muted-foreground underline-offset-4 hover:underline"
+            >
+              {locale === 'pl' ? 'Wyczyść' : 'Clear'}
+            </button>
+          )}
+        </div>
+        <div className="ml-auto inline-flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">
+            {isCompact ? (locale === 'pl' ? 'Widok kompaktowy' : 'Compact view') : (locale === 'pl' ? 'Widok kart' : 'Card view')}
+          </span>
+          <Button variant={isCompact ? 'secondary' : 'outline'} size="sm" onClick={() => setIsCompact(v => !v)}>
+            {isCompact ? (locale === 'pl' ? 'Karty' : 'Cards') : (locale === 'pl' ? 'Kompakt' : 'Compact')}
+          </Button>
+        </div>
+      </div>
+
+      {isCompact ? (
+        <ul className="divide-y rounded-lg border bg-card">
+          {filtered.map(post => (
+            <li key={post.slug} className="grid grid-cols-[1fr_auto] items-center gap-3 p-3 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
+              <div className="min-w-0">
+                <Link href={`/${locale}/blog/${post.slug}`} className="truncate font-medium underline-offset-4 hover:underline">
+                  {post.title}
+                </Link>
+                {post.description && (
+                  <p className="truncate text-sm text-muted-foreground">
+                    {post.description}
+                  </p>
+                )}
+              </div>
+              <time className="col-start-2 text-xs text-muted-foreground sm:col-start-auto" dateTime={post.date}>
+                {formatDateISO(post.date)}
+              </time>
+              <span className="hidden text-xs text-muted-foreground sm:block">{post.readingTimeMinutes} min</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((post) => (
+            <article
+              key={post.slug}
+              className="group relative overflow-hidden rounded-xl border bg-card p-5 shadow-sm transition hover:shadow-md"
+            >
+              <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+                <time dateTime={post.date}>{formatDateISO(post.date)}</time>
+                <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px]">
+                  {post.readingTimeMinutes} min
+                </span>
+              </div>
+              <h2 className="mt-3 text-lg font-semibold tracking-tight">
+                <Link className="inline-block underline-offset-4 group-hover:underline" href={`/${locale}/blog/${post.slug}`}>
+                  {post.title}
+                </Link>
+              </h2>
+              {post.description && (
+                <p className="mt-2 text-sm text-muted-foreground">{post.description}</p>
+              )}
+              {post.tags.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span key={tag} className="text-xs bg-muted px-2 py-0.5 rounded-full">#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+
