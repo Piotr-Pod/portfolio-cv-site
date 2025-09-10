@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Mail, CheckCircle } from 'lucide-react';
+import { Download, Mail, CheckCircle, Github } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -122,6 +122,8 @@ export function HeroSection() {
     }
   };
 
+  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
+
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center bg-background relative pt-16">
       <div className="container mx-auto px-4 py-4">
@@ -230,6 +232,20 @@ export function HeroSection() {
               <Mail className="mr-2 h-5 w-5" />
               {t('contact')}
             </Button>
+
+            {githubUrl && (
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+                className="group px-8 py-3 text-lg font-semibold transition-all duration-300 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+              >
+                <a href={githubUrl} target="_blank" rel="noreferrer noopener">
+                  <Github className="mr-2 h-5 w-5" />
+                  GitHub
+                </a>
+              </Button>
+            )}
           </motion.div>
 
           {/* Scroll indicator */}

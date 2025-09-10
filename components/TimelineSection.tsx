@@ -21,7 +21,8 @@ import {
   Star,
   Shield,
   type LucideIcon,
-  Handshake
+  Handshake,
+  Github
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -54,6 +55,8 @@ export function TimelineSection() {
     new Set<TimelineType>(['work', 'education', 'training', 'projects'])
   );
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set<string>());
+  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
+  const nonExpandableIds = new Set<string>(['projects-2']);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -232,6 +235,15 @@ export function TimelineSection() {
       endDate: null,
       customIcon: Code,
       iconColor: 'bg-gradient-to-br from-purple-500 to-pink-500'
+    },
+    // Projects - GitHub CTA (oldest to appear at the bottom)
+    {
+      id: 'projects-2',
+      type: 'projects',
+      startDate: '2000-01',
+      endDate: null,
+      customIcon: Github,
+      iconColor: 'bg-neutral-900 text-white'
     }
   ];
 
@@ -335,6 +347,7 @@ export function TimelineSection() {
   };
 
   const toggleItemExpanded = (itemId: string) => {
+    if (nonExpandableIds.has(itemId)) return;
     setExpandedItems(prev => {
       const newExpanded = new Set(prev);
       if (newExpanded.has(itemId)) {
@@ -347,8 +360,8 @@ export function TimelineSection() {
   };
 
   const toggleAllExpanded = () => {
-    const visibleItemIds = filteredItems.map(item => item.id);
-    const allVisible = visibleItemIds.every(id => expandedItems.has(id));
+    const visibleItemIds = filteredItems.filter(item => !nonExpandableIds.has(item.id)).map(item => item.id);
+    const allVisible = visibleItemIds.length > 0 && visibleItemIds.every(id => expandedItems.has(id));
     
     if (allVisible) {
       // Jeśli wszystkie widoczne są rozwinięte, zwiń wszystkie
@@ -359,7 +372,10 @@ export function TimelineSection() {
     }
   };
 
-  const allVisibleExpanded = filteredItems.length > 0 && filteredItems.every(item => expandedItems.has(item.id));
+  const allVisibleExpanded = (() => {
+    const expandable = filteredItems.filter(item => !nonExpandableIds.has(item.id));
+    return expandable.length > 0 && expandable.every(item => expandedItems.has(item.id));
+  })();
 
   const filterOptions = [
     { key: 'all' as const, label: t('filters.all'), icon: null, onClick: toggleAllFilters, isActive: enabledFilters.size === 4 },
@@ -499,20 +515,33 @@ export function TimelineSection() {
                         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
-                              <h3 className="text-lg font-bold text-foreground group-hover:text-blue-600 transition-colors">
-                                {item.title}
-                              </h3>
+                              {item.id === 'projects-2' && githubUrl ? (
+                                <a
+                                  href={githubUrl}
+                                  target="_blank"
+                                  rel="noreferrer noopener"
+                                  className="text-lg font-bold text-blue-600 hover:underline"
+                                >
+                                  {t('items.projects-2.title')}
+                                </a>
+                              ) : (
+                                <h3 className="text-lg font-bold text-foreground group-hover:text-blue-600 transition-colors">
+                                  {item.title}
+                                </h3>
+                              )}
                               {item.category && (
                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${item.category.color}`}>
                                   {item.category.label}
                                 </span>
                               )}
                             </div>
-                            <div className="flex items-center text-muted-foreground mt-1 mb-1">
-                              <Building className="h-3.5 w-3.5 mr-1.5" />
-                              <span className="font-medium text-sm">{item.subtitle}</span>
-                            </div>
-                            {!isExpanded && (
+                            {item.id !== 'projects-2' && (
+                              <div className="flex items-center text-muted-foreground mt-1 mb-1">
+                                <Building className="h-3.5 w-3.5 mr-1.5" />
+                                <span className="font-medium text-sm">{item.subtitle}</span>
+                              </div>
+                            )}
+                            {item.id !== 'projects-2' && !isExpanded && (
                               <div className="flex items-center text-muted-foreground text-xs">
                                 <Calendar className="h-3 w-3 mr-1.5" />
                                 <span>
@@ -522,28 +551,30 @@ export function TimelineSection() {
                             )}
                           </div>
                           
-                          {/* Toggle button */}
-                          <button
-                            onClick={() => toggleItemExpanded(item.id)}
-                            className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-xs font-medium transition-colors mt-2 md:mt-0"
-                          >
-                            <span>{isExpanded ? t('showLess') : t('showMore')}</span>
-                            {isExpanded ? (
-                              <ChevronUp className="h-3 w-3" />
-                            ) : (
-                              <ChevronDown className="h-3 w-3" />
-                            )}
-                          </button>
+                          {/* Toggle button (hidden for non-expandable GitHub item) */}
+                          {item.id !== 'projects-2' && (
+                            <button
+                              onClick={() => toggleItemExpanded(item.id)}
+                              className="flex items-center gap-1 text-muted-foreground hover:text-foreground text-xs font-medium transition-colors mt-2 md:mt-0"
+                            >
+                              <span>{isExpanded ? t('showLess') : t('showMore')}</span>
+                              {isExpanded ? (
+                                <ChevronUp className="h-3 w-3" />
+                              ) : (
+                                <ChevronDown className="h-3 w-3" />
+                              )}
+                            </button>
+                          )}
                         </div>
 
                         {/* Basic description - always visible */}
                         <p className="text-muted-foreground leading-relaxed mb-3 text-sm">
-                          {item.description}
+                          {item.id === 'projects-2' ? t('moreProjects') : item.description}
                         </p>
 
                         {/* Expanded details */}
                         <AnimatePresence>
-                          {isExpanded && (
+                          {isExpanded && item.id !== 'projects-2' && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}

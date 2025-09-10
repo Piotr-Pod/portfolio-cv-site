@@ -7,6 +7,9 @@
     "contact": "Kontakt",
     "scroll": "przewiń"
   },
+  "common": {
+    "github": "GitHub"
+  },
   "navigation": {
     "home": "Strona główna",
     "about": "O mnie",
@@ -36,6 +39,7 @@
     "period": "Okres",
     "technologiesCount": "technologii",
     "achievementsCount": "osiągnięć",
+    "moreProjects": "Więcej projektów",
     "months": {
       "jan": "Sty",
       "feb": "Lut",
@@ -180,6 +184,11 @@
         "description": "Rozpoczęcie tworzenia własnej strony CV realizującej wiele moich pomysłów i przedstawiającej moje doświadczenia. Projekt tworzę w ramach eksperymentowania z vibe coding.",
         "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "zod/dompurify", "Playwright", "MS Clarity/Umami", "Vercel", "Vibe Coding"],
         "achievements": []
+      },
+      "projects-2": {
+        "title": "GitHub repozytoria",
+        "location": "Online",
+        "description": "Więcej moich projektów"
       }
     }
   },

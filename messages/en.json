@@ -7,6 +7,9 @@
     "contact": "Contact",
     "scroll": "Scroll"
   },
+  "common": {
+    "github": "GitHub"
+  },
   "navigation": {
     "home": "Home",
     "about": "About",
@@ -36,6 +39,7 @@
     "period": "Period",
     "technologiesCount": "technologies",
     "achievementsCount": "achievements",
+    "moreProjects": "More projects",
     "months": {
       "jan": "Jan",
       "feb": "Feb",
@@ -180,6 +184,11 @@
         "description": "Starting the creation of a personal CV website realizing many of my ideas and presenting my experiences. Project created as part of experimenting with vibe coding.",
         "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "zod/dompurify", "Playwright", "MS Clarity/Umami","Vercel", "Vibe Coding"],
         "achievements": []
+      },
+      "projects-2": {
+        "title": "GitHub repositories",
+        "location": "Online",
+        "description": "More of my projects"
       }
     }
   },

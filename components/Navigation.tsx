@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Github } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
@@ -68,6 +68,8 @@ export function Navigation({ className = '' }: NavigationProps) {
     { id: 'contact', label: t('contact') },
   ];
 
+  const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
+
   return (
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border ${className}`}
@@ -119,11 +121,22 @@ export function Navigation({ className = '' }: NavigationProps) {
                       </motion.button>
                     </SheetClose>
                   ))}
+                  {githubUrl && (
+                    <a
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="flex items-center gap-2 text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 py-2"
+                    >
+                      <Github className="h-4 w-4" />
+                      GitHub
+                    </a>
+                  )}
                   {/* Mobile-only: Settings section */}
                   <div className="pt-2 mt-2 border-t border-border/50" />
                   <div className="flex flex-col items-start space-y-4">
                     {/* Language selector */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 rounded-full bg-muted p-1">
                       <Button 
                         variant={locale === 'pl' ? 'default' : 'ghost'} 
                         size="sm" 
@@ -151,8 +164,20 @@ export function Navigation({ className = '' }: NavigationProps) {
             </Sheet>
           </div>
 
-          {/* Right side - Theme toggle + Locale switcher (desktop only) */}
+          {/* Right side - GitHub + Theme toggle + Locale switcher (desktop only) */}
           <div className="hidden md:flex items-center gap-2 sm:gap-3">
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-muted transition-colors"
+                aria-label="GitHub"
+                title="GitHub"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+            )}
             <ThemeToggle />
             
             <div className="flex items-center gap-0.5 sm:gap-1 rounded-full bg-muted p-0.5 sm:p-1">
