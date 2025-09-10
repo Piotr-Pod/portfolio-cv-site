@@ -27,8 +27,8 @@ export function ThemeToggle() {
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <div className="w-10 h-10 p-0 rounded-full">
-        <div className="w-4 h-4 m-3" /> {/* Placeholder to maintain layout */}
+      <div className="w-8 h-8 p-0 rounded-full">
+        <div className="w-4 h-4 m-2" /> {/* Placeholder to maintain layout */}
       </div>
     );
   }
@@ -39,7 +39,7 @@ export function ThemeToggle() {
         variant="ghost"
         size="sm"
         onClick={toggleTheme}
-        className="w-10 h-10 p-0 rounded-full hover:bg-muted transition-colors duration-200"
+        className="w-8 h-8 p-0 rounded-full hover:bg-muted transition-colors duration-200"
         aria-label={`Przełącz motyw (obecnie: ${theme === 'light' ? 'jasny' : 'ciemny'})`}
       >
         <Icon className="h-4 w-4 transition-all duration-300" />

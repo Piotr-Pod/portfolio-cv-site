@@ -76,7 +76,7 @@ export function Navigation({ className = '' }: NavigationProps) {
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 overflow-x-hidden">
           {/* Desktop Navigation - Hidden on mobile */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
@@ -119,20 +119,47 @@ export function Navigation({ className = '' }: NavigationProps) {
                       </motion.button>
                     </SheetClose>
                   ))}
+                  {/* Mobile-only: Settings section */}
+                  <div className="pt-2 mt-2 border-t border-border/50" />
+                  <div className="flex flex-col items-start space-y-4">
+                    {/* Language selector */}
+                    <div className="flex items-center gap-2">
+                      <Button 
+                        variant={locale === 'pl' ? 'default' : 'ghost'} 
+                        size="sm" 
+                        className="h-8 px-3"
+                        aria-pressed={locale === 'pl'}
+                        onClick={() => handleLocaleChange('pl')}
+                      >
+                        PL
+                      </Button>
+                      <Button 
+                        variant={locale === 'en' ? 'default' : 'ghost'} 
+                        size="sm" 
+                        className="h-8 px-3"
+                        aria-pressed={locale === 'en'}
+                        onClick={() => handleLocaleChange('en')}
+                      >
+                        EN
+                      </Button>
+                    </div>
+                    {/* Theme toggle */}
+                    <ThemeToggle />
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
           </div>
 
-          {/* Right side - Theme toggle + Locale switcher */}
-          <div className="flex items-center gap-3">
+          {/* Right side - Theme toggle + Locale switcher (desktop only) */}
+          <div className="hidden md:flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             
-            <div className="flex items-center gap-1 rounded-full bg-muted p-1">
+            <div className="flex items-center gap-0.5 sm:gap-1 rounded-full bg-muted p-0.5 sm:p-1">
               <Button 
                 variant={locale === 'pl' ? 'default' : 'ghost'} 
                 size="sm" 
-                className="h-8 px-3" 
+                className="h-8 px-2 sm:px-3" 
                 aria-pressed={locale === 'pl'}
                 onClick={() => handleLocaleChange('pl')}
               >
@@ -141,7 +168,7 @@ export function Navigation({ className = '' }: NavigationProps) {
               <Button 
                 variant={locale === 'en' ? 'default' : 'ghost'} 
                 size="sm" 
-                className="h-8 px-3" 
+                className="h-8 px-2 sm:px-3" 
                 aria-pressed={locale === 'en'}
                 onClick={() => handleLocaleChange('en')}
               >
