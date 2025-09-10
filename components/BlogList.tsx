@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { type BlogPostIndexItem } from '@/lib/blog'
 import { formatDateISO } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 interface BlogListProps {
   posts: BlogPostIndexItem[]
@@ -12,6 +13,7 @@ interface BlogListProps {
 }
 
 export default function BlogList({ posts, locale }: BlogListProps) {
+  const t = useTranslations('blog')
   const allTags = React.useMemo(() => {
     const set = new Set<string>()
     for (const p of posts) for (const t of p.tags) set.add(t)
@@ -45,7 +47,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
           <div className="flex items-center gap-2 pr-6">
           {allTags.length > 6 && (
             <Button variant="outline" size="sm" onClick={() => setShowAllTags(v => !v)}>
-              {showAllTags ? (locale === 'pl' ? 'Mniej' : 'Less') : (locale === 'pl' ? 'Więcej tagów' : 'More tags')}
+              {showAllTags ? t('less') : t('moreTags')}
             </Button>
           )}
           {(showAllTags ? allTags : allTags.slice(0, 6)).map(tag => {
@@ -71,10 +73,10 @@ export default function BlogList({ posts, locale }: BlogListProps) {
         </div>
         <div className="ml-auto inline-flex items-center gap-2">
           <span className="text-sm text-muted-foreground">
-            {isCompact ? (locale === 'pl' ? 'Widok kompaktowy' : 'Compact view') : (locale === 'pl' ? 'Widok kart' : 'Card view')}
+            {isCompact ? t('view.compact') : t('view.card')}
           </span>
           <Button variant={isCompact ? 'secondary' : 'outline'} size="sm" onClick={() => setIsCompact(v => !v)}>
-            {isCompact ? (locale === 'pl' ? 'Karty' : 'Cards') : (locale === 'pl' ? 'Kompakt' : 'Compact')}
+            {isCompact ? t('toggle.cards') : t('toggle.compact')}
           </Button>
         </div>
       </div>
@@ -85,7 +87,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
               onClick={clearTags}
               className="rounded-full px-3 py-1 text-xs text-muted-foreground underline-offset-4 hover:underline"
             >
-              {locale === 'pl' ? 'Wyczyść tagi' : 'Clear tags'}
+              {t('clearTags')}
             </button>
           )}
 
@@ -106,7 +108,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
               <time className="col-start-2 text-xs text-muted-foreground sm:col-start-auto" dateTime={post.date}>
                 {formatDateISO(post.date)}
               </time>
-              <span className="hidden text-xs text-muted-foreground sm:block">{post.readingTimeMinutes} min</span>
+              <span className="hidden text-xs text-muted-foreground sm:block">{t('readingMinutes', { minutes: post.readingTimeMinutes })}</span>
             </li>
           ))}
         </ul>
@@ -120,7 +122,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
               <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
                 <time dateTime={post.date}>{formatDateISO(post.date)}</time>
                 <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px]">
-                  {post.readingTimeMinutes} min
+                  {t('readingMinutes', { minutes: post.readingTimeMinutes })}
                 </span>
               </div>
               <h2 className="mt-3 text-lg font-semibold tracking-tight">

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getAllPosts, getPostBySlug } from '@/lib/blog'
 import { formatDateISO } from '@/lib/utils'
 import { renderMarkdownToHtml } from '@/lib/markdown'
+import { getTranslations } from 'next-intl/server'
 
 interface PageProps {
   params: Promise<{ locale: 'pl' | 'en'; slug: string }>
@@ -15,13 +16,14 @@ export default async function BlogPostPage({ params }: PageProps) {
   const postLocale = (frontmatter.locale as 'pl' | 'en') ?? 'pl'
   if (postLocale !== locale || frontmatter.draft) return notFound()
   const html = await renderMarkdownToHtml(content)
+  const t = await getTranslations('blog')
 
   return (
     <main className="container mx-auto px-4 pt-24 pb-20">
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 text-sm">
           <Link className="text-muted-foreground underline-offset-4 hover:underline" href={`/${locale}/blog`}>
-            {locale === 'pl' ? '← Wróć do bloga' : '← Back to blog'}
+            {t('backToBlog')}
           </Link>
         </div>
         <div className="prose dark:prose-invert">
@@ -29,7 +31,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <time dateTime={frontmatter.date}>{formatDateISO(frontmatter.date)}</time>
             <span>•</span>
-            <span>{Math.max(1, Math.round(content.split(/\s+/).length / 220))} min</span>
+            <span>{t('readingMinutes', { minutes: Math.max(1, Math.round(content.split(/\s+/).length / 220)) })}</span>
             {frontmatter.tags && frontmatter.tags.length > 0 && (
               <>
                 <span>•</span>

@@ -264,4 +264,22 @@
       "savePreferences": "Zapisz preferencje"
     }
   }
+  ,
+  "blog": {
+    "title": "Blog",
+    "noPosts": "Brak wpisów.",
+    "backToBlog": "← Wróć do bloga",
+    "readingMinutes": "{minutes} min",
+    "moreTags": "Więcej tagów",
+    "less": "Mniej",
+    "clearTags": "Wyczyść tagi",
+    "view": {
+      "compact": "Widok kompaktowy",
+      "card": "Widok kart"
+    },
+    "toggle": {
+      "compact": "Kompakt",
+      "cards": "Karty"
+    }
+  }
 }

@@ -264,4 +264,22 @@
       "savePreferences": "Save preferences"
     }
   }
+  ,
+  "blog": {
+    "title": "Blog",
+    "noPosts": "No posts yet.",
+    "backToBlog": "← Back to blog",
+    "readingMinutes": "{minutes} min",
+    "moreTags": "More tags",
+    "less": "Less",
+    "clearTags": "Clear tags",
+    "view": {
+      "compact": "Compact view",
+      "card": "Card view"
+    },
+    "toggle": {
+      "compact": "Compact",
+      "cards": "Cards"
+    }
+  }
 }
