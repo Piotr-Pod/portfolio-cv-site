@@ -1,0 +1,33 @@
+---
+title: Case study — przykład optymalizacji
+description: Krótki case study pokazujący strukturę wpisu z sekcjami.
+date: 2025-09-10
+tags: [case-study, performance]
+locale: pl
+---
+
+# Case study — optymalizacja zapytań
+
+Wpis prezentuje schemat prostego case study: cele, kroki, wyniki.
+
+## Cel
+
+Zredukować czas odpowiedzi endpointu z ~800 ms do < 200 ms.
+
+## Kroki
+
+1. Profilowanie i identyfikacja wąskiego gardła.
+2. Dodanie indeksów w bazie i cachowania wyników.
+3. Eliminacja zbędnych zapytań N+1.
+
+## Wynik
+
+- Czas: ~160 ms (p95)
+- Stabilność: poprawa p99 o 45%
+- Koszt: bez zmian, dzięki lepszemu wykorzystaniu cache
+
+## Podsumowanie
+
+Lepsza wydajność bez zwiększania kosztów — głównie dzięki obserwowalności i szybkim iteracjom.
+
+

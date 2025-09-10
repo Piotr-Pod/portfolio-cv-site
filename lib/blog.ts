@@ -28,13 +28,17 @@ function readDirectorySafe(dirPath: string): string[] {
 }
 
 export function getPostSlugs(): string[] {
-  return readDirectorySafe(CONTENT_DIR).filter((name) =>
-    fs.existsSync(path.join(CONTENT_DIR, name, 'index.mdx'))
-  )
+  return readDirectorySafe(CONTENT_DIR).filter((name) => {
+    const mdx = path.join(CONTENT_DIR, name, 'index.mdx')
+    const md = path.join(CONTENT_DIR, name, 'index.md')
+    return fs.existsSync(mdx) || fs.existsSync(md)
+  })
 }
 
 export function getPostBySlug(slug: string) {
-  const fullPath = path.join(CONTENT_DIR, slug, 'index.mdx')
+  const mdxPath = path.join(CONTENT_DIR, slug, 'index.mdx')
+  const mdPath = path.join(CONTENT_DIR, slug, 'index.md')
+  const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath
   const file = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(file)
   return { frontmatter: data as BlogFrontmatter, content }
