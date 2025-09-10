@@ -1,6 +1,7 @@
  'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -93,6 +94,10 @@ export function Navigation({ className = '' }: NavigationProps) {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-200 group-hover:w-full"></span>
               </motion.button>
             ))}
+            <Link href={`/${locale}/blog`} className="text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 relative group">
+              {t('blog')}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-200 group-hover:w-full"></span>
+            </Link>
           </div>
 
           {/* Mobile Navigation - Visible only on mobile */}
@@ -121,6 +126,14 @@ export function Navigation({ className = '' }: NavigationProps) {
                       </motion.button>
                     </SheetClose>
                   ))}
+                  <SheetClose asChild>
+                    <Link
+                      href={`/${locale}/blog`}
+                      className="text-left text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 py-2 px-1 border-b border-border/50"
+                    >
+                      {t('blog')}
+                    </Link>
+                  </SheetClose>
                   {githubUrl && (
                     <a
                       href={githubUrl}
