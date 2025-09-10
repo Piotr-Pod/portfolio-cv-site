@@ -44,6 +44,18 @@ export function Navigation({ className = '' }: NavigationProps) {
     }
   };
 
+  const handleNavClick = (sectionId: string) => {
+    if (!mounted) return;
+    const homePath = `/${locale}`;
+    if (currentPathname === homePath) {
+      // Already on home – smooth scroll
+      scrollToSection(sectionId);
+    } else {
+      // Navigate back to home with hash so browser scrolls there
+      router.push(`${homePath}#${sectionId}`);
+    }
+  };
+
 
   const makeLocaleHref = (nextLocale: 'pl' | 'en') => {
     const base = currentPathname || '/';
@@ -85,7 +97,7 @@ export function Navigation({ className = '' }: NavigationProps) {
             {navItems.map((item) => (
               <motion.button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 className="text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 relative group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -117,7 +129,7 @@ export function Navigation({ className = '' }: NavigationProps) {
                   {navItems.map((item) => (
                     <SheetClose asChild key={item.id}>
                       <motion.button
-                        onClick={() => scrollToSection(item.id)}
+                        onClick={() => handleNavClick(item.id)}
                         className="text-left text-foreground hover:text-cyan-500 font-medium transition-colors duration-200 py-2 px-1 border-b border-border/50"
                         whileHover={{ x: 4 }}
                         whileTap={{ scale: 0.98 }}
