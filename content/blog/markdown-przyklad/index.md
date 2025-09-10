@@ -2,7 +2,7 @@
 title: Czysty Markdown — przykład
 description: Wpis zapisany w czystym Markdown bez MDX.
 date: 2025-09-10
-tags: [markdown]
+tags: [markdown, mdx, contentlayer, blogging]
 locale: pl
 ---
 

@@ -20,6 +20,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
 
   const [selectedTags, setSelectedTags] = React.useState<Set<string>>(new Set())
   const [isCompact, setIsCompact] = React.useState(false)
+  const [showAllTags, setShowAllTags] = React.useState(false)
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev => {
@@ -40,8 +41,14 @@ export default function BlogList({ posts, locale }: BlogListProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          {allTags.map(tag => {
+        <div className="relative -mx-2 max-w-full flex-1 overflow-x-auto px-2">
+          <div className="flex items-center gap-2 pr-6">
+          {allTags.length > 6 && (
+            <Button variant="outline" size="sm" onClick={() => setShowAllTags(v => !v)}>
+              {showAllTags ? (locale === 'pl' ? 'Mniej' : 'Less') : (locale === 'pl' ? 'Więcej tagów' : 'More tags')}
+            </Button>
+          )}
+          {(showAllTags ? allTags : allTags.slice(0, 6)).map(tag => {
             const active = selectedTags.has(tag)
             return (
               <button
@@ -57,14 +64,9 @@ export default function BlogList({ posts, locale }: BlogListProps) {
               </button>
             )
           })}
-          {allTags.length > 0 && (
-            <button
-              type="button"
-              onClick={clearTags}
-              className="rounded-full px-3 py-1 text-xs text-muted-foreground underline-offset-4 hover:underline"
-            >
-              {locale === 'pl' ? 'Wyczyść' : 'Clear'}
-            </button>
+          </div>
+          {allTags.length > 6 && (
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background to-transparent" />
           )}
         </div>
         <div className="ml-auto inline-flex items-center gap-2">
@@ -76,6 +78,16 @@ export default function BlogList({ posts, locale }: BlogListProps) {
           </Button>
         </div>
       </div>
+        
+        {selectedTags.size > 0 && (
+            <button
+              type="button"
+              onClick={clearTags}
+              className="rounded-full px-3 py-1 text-xs text-muted-foreground underline-offset-4 hover:underline"
+            >
+              {locale === 'pl' ? 'Wyczyść tagi' : 'Clear tags'}
+            </button>
+          )}
 
       {isCompact ? (
         <ul className="divide-y rounded-lg border bg-card">
@@ -120,10 +132,13 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                 <p className="mt-2 text-sm text-muted-foreground">{post.description}</p>
               )}
               {post.tags.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  {post.tags.slice(0, 3).map((tag) => (
                     <span key={tag} className="text-xs bg-muted px-2 py-0.5 rounded-full">#{tag}</span>
                   ))}
+                  {post.tags.length > 3 && (
+                    <span className="text-xs text-muted-foreground">+{post.tags.length - 3}</span>
+                  )}
                 </div>
               )}
             </article>
