@@ -21,7 +21,7 @@ export const DEFAULT_PERSONA_PROMPTS: PersonaPromptMap = {
   Child10: 'Wyjaśnij prostymi słowami i krótkimi zdaniami jakbym miał 10 lat, zachowując nagłówki i listy Markdown.',
   Poet: 'Nadaj metaforyczny ton bez dodawania faktów, w jednym miejscu treść zamień w krótki wiersz jeśli jest to możliwe, zachowaj strukturę akapitów i Markdown.',
   Developer: 'Przetłumacz dla developera, skup się na technicznych aspektach, decyzjach architektonicznych, konsekwencjach i trade-offach, zachowaj precyzyjne terminy, przykłady i strukturę Markdown.',
-  Custom: 'Użyj treści z pola jako persony i tonu dla której przygotujesz treść, tłumacz w Markdown, zachowując fakty i układ.'
+  Custom: 'Użyj treści z pola jako odbiorcy i tonu dla którego przygotujesz treść, tłumacz w Markdown, zachowując fakty i układ.'
 }
 
 export interface P13nTranslateRequest {

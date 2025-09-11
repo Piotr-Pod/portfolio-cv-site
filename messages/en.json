@@ -281,5 +281,36 @@
       "compact": "Compact",
       "cards": "Cards"
     }
+  },
+  "p13n": {
+    "buttons": {
+      "customize": "Customize text",
+      "customizing": "Customizing... {progress}%",
+      "readingAs": "Reading as: {persona}",
+      "changeAudience": "Change audience",
+      "restoreOriginal": "Restore original",
+      "applyCustom": "Apply custom description"
+    },
+    "menu": {
+      "title": "Select audience",
+      "close": "Close menu",
+      "customLabel": "Custom audience description",
+      "customPlaceholder": "Describe the audience and tone...",
+      "ariaLabel": "Audience selection for content customization"
+    },
+    "personas": {
+      "HR": "HR",
+      "NonIT": "Non-IT reader",
+      "Child10": "10-year-old child",
+      "Poet": "Poet",
+      "Developer": "Developer",
+      "Custom": "Custom description"
+    },
+    "notifications": {
+      "success": "Content customized for: {persona}",
+      "error": "Failed to customize content: {error}",
+      "restored": "Original content restored"
+    },
+    "disclaimer": "Experimental AI content customization for different audiences. Results may be unpredictable."
   }
 }

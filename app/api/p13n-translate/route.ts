@@ -39,7 +39,7 @@ async function callLLM(prompt: string, contentMarkdown: string): Promise<string>
   }
 
   const systemInstruction = [
-    'Jesteś asystentem do personalizacji treści bloga.',
+    'Jesteś asystentem do dostosowywania treści bloga.',
     'Zwróć wyłącznie treść w formacie Markdown.',
     'Zachowaj: nagłówki (#), listy, cytaty, tabele, linki, obrazki.',
     'Nie zmieniaj ani nie tłumacz: bloków kodu ``` oraz inline code, URL-i, YAML frontmatter.',
@@ -47,7 +47,7 @@ async function callLLM(prompt: string, contentMarkdown: string): Promise<string>
   ].join(' ')
 
   const userContent = [
-    'PERSONA INSTRUKCJA:',
+    'INSTRUKCJA DOSTOSOWANIA:',
     prompt,
     '',
     '--- TREŚĆ MARKDOWN DO PRZETWORZENIA (NIE ZMIENIAJ KODU) ---',

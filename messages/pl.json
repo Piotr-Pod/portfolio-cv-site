@@ -281,5 +281,36 @@
       "compact": "Kompakt",
       "cards": "Karty"
     }
+  },
+  "p13n": {
+    "buttons": {
+      "customize": "Dostosuj tekst",
+      "customizing": "Dostosowywanie... {progress}%",
+      "readingAs": "Czytasz jako: {persona}",
+      "changeAudience": "Zmień odbiorcę",
+      "restoreOriginal": "Przywróć oryginał",
+      "applyCustom": "Zastosuj własny opis"
+    },
+    "menu": {
+      "title": "Wybierz odbiorcę",
+      "close": "Zamknij menu",
+      "customLabel": "Własny opis odbiorcy",
+      "customPlaceholder": "Opisz odbiorcę i ton...",
+      "ariaLabel": "Wybór odbiorcy dla dostosowania treści"
+    },
+    "personas": {
+      "HR": "HR",
+      "NonIT": "Czytelnik spoza IT",
+      "Child10": "Dziecko 10 lat",
+      "Poet": "Poeta",
+      "Developer": "Developer",
+      "Custom": "Własny opis"
+    },
+    "notifications": {
+      "success": "Treść została dostosowana dla: {persona}",
+      "error": "Nie udało się dostosować treści: {error}",
+      "restored": "Przywrócono oryginalną treść"
+    },
+    "disclaimer": "Eksperymentalne dostosowanie treści wpisu przez AI do odbiorcy. Wyniki mogą być nieprzewidziane."
   }
 }
