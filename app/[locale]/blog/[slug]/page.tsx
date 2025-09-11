@@ -14,7 +14,8 @@ export default async function BlogPostPage({ params }: PageProps) {
   const { locale, slug } = await params
   const { frontmatter, content } = getPostBySlug(slug)
   const postLocale = (frontmatter.locale as 'pl' | 'en') ?? 'pl'
-  if (postLocale !== locale || frontmatter.draft) return notFound()
+  // Allow viewing Polish posts under any locale; hide drafts
+  if (postLocale !== 'pl' || frontmatter.draft) return notFound()
   const html = await renderMarkdownToHtml(content)
   const t = await getTranslations('blog')
 
@@ -52,7 +53,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllPosts('pl').concat(getAllPosts('en')).map((p) => ({ slug: p.slug }))
+  const slugs = getAllPosts('pl').map((p) => ({ slug: p.slug }))
   return slugs
 }
 

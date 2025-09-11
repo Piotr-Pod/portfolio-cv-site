@@ -53,7 +53,8 @@ export function getAllPosts(locale: 'pl' | 'en'): BlogPostIndexItem[] {
       const fm = frontmatter
       if (fm.draft) return null
       const postLocale = (fm.locale as 'pl' | 'en') ?? 'pl'
-      if (postLocale !== locale) return null
+      // Show only Polish posts for all locales
+      if (postLocale !== 'pl') return null
       return {
         slug,
         locale: postLocale,
