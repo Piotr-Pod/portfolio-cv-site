@@ -106,3 +106,59 @@ comment on column public.blog_entries.reading_time_minutes is 'Precomputed readi
 --   select * from public.blog_posts_detail where slug = 'your-slug' limit 1;
 
 
+-- 9) Metrics tables (page views and click events)
+-- Note: These tables are designed for server-side writes only. Consider placing them in a separate schema
+-- or protecting via RLS policies that only allow service role writes. Anon should not insert here.
+
+-- Page views: unique per (post_id, day, client_id) OR (post_id, day, fp_hash)
+create table if not exists public.page_views (
+  id bigserial primary key,
+  post_id text not null,
+  day date not null,
+  client_id text,
+  fp_hash text,
+  user_agent text,
+  sec_ch_ua text,
+  created_at timestamptz not null default now(),
+  constraint uq_page_views_identity unique (post_id, day, client_id, fp_hash)
+);
+
+create index if not exists idx_page_views_day on public.page_views (day desc);
+create index if not exists idx_page_views_post_day on public.page_views (post_id, day desc);
+
+-- Click events: kept as append-only
+do $$ begin
+  create type click_type as enum ('click_outbound', 'click_cta', 'click_toc');
+exception when duplicate_object then null; end $$;
+
+create table if not exists public.click_events (
+  id bigserial primary key,
+  post_id text not null,
+  day date not null,
+  type click_type not null,
+  client_id text,
+  fp_hash text,
+  meta jsonb,
+  user_agent text,
+  sec_ch_ua text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists idx_click_events_post_day on public.click_events (post_id, day desc);
+create index if not exists idx_click_events_type_day on public.click_events (type, day desc);
+
+-- Enable RLS and restrict anon writes
+alter table public.page_views enable row level security;
+alter table public.click_events enable row level security;
+
+-- Allow no selects for anon by default (commented sample policies):
+-- do $$ begin
+--   create policy page_views_insert_service on public.page_views
+--     for insert to service_role using (true) with check (true);
+-- exception when duplicate_object then null; end $$;
+-- do $$ begin
+--   create policy click_events_insert_service on public.click_events
+--     for insert to service_role using (true) with check (true);
+-- exception when duplicate_object then null; end $$;
+
+
