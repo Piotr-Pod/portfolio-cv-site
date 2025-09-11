@@ -94,11 +94,11 @@ export default function BlogList({ posts, locale }: BlogListProps) {
       {isCompact ? (
         <ul className="divide-y rounded-lg border bg-card">
           {filtered.map(post => (
-            <li key={post.slug} className="grid grid-cols-[1fr_auto] items-center gap-3 p-3 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
+            <li key={post.slug} className="group relative grid grid-cols-[1fr_auto] items-center gap-3 p-3 transition hover:bg-muted/50 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
               <div className="min-w-0">
-                <Link href={`/${locale}/blog/${post.slug}`} className="truncate font-medium underline-offset-4 hover:underline">
+                <span className="truncate font-medium underline-offset-4 group-hover:underline">
                   {post.title}
-                </Link>
+                </span>
                 {post.description && (
                   <p className="truncate text-sm text-muted-foreground">
                     {post.description}
@@ -109,6 +109,13 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                 {formatDateISO(post.date)}
               </time>
               <span className="hidden text-xs text-muted-foreground sm:block">{t('readingMinutes', { minutes: post.readingTimeMinutes })}</span>
+              <Link
+                href={`/${locale}/blog/${post.slug}`}
+                className="absolute inset-0"
+                aria-label={post.title}
+              >
+                <span className="sr-only">{post.title}</span>
+              </Link>
             </li>
           ))}
         </ul>
@@ -126,9 +133,9 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                 </span>
               </div>
               <h2 className="mt-3 text-lg font-semibold tracking-tight">
-                <Link className="inline-block underline-offset-4 group-hover:underline" href={`/${locale}/blog/${post.slug}`}>
+                <span className="inline-block underline-offset-4 group-hover:underline">
                   {post.title}
-                </Link>
+                </span>
               </h2>
               {post.description && (
                 <p className="mt-2 text-sm text-muted-foreground">{post.description}</p>
@@ -143,6 +150,13 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                   )}
                 </div>
               )}
+              <Link
+                href={`/${locale}/blog/${post.slug}`}
+                className="absolute inset-0"
+                aria-label={post.title}
+              >
+                <span className="sr-only">{post.title}</span>
+              </Link>
             </article>
           ))}
         </div>
