@@ -83,10 +83,16 @@
     @apply text-foreground/90;
   }
   .prose :where(code):not(:where(pre code)){
-    @apply rounded bg-muted px-1.5 py-0.5 text-sm font-medium;
+    @apply rounded bg-muted px-1.5 py-0.5 text-sm font-medium text-foreground;
   }
   .prose pre {
-    @apply rounded-lg border bg-muted/50 p-4 shadow-sm;
+    @apply rounded-lg border bg-muted p-4 shadow-sm text-foreground;
+  }
+  .prose pre code {
+    @apply bg-transparent text-foreground;
+  }
+  .dark .prose pre {
+    @apply bg-muted/30 text-foreground;
   }
   .prose img {
     @apply rounded-lg border shadow-sm;

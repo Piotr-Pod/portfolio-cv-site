@@ -75,7 +75,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
           <span className="text-sm text-muted-foreground">
             {isCompact ? t('view.compact') : t('view.card')}
           </span>
-          <Button variant={isCompact ? 'secondary' : 'outline'} size="sm" onClick={() => setIsCompact(v => !v)}>
+          <Button variant="outline" size="sm" onClick={() => setIsCompact(v => !v)}>
             {isCompact ? t('toggle.cards') : t('toggle.compact')}
           </Button>
         </div>

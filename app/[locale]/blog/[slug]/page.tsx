@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllPosts } from '@/lib/blog'
 import { formatDateISO } from '@/lib/utils'
-import { renderMarkdownToHtml } from '@/lib/markdown'
+// Markdown is rendered client-side via PersonalizedPost component
+import PersonalizedPost from '@/components/PersonalizedPost'
 import { getTranslations } from 'next-intl/server'
 import type { BlogPostDetail } from '@/lib/blog-model'
 import TrackPostView from '@/components/TrackPostView'
@@ -14,11 +15,12 @@ interface PageProps {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { locale, slug } = await params
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/blog/${slug}?locale=${locale}`, { cache: 'no-store' })
+  // Ensure absolute URL to avoid ERR_INVALID_URL on server
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const res = await fetch(`${baseUrl}/api/blog/${slug}?locale=${locale}`, { cache: 'no-store' })
   if (!res.ok) return notFound()
   const data = (await res.json()) as BlogPostDetail
   if (data.draft || data.locale !== 'pl') return notFound()
-  const html = await renderMarkdownToHtml(data.contentMarkdown)
   const t = await getTranslations('blog')
 
   return (
@@ -48,7 +50,9 @@ export default async function BlogPostPage({ params }: PageProps) {
             )}
           </div>
           {data.description && <p className="mt-2 text-base text-foreground/80">{data.description}</p>}
-          <article className="mt-8" dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="mt-8">
+            <PersonalizedPost postId={data.slug} initialMarkdown={data.contentMarkdown} />
+          </div>
         </div>
       </div>
     </main>

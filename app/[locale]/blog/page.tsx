@@ -6,7 +6,9 @@ import type { BlogPostIndexItem } from '@/lib/blog-model'
 export default async function BlogIndexPage({ params }: { params: Promise<{ locale: 'pl' | 'en' }> }) {
   const { locale } = await params
   const t = await getTranslations('blog')
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/blog?locale=${locale}`, { next: { revalidate: 60 } })
+  // Ensure absolute URL to avoid ERR_INVALID_URL on server
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const res = await fetch(`${baseUrl}/api/blog?locale=${locale}`, { next: { revalidate: 60 } })
   const posts = (await res.json()) as BlogPostIndexItem[]
 
   return (
