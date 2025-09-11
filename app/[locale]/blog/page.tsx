@@ -1,12 +1,13 @@
 import React from 'react'
-import { getAllPosts } from '@/lib/blog'
 import BlogList from '@/components/BlogList'
 import { getTranslations } from 'next-intl/server'
+import type { BlogPostIndexItem } from '@/lib/blog-model'
 
 export default async function BlogIndexPage({ params }: { params: Promise<{ locale: 'pl' | 'en' }> }) {
   const { locale } = await params
   const t = await getTranslations('blog')
-  const posts = getAllPosts(locale)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/blog?locale=${locale}`, { next: { revalidate: 60 } })
+  const posts = (await res.json()) as BlogPostIndexItem[]
 
   return (
     <main className="container mx-auto px-4 pt-24 pb-16">
