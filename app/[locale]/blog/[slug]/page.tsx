@@ -6,6 +6,7 @@ import { formatDateISO } from '@/lib/utils'
 import { renderMarkdownToHtml } from '@/lib/markdown'
 import { getTranslations } from 'next-intl/server'
 import type { BlogPostDetail } from '@/lib/blog-model'
+import TrackPostView from '@/components/TrackPostView'
 
 interface PageProps {
   params: Promise<{ locale: 'pl' | 'en'; slug: string }>
@@ -22,6 +23,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <main className="container mx-auto px-4 pt-24 pb-20">
+      <TrackPostView postId={data.slug} />
       <div className="mx-auto max-w-3xl">
         <div className="mb-6 text-sm">
           <Link className="text-muted-foreground underline-offset-4 hover:underline" href={`/${locale}/blog`}>

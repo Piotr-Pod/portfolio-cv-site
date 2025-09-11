@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const rotatingSalt = process.env.SECRET_ROTATING_SALT || 'dev-rotate-salt';
     const fpHash = clientId ? undefined : hashFingerprint(ip, userAgent, rotatingSalt);
 
-    const { inserted } = await repo.saveUniquePageView({
+    const { inserted, total, unique } = await repo.saveUniquePageView({
       postId,
       dayISO,
       clientId,
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       createdAt: new Date(),
     });
 
-    return NextResponse.json({ ok: true, inserted });
+    return NextResponse.json({ ok: true, inserted, counts: { total, unique }, dayISO });
   } catch (e) {
     return NextResponse.json({ ok: false }, { status: 500 });
   }

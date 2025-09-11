@@ -23,22 +23,37 @@ export interface ClickEvent {
 }
 
 export interface MetricsRepository {
-  saveUniquePageView(event: PageViewEvent): Promise<{ inserted: boolean }>; // dedupe by (postId, dayISO, clientId|fingerprintHash)
+  // dedupe by (postId, dayISO, clientId|fingerprintHash), always increments total; returns counts
+  saveUniquePageView(event: PageViewEvent): Promise<{ inserted: boolean; total: number; unique: number }>;
   saveClickEvent(event: ClickEvent): Promise<void>;
 }
 
 export class InMemoryMetricsRepository implements MetricsRepository {
   private readonly viewDedupeKeys = new Set<string>();
+  private readonly totalPerDay = new Map<string, number>(); // key: post|day
+  private readonly uniquePerDay = new Map<string, number>(); // key: post|day
   private readonly clickEvents: ClickEvent[] = [];
 
-  async saveUniquePageView(event: PageViewEvent): Promise<{ inserted: boolean }> {
+  async saveUniquePageView(event: PageViewEvent): Promise<{ inserted: boolean; total: number; unique: number }> {
     const identity = event.clientId ?? event.fingerprintHash ?? 'anon';
-    const key = `${event.postId}|${event.dayISO}|${identity}`;
-    if (this.viewDedupeKeys.has(key)) {
-      return { inserted: false };
+    const dedupeKey = `${event.postId}|${event.dayISO}|${identity}`;
+    const dayKey = `${event.postId}|${event.dayISO}`;
+
+    // increment total views
+    const prevTotal = this.totalPerDay.get(dayKey) ?? 0;
+    const newTotal = prevTotal + 1;
+    this.totalPerDay.set(dayKey, newTotal);
+
+    let inserted = false;
+    if (!this.viewDedupeKeys.has(dedupeKey)) {
+      this.viewDedupeKeys.add(dedupeKey);
+      const prevUnique = this.uniquePerDay.get(dayKey) ?? 0;
+      this.uniquePerDay.set(dayKey, prevUnique + 1);
+      inserted = true;
     }
-    this.viewDedupeKeys.add(key);
-    return { inserted: true };
+
+    const unique = this.uniquePerDay.get(dayKey) ?? 0;
+    return { inserted, total: newTotal, unique };
   }
 
   async saveClickEvent(event: ClickEvent): Promise<void> {
