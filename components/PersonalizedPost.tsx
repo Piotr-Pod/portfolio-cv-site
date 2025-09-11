@@ -2,16 +2,21 @@
 
 import React from 'react'
 import P13nButton from '@/components/P13nButton'
+import type { Persona } from '@/types/p13n'
 
 interface PersonalizedPostProps {
   postId: string
   initialMarkdown: string
+  onPersonaChange?: (persona: Persona | null) => void
+  onOpenP13nMenu?: () => void
 }
 
-export function PersonalizedPost({ postId, initialMarkdown }: PersonalizedPostProps) {
+export function PersonalizedPost({ postId, initialMarkdown, onPersonaChange, onOpenP13nMenu }: PersonalizedPostProps) {
   const [original] = React.useState(initialMarkdown)
   const [markdown, setMarkdown] = React.useState(initialMarkdown)
   const [html, setHtml] = React.useState<string>('')
+  const [selectedPersona, setSelectedPersona] = React.useState<Persona | null>(null)
+  const [openP13nMenu, setOpenP13nMenu] = React.useState(false)
 
   // Debug: component mount and props check
   React.useEffect(() => {
@@ -47,6 +52,29 @@ export function PersonalizedPost({ postId, initialMarkdown }: PersonalizedPostPr
     }
   }, [markdown])
 
+  const handlePersonaChange = (persona: Persona | null) => {
+    setSelectedPersona(persona)
+    onPersonaChange?.(persona)
+  }
+
+  const handleRestoreOriginal = () => {
+    setMarkdown(original)
+    setSelectedPersona(null)
+    onPersonaChange?.(null)
+  }
+
+  // Handle external request to open P13n menu
+  React.useEffect(() => {
+    const handleOpenMenu = () => {
+      setOpenP13nMenu(true)
+      // Reset after a short delay to allow the menu to open
+      setTimeout(() => setOpenP13nMenu(false), 100)
+    }
+    
+    window.addEventListener('openP13nMenu', handleOpenMenu)
+    return () => window.removeEventListener('openP13nMenu', handleOpenMenu)
+  }, [])
+
   return (
     <div>
       <div className="mb-4 flex items-center gap-2">
@@ -54,7 +82,14 @@ export function PersonalizedPost({ postId, initialMarkdown }: PersonalizedPostPr
           postId={postId}
           contentMarkdown={original}
           onApply={(m) => setMarkdown(m)}
-          onRestoreOriginal={() => setMarkdown(original)}
+          onRestoreOriginal={handleRestoreOriginal}
+          onPersonaChange={handlePersonaChange}
+          openMenu={openP13nMenu}
+          onMenuOpenChange={(open) => {
+            if (!open) {
+              setOpenP13nMenu(false)
+            }
+          }}
         />
       </div>
       <article className="mt-4" dangerouslySetInnerHTML={{ __html: html }} />

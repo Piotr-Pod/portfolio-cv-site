@@ -311,6 +311,10 @@
       "error": "Failed to customize content: {error}",
       "restored": "Original content restored"
     },
-    "disclaimer": "Experimental AI content customization for different audiences. Results may be unpredictable."
+    "disclaimer": "Experimental AI content customization for different audiences. Results may be unpredictable.",
+    "stickyHeader": {
+      "change": "Change audience",
+      "changeAudienceAriaLabel": "Change audience and return to top of page"
+    }
   }
 }

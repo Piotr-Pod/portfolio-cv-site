@@ -15,6 +15,9 @@ interface P13nButtonProps {
   contentMarkdown: string
   onApply(markdown: string): void
   onRestoreOriginal(): void
+  onPersonaChange?: (persona: Persona | null) => void
+  openMenu?: boolean
+  onMenuOpenChange?: (open: boolean) => void
   disabled?: boolean
   className?: string
 }
@@ -24,7 +27,7 @@ type MenuPersona = Exclude<Persona, never>
 const cache = new LocalStorageCacheStore<{ markdown: string; ts: number }>('p13n')
 
 export function P13nButton(props: P13nButtonProps) {
-  const { postId, contentMarkdown, onApply, onRestoreOriginal, disabled, className } = props
+  const { postId, contentMarkdown, onApply, onRestoreOriginal, onPersonaChange, openMenu, onMenuOpenChange, disabled, className } = props
   const t = useTranslations('p13n')
   
   const MENU_ITEMS = React.useMemo(() => [
@@ -125,6 +128,25 @@ export function P13nButton(props: P13nButtonProps) {
       return () => clearTimeout(timer)
     }
   }, [notification])
+
+  // Handle external menu control
+  React.useEffect(() => {
+    if (openMenu === true && !open) {
+      setOpen(true)
+    }
+  }, [openMenu, open])
+
+  // Notify parent about menu state changes (only when menu closes)
+  React.useEffect(() => {
+    if (!open && onMenuOpenChange) {
+      onMenuOpenChange(false)
+    }
+  }, [open, onMenuOpenChange])
+
+  // Notify parent about persona changes
+  React.useEffect(() => {
+    onPersonaChange?.(selectedPersona)
+  }, [selectedPersona, onPersonaChange])
 
   const send = React.useCallback(async (persona: Persona, prompt: string) => {
     setBusy(true)

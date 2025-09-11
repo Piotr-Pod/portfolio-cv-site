@@ -20,5 +20,56 @@ To jest zwykły plik Markdown. Działa pogrubienie (**bold**), kursywa (_italic_
 ```bash
 echo "Hello markdown"
 ```
+Dlugi tekst 2
+
+## Lista
+
+- Element 1
+- Element 2
+
+## Kod
+
+```bash
+echo "Hello markdown"
+```
+
+Dlugi tekst 3
+
+## Lista
+
+- Element 1
+- Element 2
+
+## Kod
+
+```bash
+echo "Hello markdown"
+```
+
+Dlugi tekst 4
+
+## Lista
+
+- Element 1
+- Element 2
+
+## Kod
+
+```bash
+echo "Hello markdown"
+```
+
+Dlugi tekst 5
+
+## Lista
+
+- Element 1
+- Element 2
+
+## Kod
+
+```bash
+echo "Hello markdown"
+```
 
 
