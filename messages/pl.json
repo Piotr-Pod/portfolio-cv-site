@@ -316,5 +316,35 @@
       "change": "Zmień odbiorcę",
       "changeAudienceAriaLabel": "Zmień odbiorcę i wróć do góry strony"
     }
+  },
+  "cvDownload": {
+    "modalTitle": "Pobierz CV",
+    "gdprTitle": "Zgoda na przetwarzanie danych osobowych (RODO)",
+    "gdprText": "Wyrażam zgodę na przetwarzanie moich danych osobowych w celu rekrutacji zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO). Dane będą przetwarzane wyłącznie na potrzeby rekrutacji przez maksymalnie 3 miesiące od daty pobrania CV.",
+    "gdprConsent": "Wyrażam zgodę na powyższe warunki",
+    "optionalFieldsTitle": "Informacje opcjonalne",
+    "optionalFieldsDescription": "Poniższe pola są opcjonalne, ale pomogą mi lepiej zrozumieć kontekst Twojego zainteresowania:",
+    "fullNameLabel": "Imię i nazwisko",
+    "fullNamePlaceholder": "Jan Kowalski",
+    "companyLabel": "Firma",
+    "companyPlaceholder": "Nazwa firmy",
+    "contactLabel": "Kontakt",
+    "contactPlaceholder": "email@firma.pl lub +48 123 456 789",
+    "justificationLabel": "Uzasadnienie",
+    "justificationPlaceholder": "Krótkie uzasadnienie potrzeby pobrania CV (np. rekrutacja na stanowisko Senior Java Developer)",
+    "downloadButton": "Pobierz CV",
+    "downloading": "Pobieranie...",
+    "cancel": "Anuluj",
+    "successTitle": "CV zostało pobrane!",
+    "successMessage": "Dziękuję za podanie informacji. CV zostało pobrane pomyślnie.",
+    "errorTitle": "Wystąpił błąd",
+    "errorMessage": "Nie udało się przetworzyć żądania pobrania CV. Spróbuj ponownie.",
+    "validationErrors": {
+      "gdprRequired": "Musisz wyrazić zgodę na przetwarzanie danych osobowych",
+      "fullNameTooLong": "Imię i nazwisko nie może być dłuższe niż 100 znaków",
+      "companyTooLong": "Nazwa firmy nie może być dłuższa niż 100 znaków",
+      "contactTooLong": "Kontakt nie może być dłuższy niż 100 znaków",
+      "justificationTooLong": "Uzasadnienie nie może być dłuższe niż 500 znaków"
+    }
   }
 }

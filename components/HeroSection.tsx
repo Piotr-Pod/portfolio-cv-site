@@ -8,11 +8,13 @@ import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/lib/theme-provider';
+import { CvDownloadModal } from '@/components/CvDownloadModal';
 
 export function HeroSection() {
   const t = useTranslations('hero');
   const { theme } = useTheme();
   const [showPopup, setShowPopup] = useState(false);
+  const [showCvModal, setShowCvModal] = useState(false);
   const [avatarAchievement, setAvatarAchievement] = useState(false);
   const [showAchievementPopup, setShowAchievementPopup] = useState(false);
   const [isAvatarFlipped, setIsAvatarFlipped] = useState(false);
@@ -72,25 +74,7 @@ export function HeroSection() {
   };
 
   const handleDownloadCV = () => {
-    // Get current locale from URL or default to 'pl'
-    const locale = window.location.pathname.split('/')[1] || 'pl';
-    
-    // Download static CV PDF file
-    const downloadUrl = `/cv/Piotr-Podgorski-CV-${locale}.pdf`;
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = `Piotr-Podgorski-CV-${locale}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Show popup
-    setShowPopup(true);
-    
-    // Hide popup after 2 seconds
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 2000);
+    setShowCvModal(true);
   };
 
   const handleContact = () => {
@@ -344,6 +328,13 @@ export function HeroSection() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* CV Download Modal */}
+      <CvDownloadModal
+        isOpen={showCvModal}
+        onClose={() => setShowCvModal(false)}
+        locale={typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'pl' : 'pl'}
+      />
     </section>
   );
 }

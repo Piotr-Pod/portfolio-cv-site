@@ -316,5 +316,35 @@
       "change": "Change audience",
       "changeAudienceAriaLabel": "Change audience and return to top of page"
     }
+  },
+  "cvDownload": {
+    "modalTitle": "Download CV",
+    "gdprTitle": "Consent to personal data processing (GDPR)",
+    "gdprText": "I consent to the processing of my personal data for recruitment purposes in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR). Data will be processed exclusively for recruitment purposes for a maximum of 3 months from the date of CV download.",
+    "gdprConsent": "I consent to the above conditions",
+    "optionalFieldsTitle": "Optional information",
+    "optionalFieldsDescription": "The following fields are optional, but will help me better understand the context of your interest:",
+    "fullNameLabel": "Full name",
+    "fullNamePlaceholder": "John Smith",
+    "companyLabel": "Company",
+    "companyPlaceholder": "Company name",
+    "contactLabel": "Contact",
+    "contactPlaceholder": "email@company.com or +1 123 456 789",
+    "justificationLabel": "Justification",
+    "justificationPlaceholder": "Brief justification for CV download need (e.g., recruitment for Senior Java Developer position)",
+    "downloadButton": "Download CV",
+    "downloading": "Downloading...",
+    "cancel": "Cancel",
+    "successTitle": "CV downloaded!",
+    "successMessage": "Thank you for providing the information. CV has been downloaded successfully.",
+    "errorTitle": "An error occurred",
+    "errorMessage": "Failed to process CV download request. Please try again.",
+    "validationErrors": {
+      "gdprRequired": "You must consent to personal data processing",
+      "fullNameTooLong": "Full name cannot be longer than 100 characters",
+      "companyTooLong": "Company name cannot be longer than 100 characters",
+      "contactTooLong": "Contact cannot be longer than 100 characters",
+      "justificationTooLong": "Justification cannot be longer than 500 characters"
+    }
   }
 }

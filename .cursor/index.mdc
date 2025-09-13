@@ -23,7 +23,6 @@ alwaysApply: true
 - Analytics: `./rules/25-analytics.mdc`
 - Content: `./rules/20-content.mdc`
 - Formularze/E-mail: `./rules/30-forms-email.mdc`
-- CV PDF: `./rules/40-cv-pdf.mdc`
 - A11y: `./rules/50-a11y.mdc`
 - OpenAPI/BFF: `./rules/60-api-openapi-bff.mdc`
 - Hosting/CI: `./rules/70-ci-cd.mdc`
