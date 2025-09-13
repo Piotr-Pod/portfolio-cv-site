@@ -33,7 +33,7 @@ export function P13nButton(props: P13nButtonProps) {
   const MENU_ITEMS = React.useMemo(() => [
     { id: 'HR' as MenuPersona, label: t('personas.HR') },
     { id: 'NonIT' as MenuPersona, label: t('personas.NonIT') },
-    { id: 'Child10' as MenuPersona, label: t('personas.Child10') },
+    { id: 'Child15' as MenuPersona, label: t('personas.Child15') },
     { id: 'Poet' as MenuPersona, label: t('personas.Poet') },
     { id: 'Developer' as MenuPersona, label: t('personas.Developer') },
     { id: 'Custom' as MenuPersona, label: t('personas.Custom') }

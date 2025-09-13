@@ -1,7 +1,7 @@
 export type Persona =
   | 'HR'
   | 'NonIT'
-  | 'Child10'
+  | 'Child15'
   | 'Poet'
   | 'Developer'
   | 'Custom'
@@ -9,7 +9,7 @@ export type Persona =
 export interface PersonaPromptMap {
   HR: string
   NonIT: string
-  Child10: string
+  Child15: string
   Poet: string
   Developer: string
   Custom: string
@@ -18,7 +18,7 @@ export interface PersonaPromptMap {
 export const DEFAULT_PERSONA_PROMPTS: PersonaPromptMap = {
   HR: 'Przetłumacz wpis dla specjalisty HR, ogranicz żargon techniczny, zachowaj strukturę sekcji i elementy Markdown.',
   NonIT: 'Uprość język i wyjaśnij pojęcia w nawiasach jak dla osoby nietechnicznej z IT, nie zmieniaj struktury i formatowania Markdown.',
-  Child10: 'Wyjaśnij prostymi słowami i krótkimi zdaniami jakbym miał 10 lat, zachowując nagłówki i listy Markdown.',
+  Child15: 'Wyjaśnij prostymi słowami i krótkimi zdaniami jak dla nastolatka (15 lat) - możesz używać przykładów ze świata młodzieży, gier, social mediów czy szkoły. Zachowaj nagłówki i listy Markdown.',
   Poet: 'Nadaj metaforyczny ton bez dodawania faktów, w jednym miejscu treść zamień w krótki wiersz jeśli jest to możliwe, zachowaj strukturę akapitów i Markdown.',
   Developer: 'Przetłumacz dla developera, skup się na technicznych aspektach, decyzjach architektonicznych, konsekwencjach i trade-offach, zachowaj precyzyjne terminy, przykłady i strukturę Markdown.',
   Custom: 'Użyj treści z pola jako odbiorcy i tonu dla którego przygotujesz treść, tłumacz w Markdown, zachowując fakty i układ.'

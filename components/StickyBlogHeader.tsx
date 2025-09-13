@@ -49,7 +49,7 @@ export function StickyBlogHeader({
     const personas = {
       'HR': tP13n('personas.HR'),
       'NonIT': tP13n('personas.NonIT'),
-      'Child10': tP13n('personas.Child10'),
+      'Child15': tP13n('personas.Child15'),
       'Poet': tP13n('personas.Poet'),
       'Developer': tP13n('personas.Developer'),
       'Custom': tP13n('personas.Custom')

@@ -5,7 +5,7 @@ import type { Persona, P13nTranslateRequest, P13nTranslateResponse } from '@/typ
 const AllowedPersonas: ReadonlyArray<Persona> = [
   'HR',
   'NonIT',
-  'Child10',
+  'Child15',
   'Poet',
   'Developer',
   'Custom'
@@ -16,7 +16,7 @@ const BodySchema = z.object({
   persona: z.enum([
     'HR',
     'NonIT',
-    'Child10',
+    'Child15',
     'Poet',
     'Developer',
     'Custom'
