@@ -27,8 +27,10 @@ The application implements the following security headers via middleware:
 
 ### Input Validation
 - **Schema**: Zod validation for all API inputs
-- **Sanitization**: Automatic input sanitization
+- **HTML Sanitization**: DOMPurify removes HTML tags and escapes special characters
+- **Suspicious Content Detection**: Automatic detection of XSS and injection attempts
 - **Length Limits**: Enforced character limits on all fields
+- **Security Logging**: All suspicious content attempts are logged
 
 ## Environment Variables
 Never commit sensitive information to version control:

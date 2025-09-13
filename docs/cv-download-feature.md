@@ -89,10 +89,13 @@ NEXT_PUBLIC_CONTACT_EMAIL=your-email@domain.com
 - **Technical**: IP address, user agent, timestamp (for security)
 
 ### Data Security
-- All data validated and sanitized
-- Secure transmission (HTTPS)
-- No persistent storage of personal data
-- Email notifications only
+- **Input Validation**: Zod schema validation for all fields
+- **HTML Sanitization**: DOMPurify removes all HTML tags and escapes special characters
+- **Suspicious Content Detection**: Automatic detection of potentially malicious patterns
+- **Security Logging**: Suspicious content attempts are logged with IP and timestamp
+- **Secure Transmission**: HTTPS only
+- **No Persistent Storage**: No personal data stored permanently
+- **Email Security**: All user input sanitized before email generation
 
 ## Email Notifications
 
@@ -112,12 +115,42 @@ Content:
   - Analytics tracking services (Clarity, Umami)
   - Client ID (if analytics consent given)
   - Unique session ID for this request
+
+- ⚠️ Security Alert (only if threats detected):
+  - Prominent warning about malicious content
+  - List of affected form fields
+  - Detailed threat descriptions
+  - Neutralization confirmation
+  - Safety assurance and recommendations
   
 - 👤 Recruiter Information:
-  - Full name, company, contact
-  - Justification for CV download
+  - Full name, company, contact (sanitized)
+  - Justification for CV download (sanitized)
   
 - Security footer with GDPR compliance notice
+```
+
+### Security Alert Example
+When malicious content is detected, the email includes a section like:
+```
+⚠️ Security Alert - Malicious Content Detected & Neutralized
+
+IMPORTANT: The system detected potentially malicious code in the submitted form. 
+All dangerous content has been automatically sanitized and rendered completely harmless.
+
+📍 Affected fields: fullName, justification
+🛡️ Detected threats:
+• Script tags (potential XSS)
+• onclick event handlers
+• iframe elements (potential embedding)
+
+⚡ Action taken: All HTML tags, JavaScript code, event handlers, and suspicious 
+patterns have been completely removed or escaped. The content below is 100% safe 
+to read and cannot execute any code.
+
+✅ Security Status: All malicious content has been neutralized. You can safely 
+review the sanitized information below without any risk of code execution or 
+security compromise.
 ```
 
 ### Session Tracking Integration
@@ -130,6 +163,54 @@ Content:
 1. **Primary**: Resend service
 2. **Fallback**: Mailgun service
 3. **Error Handling**: Proper error responses if both fail
+
+## Security Implementation
+
+### XSS Protection
+The CV download feature implements comprehensive protection against XSS attacks:
+
+```typescript
+// All user input is sanitized using DOMPurify
+function sanitizeForEmail(input: string): string {
+  const sanitized = purify.sanitize(input, { 
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: []
+  });
+  
+  return sanitized.replace(/[&<>"']/g, (char) => {
+    const map = {
+      '&': '&amp;', '<': '&lt;', '>': '&gt;',
+      '"': '&quot;', "'": '&#039;'
+    };
+    return map[char];
+  });
+}
+```
+
+### Malicious Content Detection
+Automatic detection of suspicious patterns:
+- Script tags (`<script>`)
+- JavaScript URIs (`javascript:`)
+- Event handlers (`onload=`, `onclick=`, etc.)
+- Dangerous HTML elements (`<iframe>`, `<object>`, etc.)
+
+### Security Logging & Email Alerts
+All suspicious content attempts are logged with:
+- Client IP address
+- User agent
+- Timestamp
+- Affected fields
+- Detailed list of detected threats
+- Truncated content samples
+- Security actions taken
+
+When malicious content is detected, the email notification includes:
+- **Security Alert Section**: Prominent warning about detected threats
+- **Threat Details**: Specific types of malicious patterns found
+- **Affected Fields**: Which form fields contained suspicious content
+- **Neutralization Confirmation**: Clear statement that all threats have been sanitized
+- **Safety Assurance**: Confirmation that the content is now safe to review
+- **Recommendations**: Guidance on next steps based on threat assessment
 
 ## API Reference
 
