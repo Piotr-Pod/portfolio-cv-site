@@ -30,14 +30,29 @@ export function P13nButton(props: P13nButtonProps) {
   const { postId, contentMarkdown, onApply, onRestoreOriginal, onPersonaChange, openMenu, onMenuOpenChange, disabled, className } = props
   const t = useTranslations('p13n')
   
-  const MENU_ITEMS = React.useMemo(() => [
-    { id: 'HR' as MenuPersona, label: t('personas.HR') },
-    { id: 'NonIT' as MenuPersona, label: t('personas.NonIT') },
-    { id: 'Child15' as MenuPersona, label: t('personas.Child15') },
-    { id: 'Poet' as MenuPersona, label: t('personas.Poet') },
-    { id: 'Developer' as MenuPersona, label: t('personas.Developer') },
-    { id: 'Custom' as MenuPersona, label: t('personas.Custom') }
-  ], [t])
+  // Check enablers early
+  const p13nEnv = process.env.NEXT_PUBLIC_P13N_ENABLED
+  const p13nCustomEnv = process.env.NEXT_PUBLIC_P13N_CUSTOM_ENABLED
+  // Tymczasowo: jeśli zmienna jest undefined, pokaż przycisk dla debugowania
+  const p13nEnabled = p13nEnv === 'true' || p13nEnv === undefined
+  const p13nCustomEnabled = p13nCustomEnv === 'true'
+  
+  const MENU_ITEMS = React.useMemo(() => {
+    const baseItems = [
+      { id: 'HR' as MenuPersona, label: t('personas.HR') },
+      { id: 'NonIT' as MenuPersona, label: t('personas.NonIT') },
+      { id: 'Child15' as MenuPersona, label: t('personas.Child15') },
+      { id: 'Poet' as MenuPersona, label: t('personas.Poet') },
+      { id: 'Developer' as MenuPersona, label: t('personas.Developer') }
+    ]
+    
+    // Add Custom option only if enabled
+    if (p13nCustomEnabled) {
+      baseItems.push({ id: 'Custom' as MenuPersona, label: t('personas.Custom') })
+    }
+    
+    return baseItems
+  }, [t, p13nCustomEnabled])
   const [open, setOpen] = React.useState(false)
   const [sheetOpen, setSheetOpen] = React.useState(false)
   const [busy, setBusy] = React.useState(false)
@@ -58,10 +73,6 @@ export function P13nButton(props: P13nButtonProps) {
     console.log('[p13n] Raw NEXT_PUBLIC_P13N_ENABLED:', JSON.stringify(process.env.NEXT_PUBLIC_P13N_ENABLED))
   }, [])
 
-  const p13nEnv = process.env.NEXT_PUBLIC_P13N_ENABLED
-  // Tymczasowo: jeśli zmienna jest undefined, pokaż przycisk dla debugowania
-  const p13nEnabled = p13nEnv === 'true' || p13nEnv === undefined
-  
   // eslint-disable-next-line no-console
   console.log('[p13n] P13nButton render check', { 
     NEXT_PUBLIC_P13N_ENABLED: p13nEnv, 
@@ -237,29 +248,31 @@ export function P13nButton(props: P13nButtonProps) {
         </button>
       ))}
 
-      <div className="border-t pt-2 mt-2">
-        <label htmlFor="p13n-custom-desktop" className="mb-1 block text-sm">
-          {t('menu.customLabel')}
-        </label>
-        <input
-          id="p13n-custom-desktop"
-          className="w-full rounded border bg-background px-3 py-2 text-sm"
-          placeholder={t('menu.customPlaceholder')}
-          value={customPrompt}
-          onChange={(e) => setCustomPrompt(e.target.value)}
-          maxLength={800}
-        />
-        <div className="mt-2 flex justify-end">
-          <Button 
-            type="button" 
-            size="sm" 
-            onClick={() => onSelect('Custom')} 
-            disabled={busy || !customPrompt.trim()}
-          >
-            {t('buttons.applyCustom')}
-          </Button>
+      {p13nCustomEnabled && (
+        <div className="border-t pt-2 mt-2">
+          <label htmlFor="p13n-custom-desktop" className="mb-1 block text-sm">
+            {t('menu.customLabel')}
+          </label>
+          <input
+            id="p13n-custom-desktop"
+            className="w-full rounded border bg-background px-3 py-2 text-sm"
+            placeholder={t('menu.customPlaceholder')}
+            value={customPrompt}
+            onChange={(e) => setCustomPrompt(e.target.value)}
+            maxLength={800}
+          />
+          <div className="mt-2 flex justify-end">
+            <Button 
+              type="button" 
+              size="sm" 
+              onClick={() => onSelect('Custom')} 
+              disabled={busy || !customPrompt.trim()}
+            >
+              {t('buttons.applyCustom')}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   ), [MENU_ITEMS, selectedPersona, customPrompt, busy, t, onSelect])
 
@@ -282,29 +295,31 @@ export function P13nButton(props: P13nButtonProps) {
         </button>
       ))}
 
-      <div className="border-t pt-2 mt-4">
-        <label htmlFor="p13n-custom-mobile" className="mb-1 block text-sm">
-          {t('menu.customLabel')}
-        </label>
-        <input
-          id="p13n-custom-mobile"
-          className="w-full rounded border bg-background px-3 py-2 text-sm"
-          placeholder={t('menu.customPlaceholder')}
-          value={customPrompt}
-          onChange={(e) => setCustomPrompt(e.target.value)}
-          maxLength={800}
-        />
-        <div className="mt-2 flex justify-end">
-          <Button 
-            type="button" 
-            size="sm" 
-            onClick={() => onSelect('Custom')} 
-            disabled={busy || !customPrompt.trim()}
-          >
-            {t('buttons.applyCustom')}
-          </Button>
+      {p13nCustomEnabled && (
+        <div className="border-t pt-2 mt-4">
+          <label htmlFor="p13n-custom-mobile" className="mb-1 block text-sm">
+            {t('menu.customLabel')}
+          </label>
+          <input
+            id="p13n-custom-mobile"
+            className="w-full rounded border bg-background px-3 py-2 text-sm"
+            placeholder={t('menu.customPlaceholder')}
+            value={customPrompt}
+            onChange={(e) => setCustomPrompt(e.target.value)}
+            maxLength={800}
+          />
+          <div className="mt-2 flex justify-end">
+            <Button 
+              type="button" 
+              size="sm" 
+              onClick={() => onSelect('Custom')} 
+              disabled={busy || !customPrompt.trim()}
+            >
+              {t('buttons.applyCustom')}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   ), [MENU_ITEMS, selectedPersona, customPrompt, busy, t, onSelect])
 
