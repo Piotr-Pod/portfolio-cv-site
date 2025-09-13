@@ -251,8 +251,8 @@
         "title": "Microsoft Clarity",
         "description": "User behavior insights and session recordings"
       },
-      "plausible": {
-        "title": "Plausible Analytics",
+      "umami": {
+        "title": "Umami Analytics",
         "description": "Privacy-friendly, anonymous website analytics"
       }
     },

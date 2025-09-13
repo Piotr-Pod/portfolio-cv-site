@@ -36,7 +36,6 @@ export const CvDownloadSchema = z.object({
   sessionId: z.string().optional(),
   analyticsConsent: z.object({
     clarity: z.boolean(),
-    plausible: z.boolean(),
     umami: z.boolean(),
   }).optional(),
 });

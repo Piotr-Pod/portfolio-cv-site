@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 
 interface AnalyticsConsent {
   clarity: boolean;
-  plausible: boolean;
   umami: boolean;
 }
 
@@ -32,7 +31,7 @@ export function useAnalyticsConsent() {
   }, []);
 
   const updateConsent = (newConsent: Partial<AnalyticsConsent>) => {
-    const currentConsent = consent || { clarity: false, plausible: false, umami: false };
+    const currentConsent = consent || { clarity: false, umami: false };
     const updatedConsent = { ...currentConsent, ...newConsent };
     setConsent(updatedConsent);
     localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(updatedConsent));
@@ -41,7 +40,6 @@ export function useAnalyticsConsent() {
   const acceptAll = () => {
     updateConsent({
       clarity: true,
-      plausible: true,
       umami: true,
     });
   };
@@ -49,7 +47,6 @@ export function useAnalyticsConsent() {
   const rejectAll = () => {
     updateConsent({
       clarity: false,
-      plausible: false,
       umami: false,
     });
   };

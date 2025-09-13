@@ -76,7 +76,6 @@ export default async function LocaleLayout({
             <ScrollToTopButton />
             <AnalyticsManager
               clarityProjectId={process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}
-              plausibleDomain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
               umamiWebsiteId={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
               umamiScriptUrl={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
             />

@@ -8,14 +8,12 @@ import Script from 'next/script';
 
 interface AnalyticsManagerProps {
   clarityProjectId?: string;
-  plausibleDomain?: string;
   umamiWebsiteId?: string;
   umamiScriptUrl?: string;
 }
 
 export function AnalyticsManager({ 
   clarityProjectId, 
-  plausibleDomain, 
   umamiWebsiteId,
   umamiScriptUrl
 }: AnalyticsManagerProps) {
@@ -23,7 +21,7 @@ export function AnalyticsManager({
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-  }, [clarityProjectId, plausibleDomain, umamiWebsiteId, umamiScriptUrl]);
+  }, [clarityProjectId, umamiWebsiteId, umamiScriptUrl]);
 
   useEffect(() => {
     // Show banner if consent hasn't been given yet
@@ -49,14 +47,6 @@ export function AnalyticsManager({
         />
       )}
 
-      {/* Plausible Analytics */}
-      {consent?.plausible && plausibleDomain && (
-        <script
-          defer
-          data-domain={plausibleDomain}
-          src="https://plausible.io/js/script.js"
-        />
-      )}
 
       {/* Umami Analytics */}
       {consent?.umami && umamiWebsiteId && (

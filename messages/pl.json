@@ -251,9 +251,9 @@
         "title": "Microsoft Clarity",
         "description": "Analiza zachowań użytkowników i nagrywanie sesji"
       },
-      "plausible": {
-        "title": "Plausible Analytics",
-        "description": "Anonimowa analityka ruchu na stronie"
+      "umami": {
+        "title": "Umami Analytics",
+        "description": "Prywatna, anonimowa analityka ruchu na stronie"
       }
     },
     "buttons": {

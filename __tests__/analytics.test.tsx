@@ -59,7 +59,7 @@ describe('Analytics Components', () => {
       process.env.NODE_ENV = 'production';
       
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: true, plausible: false, umami: false },
+        consent: { clarity: true, umami: false },
         isLoaded: true,
         updateConsent: jest.fn(),
         acceptAll: jest.fn(),
@@ -80,7 +80,7 @@ describe('Analytics Components', () => {
 
     it('should not render Clarity when consent is not given', () => {
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: false, plausible: false, umami: false },
+        consent: { clarity: false, umami: false },
         isLoaded: true,
         updateConsent: jest.fn(),
         acceptAll: jest.fn(),
@@ -109,7 +109,7 @@ describe('Analytics Components', () => {
       });
       
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: true, plausible: false, umami: false },
+        consent: { clarity: true, umami: false },
         isLoaded: true,
         updateConsent: jest.fn(),
         acceptAll: jest.fn(),
@@ -147,7 +147,7 @@ describe('Analytics Components', () => {
   describe('AnalyticsConsentBanner', () => {
     it('should render consent banner with proper content', () => {
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: false, plausible: false, umami: false },
+        consent: { clarity: false, umami: false },
         isLoaded: true,
         updateConsent: jest.fn(),
         acceptAll: jest.fn(),
@@ -165,7 +165,7 @@ describe('Analytics Components', () => {
     it('should show details when toggle button is clicked', async () => {
       const mockUpdateConsent = jest.fn();
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: false, plausible: false, umami: false },
+        consent: { clarity: false, umami: false },
         isLoaded: true,
         updateConsent: mockUpdateConsent,
         acceptAll: jest.fn(),
@@ -179,7 +179,7 @@ describe('Analytics Components', () => {
 
       await waitFor(() => {
         expect(screen.getByText('Microsoft Clarity')).toBeInTheDocument();
-        expect(screen.getByText('Plausible Analytics')).toBeInTheDocument();
+        expect(screen.getByText('Umami Analytics')).toBeInTheDocument();
       });
     });
 
@@ -188,7 +188,7 @@ describe('Analytics Components', () => {
       const mockOnClose = jest.fn();
       
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: false, plausible: false, umami: false },
+        consent: { clarity: false, umami: false },
         isLoaded: true,
         updateConsent: jest.fn(),
         acceptAll: mockAcceptAll,
@@ -209,7 +209,7 @@ describe('Analytics Components', () => {
       const mockOnClose = jest.fn();
       
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: false, plausible: false, umami: false },
+        consent: { clarity: false, umami: false },
         isLoaded: true,
         updateConsent: jest.fn(),
         acceptAll: jest.fn(),
@@ -228,7 +228,7 @@ describe('Analytics Components', () => {
     it('should update consent when individual toggles are changed', async () => {
       const mockUpdateConsent = jest.fn();
       mockUseAnalyticsConsent.mockReturnValue({
-        consent: { clarity: false, plausible: false, umami: false },
+        consent: { clarity: false, umami: false },
         isLoaded: true,
         updateConsent: mockUpdateConsent,
         acceptAll: jest.fn(),

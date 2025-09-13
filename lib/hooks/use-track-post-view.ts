@@ -11,7 +11,7 @@ export function useTrackPostView(postId: string | undefined) {
     if (!isLoaded) return;
     if (!postId) return;
 
-    const consentGiven = Boolean(consent && (consent.clarity || consent.plausible || consent.umami));
+    const consentGiven = Boolean(consent && (consent.clarity || consent.umami));
     const { clientId } = getOrCreateClientId(consentGiven);
 
     if (!clientId) {

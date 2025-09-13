@@ -77,7 +77,7 @@ export function CvDownloadModal({ isOpen, onClose, locale }: CvDownloadModalProp
     
     try {
       // Gather session tracking information
-      const consentGiven = Boolean(consent && (consent.clarity || consent.plausible || consent.umami));
+      const consentGiven = Boolean(consent && (consent.clarity || consent.umami));
       const { clientId } = getOrCreateClientId(consentGiven);
       
       // Generate session ID for this request
@@ -91,7 +91,7 @@ export function CvDownloadModal({ isOpen, onClose, locale }: CvDownloadModalProp
         locale,
         clientId,
         sessionId,
-        analyticsConsent: consent || { clarity: false, plausible: false, umami: false },
+        analyticsConsent: consent || { clarity: false, umami: false },
       };
       
       const response = await fetch('/api/cv-download', {

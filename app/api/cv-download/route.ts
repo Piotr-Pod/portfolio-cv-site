@@ -76,7 +76,6 @@ export async function POST(req: Request) {
     // Determine analytics services used
     const analyticsServices = [];
     if (analyticsConsent?.clarity) analyticsServices.push('Microsoft Clarity');
-    if (analyticsConsent?.plausible) analyticsServices.push('Plausible Analytics');
     if (analyticsConsent?.umami) analyticsServices.push('Umami Analytics');
     const analyticsStatus = analyticsServices.length > 0 
       ? `Enabled: ${analyticsServices.join(', ')}` 

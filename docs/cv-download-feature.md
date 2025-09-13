@@ -109,7 +109,7 @@ Content:
   
 - 🔒 Session & Privacy Information:
   - GDPR consent status
-  - Analytics tracking services (Clarity, Plausible, Umami)
+  - Analytics tracking services (Clarity, Umami)
   - Client ID (if analytics consent given)
   - Unique session ID for this request
   

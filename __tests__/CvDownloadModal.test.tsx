@@ -36,7 +36,7 @@ jest.mock('next-intl', () => ({
 // Mock analytics hooks
 jest.mock('@/lib/hooks/use-analytics-consent', () => ({
   useAnalyticsConsent: () => ({
-    consent: { clarity: true, plausible: false, umami: true },
+    consent: { clarity: true, umami: true },
     isLoaded: true
   })
 }))
@@ -193,7 +193,7 @@ describe('CvDownloadModal', () => {
         justification: '',
         locale: 'en',
         clientId: 'test-client-id-123',
-        analyticsConsent: { clarity: true, plausible: false, umami: true }
+        analyticsConsent: { clarity: true, umami: true }
       });
       expect(payload.sessionId).toMatch(/^session-/);
     })
