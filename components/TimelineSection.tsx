@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { 
   Briefcase, 
@@ -55,6 +55,9 @@ export function TimelineSection() {
     new Set<TimelineType>(['work', 'education', 'training', 'projects'])
   );
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set<string>());
+  const [showStickyControls, setShowStickyControls] = useState<boolean>(false);
+  const filtersRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const githubUrl = process.env.NEXT_PUBLIC_GITHUB_URL;
   const nonExpandableIds = new Set<string>(['projects-2']);
 
@@ -385,8 +388,39 @@ export function TimelineSection() {
     { key: 'projects' as TimelineType, label: t('filters.projects'), icon: Code, onClick: () => toggleFilter('projects'), isActive: enabledFilters.has('projects') },
   ];
 
+  // Detect when filter controls scroll under the navigation bar and show sticky controls
+  useEffect(() => {
+    const handleScroll = () => {
+      const navOffsetPx = 64; // matches top-16 used in StickyBlogHeader
+      const threshold = navOffsetPx + 8; // small gap for sticky reveal
+
+      const filtersRect = filtersRef.current?.getBoundingClientRect();
+      const sectionRect = sectionRef.current?.getBoundingClientRect();
+
+      const filtersScrolledUnderNav = filtersRect ? filtersRect.top < threshold : false;
+
+      // Consider the timeline "visible context" when any part of it is near the viewport
+      // so sticky is hidden deep below the next section
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const sectionInView = sectionRect
+        ? (sectionRect.bottom > threshold && sectionRect.top < viewportHeight - 80)
+        : false;
+
+      const shouldShow = filtersScrolledUnderNav && sectionInView;
+      setShowStickyControls(shouldShow);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   return (
-    <section id="timeline" className="py-16 bg-background">
+    <section ref={sectionRef} id="timeline" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-4xl mx-auto"
@@ -405,8 +439,68 @@ export function TimelineSection() {
             </p>
           </motion.div>
 
+          {/* Sticky Controls (shown when original controls are scrolled under navbar) */}
+          <div
+            className={`fixed left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm transition-all duration-300 ease-in-out
+            ${showStickyControls ? 'top-16 translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}
+            style={{ position: 'fixed' }}
+            aria-hidden={!showStickyControls}
+          >
+            <div className="container mx-auto px-4 py-2">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {/* Filters row */}
+                <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
+                  {filterOptions.map((option) => {
+                    const IconComponent = option.icon;
+                    return (
+                      <Button
+                        key={`sticky-${String(option.key)}`}
+                        variant={option.isActive ? "default" : "outline"}
+                        onClick={option.onClick}
+                        size="sm"
+                        className={`transition-all duration-300 text-[11px] md:text-sm h-7 md:h-9 px-2 md:px-3
+                          ${option.isActive 
+                            ? 'bg-primary text-primary-foreground shadow' 
+                            : 'border-border text-muted-foreground hover:border-slate-900 hover:text-foreground'
+                          }
+                        `}
+                        aria-pressed={option.isActive}
+                      >
+                        {IconComponent && <IconComponent className="mr-1 h-3.5 w-3.5 hidden xs:inline-block md:inline-block" />}
+                        {option.label}
+                      </Button>
+                    );
+                  })}
+                </div>
+                {/* Expand/collapse control */}
+                {filteredItems.length > 0 && (
+                  <Button
+                    variant="ghost"
+                    onClick={toggleAllExpanded}
+                    size="sm"
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 whitespace-nowrap h-7 md:h-9"
+                    aria-expanded={allVisibleExpanded}
+                  >
+                    {allVisibleExpanded ? (
+                      <>
+                        <Minimize className="mr-2 h-4 w-4" />
+                        {t('collapseAll')}
+                      </>
+                    ) : (
+                      <>
+                        <Expand className="mr-2 h-4 w-4" />
+                        {t('expandAll')}
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Filter Buttons */}
           <motion.div 
+            ref={filtersRef}
             className="flex flex-wrap justify-center gap-2 mb-6"
             variants={itemVariants}
           >

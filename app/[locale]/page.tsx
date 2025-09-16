@@ -10,6 +10,9 @@ export default function HomePage() {
       <AboutSection />
       <TimelineSection />
       <ContactSection />
+      <ContactSection />
+      <ContactSection />
+      <ContactSection />
     </main>
   );
 }
