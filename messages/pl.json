@@ -311,7 +311,7 @@
       "error": "Nie udało się dostosować treści: {error}",
       "restored": "Przywrócono oryginalną treść"
     },
-    "disclaimer": "Eksperymentalne dostosowanie treści wpisu przez AI do odbiorcy. Wyniki mogą być nieprzewidziane.",
+    "disclaimer": "Eksperymentalne dopasowanie treści wpisu do odbiorcy z wykorzystaniem AI. Wynik jest nieprzewidziany i może różnić się od oczekiwań.",
     "stickyHeader": {
       "change": "Zmień odbiorcę",
       "changeAudienceAriaLabel": "Zmień odbiorcę i wróć do góry strony"
