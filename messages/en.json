@@ -265,6 +265,35 @@
     }
   }
   ,
+  "chat": {
+    "title": "AskiBot",
+    "welcomeMessage": "Hi! I'm Piotr's assistant. I can answer questions about his experience, projects, and skills. How can I help?",
+    "inputPlaceholder": "Ask a question...",
+    "typing": "Typing...",
+    "errorMessage": "Sorry, an error occurred. Please try again.",
+    "rateLimitMessage": "Rate limit reached. Please try again later.",
+    "bookMeeting": "Book meeting",
+    "sendEmail": "Send email",
+    "newConversation": "New conversation",
+    "newConversationTitle": "New conversation",
+    "selectConversation": "Select conversation",
+    "conversationN": "Conversation {n}",
+    "expand": "Expand",
+    "shrink": "Shrink",
+    "send": "Send",
+    "deleteConversation": "Delete",
+    "deleteAllConversations": "Delete all",
+    "deleteConversationConfirm": "Delete this conversation?",
+    "deleteAllConversationsConfirm": "Delete all conversations?",
+    "createNewConversation": "Create new conversation",
+    "manageConversations": "Manage conversations",
+    "deleteCurrent": "Delete current conversation",
+    "selectConversationToDelete": "Select conversation to delete",
+    "functions": {
+      "meetingBooked": "Meeting has been booked",
+      "emailSent": "Email has been sent"
+    }
+  },
   "blog": {
     "title": "Blog",
     "noPosts": "No posts yet.",

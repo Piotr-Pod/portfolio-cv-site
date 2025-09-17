@@ -265,6 +265,35 @@
     }
   }
   ,
+  "chat": {
+    "title": "AskiBot",
+    "welcomeMessage": "Cześć! Jestem asystentem Piotra. Mogę odpowiedzieć na pytania o jego doświadczenie, projekty i umiejętności. Jak mogę pomóc?",
+    "inputPlaceholder": "Zadaj pytanie...",
+    "typing": "Piszę...",
+    "errorMessage": "Przepraszam, wystąpił błąd. Spróbuj ponownie.",
+    "rateLimitMessage": "Osiągnięto limit wiadomości. Spróbuj ponownie później.",
+    "bookMeeting": "Umów spotkanie",
+    "sendEmail": "Wyślij email",
+    "newConversation": "Nowa rozmowa",
+    "newConversationTitle": "Nowa rozmowa",
+    "selectConversation": "Wybierz rozmowę",
+    "conversationN": "Rozmowa {n}",
+    "expand": "Powiększ",
+    "shrink": "Zmniejsz",
+    "send": "Wyślij",
+    "deleteConversation": "Usuń",
+    "deleteAllConversations": "Usuń wszystkie",
+    "deleteConversationConfirm": "Usunąć tę rozmowę?",
+    "deleteAllConversationsConfirm": "Usunąć wszystkie rozmowy?",
+    "createNewConversation": "Utwórz nową rozmowę",
+    "manageConversations": "Zarządzaj rozmowami",
+    "deleteCurrent": "Usuń aktualną rozmowę",
+    "selectConversationToDelete": "Wybierz rozmowę do usunięcia",
+    "functions": {
+      "meetingBooked": "Spotkanie zostało umówione",
+      "emailSent": "Email został wysłany"
+    }
+  },
   "blog": {
     "title": "Blog",
     "noPosts": "Brak wpisów.",

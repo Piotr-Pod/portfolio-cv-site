@@ -11,6 +11,7 @@ import { ScrollRestoration } from '@/components/ScrollRestoration';
 import { ThemeProvider } from '@/lib/theme-provider';
 import { AnalyticsManager } from '@/components/ui/analytics-manager';
 import '@/app/globals.css';
+import { ChatWidget } from '@/components/chat/ChatWidget';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -79,6 +80,7 @@ export default async function LocaleLayout({
               umamiWebsiteId={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
               umamiScriptUrl={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
             />
+            <ChatWidget locale={locale as 'pl' | 'en'} />
           </NextIntlClientProvider>
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <SpeedInsights />}
