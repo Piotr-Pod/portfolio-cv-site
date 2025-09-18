@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Bot } from 'lucide-react';
+import { ParsedResponse } from '@/lib/chat/response-parser';
 
 interface Message {
   id: string;
@@ -10,7 +10,12 @@ interface Message {
   timestamp: Date;
 }
 
-export function ChatMessage({ message }: { message: Message }) {
+interface ChatMessageProps {
+  message: Message;
+  locale: 'pl' | 'en';
+}
+
+export function ChatMessage({ message, locale }: ChatMessageProps) {
   const isUser = message.role === 'user';
   return (
     <div
@@ -28,10 +33,20 @@ export function ChatMessage({ message }: { message: Message }) {
       >
         {!isUser && (
           <div className="flex-shrink-0 mt-0.5">
-            <Bot className="h-4 w-4 text-muted-foreground" />
+            <img 
+              src="/images/bot-avatar.png" 
+              alt="Bot avatar" 
+              className="h-8 w-8 rounded-full" 
+            />
           </div>
         )}
-        <p className="flex-1">{message.content}</p>
+        <div className="flex-1">
+          {message.role === 'assistant' ? (
+            <ParsedResponse text={message.content} locale={locale} />
+          ) : (
+            <p>{message.content}</p>
+          )}
+        </div>
       </div>
     </div>
   );

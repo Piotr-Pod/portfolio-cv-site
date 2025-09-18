@@ -3,9 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2, Maximize2, Minimize2, Plus, Trash2, Trash, EllipsisVertical, Calendar, Mail, Briefcase, Globe } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Maximize2, Minimize2, Plus, Trash2, Trash, EllipsisVertical, Calendar, Mail, Briefcase, Globe, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { ChatMessage } from './ChatMessage';
 
 interface Message {
@@ -37,6 +37,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const [sessions, setSessions] = useState<Array<{ id: string; title: string; messages: Message[]; threadId: string | null; updatedAt: number; seq: number }>>([]);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
@@ -52,10 +53,25 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   };
 
+  const adjustTextareaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      const lineHeight = 24; // Approximate line height
+      const maxHeight = 2 * lineHeight; // 2 lines maximum
+      const newHeight = Math.min(scrollHeight, maxHeight);
+      textareaRef.current.style.height = `${newHeight}px`;
+    }
+  };
+
   useEffect(() => {
     const id = setTimeout(scrollToBottom, 0);
     return () => clearTimeout(id);
   }, [messages, isOpen, isExpanded, isLoading]);
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [input]);
 
   // Report chat layout (width) for positioning other floating UI (e.g., ScrollToTop)
   const reportLayout = () => {
@@ -458,8 +474,9 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
           <div ref={panelRef} className={isExpanded ? 'w-[min(720px,95vw)] h-[70vh]' : 'w-[min(460px,95vw)] h-[540px]'}>
             <div className="h-full flex flex-col rounded-lg bg-background border shadow-xl">
               <div className="flex items-center justify-between gap-2 px-3 py-2 border-b">
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-sm font-semibold truncate">{t('title')}</h3>
+                <div className="min-w-0 flex-1 flex items-center gap-2">
+                  <Bot className="h-5 w-5 text-primary flex-shrink-0" />
+                  <h3 className="text-lg font-semibold truncate">{t('title')}</h3>
                 </div>
                 <div className="flex items-center justify-end gap-1 flex-wrap">
                   <select
@@ -615,7 +632,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
                   )}
 
                   {messages.map((m) => (
-                    <ChatMessage key={m.id} message={m} />
+                    <ChatMessage key={m.id} message={m} locale={locale} />
                   ))}
 
                   {isLoading && (
@@ -630,13 +647,15 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
 
                 <div className="p-3 border-t">
                   <div className="flex space-x-2">
-                    <Input
+                    <Textarea
+                      ref={textareaRef}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       onKeyDown={handleKeyDown}
                       placeholder={t('inputPlaceholder')}
                       disabled={isLoading}
-                      className="flex-1"
+                      className="flex-1 min-h-[40px] max-h-[48px] resize-none overflow-y-auto"
+                      rows={1}
                     />
                     <Button onClick={sendMessage} disabled={!input.trim() || isLoading} size="icon" aria-label={(t('send') as unknown as string) || 'Send'}>
                       <Send className="h-4 w-4" />
