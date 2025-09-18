@@ -303,6 +303,9 @@
       "contactMessage": "Chciałbym skontaktować się z Tobą bezpośrednio, aby omówić mój projekt lub zadać pytania.",
       "specializationsMessage": "Czy możesz opowiedzieć więcej o swoich specjalizacjach i obszarach ekspertyzy?",
       "websiteContentMessage": "Chciałbym dowiedzieć się więcej o zawartości i funkcjach dostępnych na tej stronie."
+    },
+    "tooltip": {
+      "message": "Cześć, jestem AskiBot - asystent Piotra. Jeśli masz pytania możesz mi je tutaj zadać."
     }
   },
   "blog": {

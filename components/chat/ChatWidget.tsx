@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Loader2, Maximize2, Minimize2, Plus, Trash2, Trash, EllipsisVertical, Calendar, Mail, Briefcase, Globe, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -34,6 +34,8 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -90,6 +92,32 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
+
+  // Animation and tooltip logic
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!hasAnimated && !isOpen) {
+        setShowTooltip(true);
+        setHasAnimated(true);
+        
+        // Auto-hide tooltip after 10 seconds
+        const hideTimer = setTimeout(() => {
+          setShowTooltip(false);
+        }, 10000);
+        
+        return () => clearTimeout(hideTimer);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [hasAnimated, isOpen]);
+
+  // Hide tooltip when chat is opened
+  useEffect(() => {
+    if (isOpen) {
+      setShowTooltip(false);
+    }
+  }, [isOpen]);
 
   // Close manage menu when clicking outside
   useEffect(() => {
@@ -459,9 +487,64 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
         animate={{ scale: 1 }}
         transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
       >
-        <Button onClick={() => { setIsOpen(true); try { window.dispatchEvent(new CustomEvent('chat:toggle', { detail: { open: true } })); } catch {} setTimeout(reportLayout, 0); }} className="h-14 w-14 rounded-full shadow-lg" size="icon" aria-label="Open chat">
-          <MessageCircle className="h-6 w-6" />
-        </Button>
+        <div className="relative">
+          {/* Tooltip */}
+          <AnimatePresence>
+            {showTooltip && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                transition={{ duration: 0.2 }}
+                className="absolute bottom-full right-0 mb-2 w-64 p-3 bg-background border rounded-lg shadow-lg z-50"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm text-foreground flex-1">
+                    {t('tooltip.message')}
+                  </p>
+                  <button
+                    onClick={() => setShowTooltip(false)}
+                    className="flex-shrink-0 p-1 hover:bg-muted rounded-full transition-colors"
+                    aria-label="Close tooltip"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+                {/* Arrow pointing down */}
+                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-background"></div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Chat Button with animation */}
+          <motion.div
+            animate={showTooltip ? { 
+              scale: [1, 1.1, 1],
+              rotate: [0, -5, 5, -5, 0]
+            } : {}}
+            transition={{ 
+              duration: 0.6,
+              repeat: showTooltip ? 2 : 0,
+              repeatDelay: 1
+            }}
+          >
+            <Button 
+              onClick={() => { 
+                setIsOpen(true); 
+                setShowTooltip(false);
+                try { 
+                  window.dispatchEvent(new CustomEvent('chat:toggle', { detail: { open: true } })); 
+                } catch {} 
+                setTimeout(reportLayout, 0); 
+              }} 
+              className="h-14 w-14 rounded-full shadow-lg" 
+              size="icon" 
+              aria-label="Open chat"
+            >
+              <MessageCircle className="h-6 w-6" />
+            </Button>
+          </motion.div>
+        </div>
       </motion.div>
 
       {isOpen && (
