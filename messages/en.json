@@ -292,6 +292,17 @@
     "functions": {
       "meetingBooked": "Meeting has been booked",
       "emailSent": "Email has been sent"
+    },
+    "quickActions": {
+      "title": "Quick actions",
+      "bookMeeting": "Book meeting",
+      "contact": "Contact",
+      "specializations": "Specializations", 
+      "websiteContent": "Website content",
+      "bookMeetingMessage": "I would like to schedule a meeting to discuss potential collaboration or recruitment opportunities.",
+      "contactMessage": "I would like to get in touch with you directly to discuss my project or ask questions.",
+      "specializationsMessage": "Could you tell me more about your specializations and areas of expertise?",
+      "websiteContentMessage": "I would like to learn more about the content and features available on this website."
     }
   },
   "blog": {

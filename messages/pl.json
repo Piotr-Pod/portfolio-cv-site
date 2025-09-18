@@ -292,6 +292,17 @@
     "functions": {
       "meetingBooked": "Spotkanie zostało umówione",
       "emailSent": "Email został wysłany"
+    },
+    "quickActions": {
+      "title": "Szybkie akcje",
+      "bookMeeting": "Umów spotkanie",
+      "contact": "Kontakt",
+      "specializations": "Specjalizacje",
+      "websiteContent": "Zawartość strony",
+      "bookMeetingMessage": "Chciałbym umówić spotkanie, aby omówić potencjalną współpracę lub możliwości rekrutacji.",
+      "contactMessage": "Chciałbym skontaktować się z Tobą bezpośrednio, aby omówić mój projekt lub zadać pytania.",
+      "specializationsMessage": "Czy możesz opowiedzieć więcej o swoich specjalizacjach i obszarach ekspertyzy?",
+      "websiteContentMessage": "Chciałbym dowiedzieć się więcej o zawartości i funkcjach dostępnych na tej stronie."
     }
   },
   "blog": {

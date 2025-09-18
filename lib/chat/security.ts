@@ -35,11 +35,12 @@ export function validateInput(input: string): SecurityCheck {
     threats.push('suspicious_characters');
   }
 
-  const hasPolish = /[ąćęłńóśźż]/i.test(input);
-  const hasEnglish = /[a-z]/i.test(input);
-  if (hasPolish && hasEnglish && input.length > 50) {
-    threats.push('mixed_languages');
-  }
+  // watpliwy kod
+  // const hasPolish = /[ąćęłńóśźż]/i.test(input);
+  // const hasEnglish = /[a-z]/i.test(input);
+  // if (hasPolish && hasEnglish && input.length > 50) {
+  //   threats.push('mixed_languages');
+  // }
 
   return {
     isValid: threats.length === 0,

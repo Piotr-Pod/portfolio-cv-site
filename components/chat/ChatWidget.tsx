@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2, Maximize2, Minimize2, Plus, Trash2, Trash, EllipsisVertical } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Maximize2, Minimize2, Plus, Trash2, Trash, EllipsisVertical, Calendar, Mail, Briefcase, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ChatMessage } from './ChatMessage';
@@ -17,6 +17,13 @@ interface Message {
 
 interface ChatWidgetProps {
   locale: 'pl' | 'en';
+}
+
+interface QuickAction {
+  id: string;
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  message: string;
 }
 
 export function ChatWidget({ locale }: ChatWidgetProps) {
@@ -290,6 +297,144 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     }
   };
 
+  const handleQuickAction = async (message: string) => {
+    if (isLoading) return;
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: message,
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    // ensure session exists and persist message
+    let sid = activeSessionId;
+    if (!sid) {
+      sid = `${Date.now()}`;
+      const maxSeq = sessions.reduce((acc, s) => Math.max(acc, s.seq || 0), 0);
+      const newSession = { id: sid, title: (t('newConversationTitle') as unknown as string) || 'New conversation', messages: [userMessage], threadId, updatedAt: Date.now(), seq: maxSeq + 1 };
+      saveSessions([newSession, ...sessions]);
+      setActiveSessionId(sid);
+    } else {
+      const current = sessions.find((s) => s.id === sid);
+      if (current) {
+        const updated = { ...current, messages: [...current.messages, userMessage], updatedAt: Date.now() };
+        saveSessions([updated, ...sessions.filter((s) => s.id !== sid)]);
+      }
+    }
+    setIsLoading(true);
+
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+      const payload: any = { message: userMessage.content, locale };
+      if (threadId) payload.threadId = threadId; // don't send null
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      }).finally(() => clearTimeout(timeout));
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: data.message,
+          timestamp: new Date()
+        };
+
+        setMessages(prev => {
+          const newMessages = [...prev, assistantMessage];
+          // persist assistant message immediately after state update
+          const curId = activeSessionId || sid;
+          const cur = sessions.find((s) => s.id === curId);
+          if (cur) {
+            const updated2 = { ...cur, messages: newMessages, threadId: data.threadId ?? cur.threadId, updatedAt: Date.now() };
+            saveSessions([updated2, ...sessions.filter((s) => s.id !== cur.id)]);
+          }
+          return newMessages;
+        });
+        if (data.threadId) setThreadId(data.threadId);
+      } else {
+        // Check for rate limit error (429)
+        if (response.status === 429) {
+          const errorMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: t('rateLimitMessage'),
+            timestamp: new Date()
+          };
+          setMessages(prev => {
+            const newMessages = [...prev, errorMessage];
+            // persist rate limit message immediately after state update
+            if (activeSessionId) {
+              const cur = sessions.find((s) => s.id === activeSessionId);
+              if (cur) {
+                const upd = { ...cur, messages: newMessages, updatedAt: Date.now() };
+                saveSessions([upd, ...sessions.filter((s) => s.id !== cur.id)]);
+              }
+            }
+            return newMessages;
+          });
+          return;
+        }
+        throw new Error(data.error || 'Failed to send message');
+      }
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: t('errorMessage'),
+        timestamp: new Date()
+      };
+      setMessages(prev => {
+        const newMessages = [...prev, errorMessage];
+        // persist error message immediately after state update
+        if (activeSessionId) {
+          const cur = sessions.find((s) => s.id === activeSessionId);
+          if (cur) {
+            const upd = { ...cur, messages: newMessages, updatedAt: Date.now() };
+            saveSessions([upd, ...sessions.filter((s) => s.id !== cur.id)]);
+          }
+        }
+        return newMessages;
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const quickActions: QuickAction[] = [
+    {
+      id: 'bookMeeting',
+      icon: Calendar,
+      label: t('quickActions.bookMeeting'),
+      message: t('quickActions.bookMeetingMessage')
+    },
+    {
+      id: 'contact',
+      icon: Mail,
+      label: t('quickActions.contact'),
+      message: t('quickActions.contactMessage')
+    },
+    {
+      id: 'specializations',
+      icon: Briefcase,
+      label: t('quickActions.specializations'),
+      message: t('quickActions.specializationsMessage')
+    },
+    {
+      id: 'websiteContent',
+      icon: Globe,
+      label: t('quickActions.websiteContent'),
+      message: t('quickActions.websiteContentMessage')
+    }
+  ];
+
   return (
     <>
       <motion.div
@@ -442,9 +587,30 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
               <div className="flex-1 min-h-0 flex flex-col p-0">
                 <div ref={listRef} className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground/30">
                   {messages.length === 0 && (
-                    <div className="text-center text-muted-foreground">
+                    <div className="text-center text-muted-foreground space-y-4">
                       <MessageCircle className="h-8 w-8 mx-auto mb-2" />
                       <p>{t('welcomeMessage')}</p>
+                      
+                      <div className="space-y-3">
+                        <h4 className="text-sm font-medium text-foreground">{t('quickActions.title')}</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {quickActions.map((action) => {
+                            const IconComponent = action.icon;
+                            return (
+                              <Button
+                                key={action.id}
+                                variant="outline"
+                                size="sm"
+                                className="h-auto p-3 flex flex-col items-center gap-2 text-xs"
+                                onClick={() => handleQuickAction(action.message)}
+                              >
+                                <IconComponent className="h-4 w-4" />
+                                <span className="text-center leading-tight">{action.label}</span>
+                              </Button>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   )}
 
