@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { processMessage } from '@/lib/ai/assistant';
+import { processMessageWithResponses } from '@/lib/ai/responses-assistant';
 import { checkRateLimit } from '@/lib/chat/rate-limit';
 import { validateInput } from '@/lib/chat/security';
 import { logApiRequest } from '@/lib/monitoring/performance';
@@ -8,7 +9,8 @@ import { logApiRequest } from '@/lib/monitoring/performance';
 const ChatRequestSchema = z.object({
   message: z.string().min(1).max(1000),
   threadId: z.string().nullable().optional(),
-  locale: z.enum(['pl', 'en']).default('pl')
+  locale: z.enum(['pl', 'en']).default('pl'),
+  botType: z.enum(['assistant', 'responses']).default('assistant')
 });
 
 export async function POST(req: NextRequest) {
@@ -32,7 +34,7 @@ export async function POST(req: NextRequest) {
     try {
       console.log('Chat API raw body:', body);
     } catch {}
-    const { message, threadId, locale } = ChatRequestSchema.parse(body);
+    const { message, threadId, locale, botType } = ChatRequestSchema.parse(body);
 
     const securityCheck = validateInput(message);
     if (!securityCheck.isValid) {
@@ -40,13 +42,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid input detected' }, { status: 400 });
     }
 
-    const assistantId = process.env.OPENAI_ASSISTANT_ID;
-    if (!assistantId || !process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: 'Assistant not configured' }, { status: 500 });
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
+    }
+
+    // Check if using assistant bot and validate assistant ID
+    if (botType === 'assistant') {
+      const assistantId = process.env.OPENAI_ASSISTANT_ID;
+      if (!assistantId) {
+        return NextResponse.json({ error: 'Assistant not configured' }, { status: 500 });
+      }
     }
 
     const aiStartTime = Date.now();
-    const result = await processMessage({ message, threadId, locale, assistantId });
+    let result;
+    
+    if (botType === 'assistant') {
+      const assistantId = process.env.OPENAI_ASSISTANT_ID!;
+      result = await processMessage({ message, threadId, locale, assistantId });
+    } else {
+      result = await processMessageWithResponses({ message, threadId, locale });
+    }
+    
     const aiProcessingTime = Date.now() - aiStartTime;
     const totalRequestTime = Date.now() - requestStartTime;
     

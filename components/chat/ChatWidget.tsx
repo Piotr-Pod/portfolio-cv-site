@@ -19,6 +19,8 @@ interface ChatWidgetProps {
   locale: 'pl' | 'en';
 }
 
+type BotType = 'assistant' | 'responses';
+
 interface QuickAction {
   id: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -41,9 +43,10 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const [sessions, setSessions] = useState<Array<{ id: string; title: string; messages: Message[]; threadId: string | null; updatedAt: number; seq: number }>>([]);
+  const [sessions, setSessions] = useState<Array<{ id: string; title: string; messages: Message[]; threadId: string | null; updatedAt: number; seq: number; botType: BotType }>>([]);
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
   const [showManageMenu, setShowManageMenu] = useState(false);
+  const [selectedBotType, setSelectedBotType] = useState<BotType>('assistant');
 
   const scrollToBottom = () => {
     if (listRef.current) {
@@ -139,11 +142,17 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
           let seqCounter = 0;
-          const normalized = parsed.map((s: any) => ({ ...s, seq: typeof s.seq === 'number' ? s.seq : (++seqCounter), messages: s.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })) }));
+          const normalized = parsed.map((s: any) => ({ 
+            ...s, 
+            seq: typeof s.seq === 'number' ? s.seq : (++seqCounter), 
+            messages: s.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })),
+            botType: s.botType || 'assistant' // Default to assistant for backward compatibility
+          }));
           setSessions(normalized);
           setActiveSessionId(normalized[0].id);
           setMessages(normalized[0].messages);
           setThreadId(normalized[0].threadId ?? null);
+          setSelectedBotType(normalized[0].botType || 'assistant');
         }
       }
     } catch {}
@@ -156,7 +165,12 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
           const parsed = JSON.parse(e.newValue);
           if (Array.isArray(parsed)) {
             let seqCounter = 0;
-            const normalized = parsed.map((s: any) => ({ ...s, seq: typeof s.seq === 'number' ? s.seq : (++seqCounter), messages: s.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })) }));
+            const normalized = parsed.map((s: any) => ({ 
+              ...s, 
+              seq: typeof s.seq === 'number' ? s.seq : (++seqCounter), 
+              messages: s.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })),
+              botType: s.botType || 'assistant' // Default to assistant for backward compatibility
+            }));
             setSessions(normalized);
             // Only update current session if it exists in the new data
             if (activeSessionId) {
@@ -164,6 +178,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
               if (found) {
                 setMessages(found.messages);
                 setThreadId(found.threadId ?? null);
+                setSelectedBotType(found.botType || 'assistant');
               }
             }
           }
@@ -181,10 +196,12 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
       if (found) {
         setMessages(found.messages);
         setThreadId(found.threadId ?? null);
+        setSelectedBotType(found.botType || 'assistant');
       }
     } else {
       setMessages([]);
       setThreadId(null);
+      setSelectedBotType('assistant');
     }
   }, [activeSessionId, sessions]);
 
@@ -205,7 +222,15 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
 
     const newId = `${Date.now()}`;
     const maxSeq = sessions.reduce((acc, s) => Math.max(acc, s.seq || 0), 0);
-    const newSession = { id: newId, title: (t('newConversationTitle') as unknown as string) || 'New conversation', messages: [], threadId: null, updatedAt: Date.now(), seq: maxSeq + 1 };
+    const newSession = { 
+      id: newId, 
+      title: (t('newConversationTitle') as unknown as string) || 'New conversation', 
+      messages: [], 
+      threadId: null, 
+      updatedAt: Date.now(), 
+      seq: maxSeq + 1,
+      botType: selectedBotType
+    };
     const next = [newSession, ...sessions];
     saveSessions(next);
     setActiveSessionId(newId);
@@ -219,6 +244,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
       setActiveSessionId(id);
       setMessages(found.messages);
       setThreadId(found.threadId ?? null);
+      setSelectedBotType(found.botType || 'assistant');
     }
   };
 
@@ -238,7 +264,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     if (!sid) {
       sid = `${Date.now()}`;
       const maxSeq = sessions.reduce((acc, s) => Math.max(acc, s.seq || 0), 0);
-      const newSession = { id: sid, title: (t('newConversationTitle') as unknown as string) || 'New conversation', messages: [userMessage], threadId, updatedAt: Date.now(), seq: maxSeq + 1 };
+      const newSession = { id: sid, title: (t('newConversationTitle') as unknown as string) || 'New conversation', messages: [userMessage], threadId, updatedAt: Date.now(), seq: maxSeq + 1, botType: selectedBotType };
       saveSessions([newSession, ...sessions]);
       setActiveSessionId(sid);
     } else {
@@ -255,7 +281,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 30000);
-      const payload: any = { message: userMessage.content, locale };
+      const payload: any = { message: userMessage.content, locale, botType: selectedBotType };
       if (threadId) payload.threadId = threadId; // don't send null
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -362,7 +388,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     if (!sid) {
       sid = `${Date.now()}`;
       const maxSeq = sessions.reduce((acc, s) => Math.max(acc, s.seq || 0), 0);
-      const newSession = { id: sid, title: (t('newConversationTitle') as unknown as string) || 'New conversation', messages: [userMessage], threadId, updatedAt: Date.now(), seq: maxSeq + 1 };
+      const newSession = { id: sid, title: (t('newConversationTitle') as unknown as string) || 'New conversation', messages: [userMessage], threadId, updatedAt: Date.now(), seq: maxSeq + 1, botType: selectedBotType };
       saveSessions([newSession, ...sessions]);
       setActiveSessionId(sid);
     } else {
@@ -378,7 +404,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 30000);
-      const payload: any = { message: userMessage.content, locale };
+      const payload: any = { message: userMessage.content, locale, botType: selectedBotType };
       if (threadId) payload.threadId = threadId; // don't send null
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -572,6 +598,15 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
                   <h3 className="text-lg font-semibold truncate">{t('title')}</h3>
                 </div>
                 <div className="flex items-center justify-end gap-1 flex-wrap">
+                  <select
+                    className="border rounded px-2 py-1 text-xs bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    value={selectedBotType}
+                    onChange={(e) => setSelectedBotType(e.target.value as BotType)}
+                    title={selectedBotType === 'assistant' ? 'Assistant Bot' : 'Responses Bot'}
+                  >
+                    <option value="assistant">Assistant</option>
+                    <option value="responses">Responses</option>
+                  </select>
                   <select
                     className="border rounded px-1 py-1 text-xs max-w-[140px] bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary truncate"
                     value={activeSessionId ?? ''}
