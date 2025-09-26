@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { processMessage } from '@/lib/ai/assistant';
 import { checkRateLimit } from '@/lib/chat/rate-limit';
 import { validateInput } from '@/lib/chat/security';
+import { logApiRequest } from '@/lib/monitoring/performance';
 
 const ChatRequestSchema = z.object({
   message: z.string().min(1).max(1000),
@@ -11,9 +12,11 @@ const ChatRequestSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const requestStartTime = Date.now();
+  const ipHeader = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '';
+  const ip = (ipHeader.split(',')[0] || 'unknown').trim();
+  
   try {
-    const ipHeader = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '';
-    const ip = (ipHeader.split(',')[0] || 'unknown').trim();
     const rateLimitResult = await checkRateLimit(ip);
     if (!rateLimitResult.allowed) {
       return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
@@ -42,10 +45,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Assistant not configured' }, { status: 500 });
     }
 
+    const aiStartTime = Date.now();
     const result = await processMessage({ message, threadId, locale, assistantId });
+    const aiProcessingTime = Date.now() - aiStartTime;
+    const totalRequestTime = Date.now() - requestStartTime;
+    
+    console.log(`[Chat API] Request completed in ${totalRequestTime}ms (AI processing: ${aiProcessingTime}ms) for IP: ${ip}`);
+    logApiRequest(totalRequestTime, ip, true);
+    
     return NextResponse.json(result);
   } catch (error) {
-    console.error('Chat API error:', error);
+    const totalRequestTime = Date.now() - requestStartTime;
+    console.error(`[Chat API] Error after ${totalRequestTime}ms:`, error);
+    logApiRequest(totalRequestTime, ip, false, error instanceof Error ? error.message : 'Unknown error');
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

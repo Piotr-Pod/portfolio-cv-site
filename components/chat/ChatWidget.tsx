@@ -250,6 +250,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
     }
     setInput('');
     setIsLoading(true);
+    const requestStartTime = Date.now();
 
     try {
       const controller = new AbortController();
@@ -264,6 +265,8 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
       }).finally(() => clearTimeout(timeout));
 
       const data = await response.json();
+      const totalResponseTime = Date.now() - requestStartTime;
+      console.log(`[Chat Frontend] Response received in ${totalResponseTime}ms`);
 
       if (response.ok) {
         const assistantMessage: Message = {
@@ -311,6 +314,8 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
         throw new Error(data.error || 'Failed to send message');
       }
     } catch (error) {
+      const totalResponseTime = Date.now() - requestStartTime;
+      console.error(`[Chat Frontend] Error after ${totalResponseTime}ms:`, error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -368,6 +373,7 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
       }
     }
     setIsLoading(true);
+    const requestStartTime = Date.now();
 
     try {
       const controller = new AbortController();
@@ -382,6 +388,8 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
       }).finally(() => clearTimeout(timeout));
 
       const data = await response.json();
+      const totalResponseTime = Date.now() - requestStartTime;
+      console.log(`[Chat Frontend] Quick action response received in ${totalResponseTime}ms`);
 
       if (response.ok) {
         const assistantMessage: Message = {
@@ -429,6 +437,8 @@ export function ChatWidget({ locale }: ChatWidgetProps) {
         throw new Error(data.error || 'Failed to send message');
       }
     } catch (error) {
+      const totalResponseTime = Date.now() - requestStartTime;
+      console.error(`[Chat Frontend] Quick action error after ${totalResponseTime}ms:`, error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
